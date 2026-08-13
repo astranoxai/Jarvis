@@ -1,0 +1,25 @@
+import { ToolDefinition } from './types.js';
+import { timeTool } from './time.js';
+import { calculatorTool } from './calculator.js';
+import { systemTool } from './system.js';
+import { weatherTool } from './weather.js';
+import { webSearchTool } from './web_search.js';
+import { memoryTool, recallTool } from './memory.js';
+
+const tools: ToolDefinition[] = [
+  timeTool,
+  calculatorTool,
+  systemTool,
+  weatherTool,
+  webSearchTool,
+  memoryTool,
+  recallTool
+];
+
+export function getTools(): ToolDefinition[] {
+  return tools;
+}
+
+export function getTool(name: string): ToolDefinition | undefined {
+  return tools.find((tool: ToolDefinition) => tool.name === name);
+}

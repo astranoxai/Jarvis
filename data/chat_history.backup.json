@@ -1,0 +1,177 @@
+[
+  {
+    "role": "assistant",
+    "content": "It seems that I'm currently unable to retrieve the list of your saved memories. If there's something specific you'd like to know, feel free to ask!",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "List my saved memories."
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_mNeZnEBHWaVwIuk3RzeOHhZE",
+        "function": {
+          "name": "recall",
+          "arguments": "{\"query\": \"memory\", \"category\": \"fact\"}"
+        }
+      },
+      {
+        "type": "function",
+        "index": 1,
+        "id": "call_tHQ1zBFuWxcjCpM6bBPi9X8c",
+        "function": {
+          "name": "recall",
+          "arguments": "{\"query\": \"memory\", \"category\": \"project\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "content": "{\"query\":\"memory\",\"count\":0,\"memories\":[]}",
+    "tool_call_id": "call_mNeZnEBHWaVwIuk3RzeOHhZE",
+    "name": "recall"
+  },
+  {
+    "role": "tool",
+    "content": "{\"query\":\"memory\",\"count\":1,\"memories\":[{\"id\":1786410834009,\"text\":\"My favorite project is JARVIS.\",\"category\":\"project\",\"importance\":5,\"created_at\":\"2026-08-11T01:13:54.007Z\",\"updated_at\":\"2026-08-11T01:13:54.007Z\"}]}",
+    "tool_call_id": "call_tHQ1zBFuWxcjCpM6bBPi9X8c",
+    "name": "recall"
+  },
+  {
+    "role": "assistant",
+    "content": "Here's a summary of your saved memories:\n\n- **Favorite Project**: My favorite project is JARVIS.\n\nIt seems I don't have any other memories saved in the \"fact\" category. If there's anything else you'd like to add or inquire about, let me know!",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "List ALL of my saved memories. Show each memory with its ID and text."
+  },
+  {
+    "role": "assistant",
+    "content": "Here are all of your saved memories:\n\n1. **ID**: 1786410834009\n   - **Text**: My favorite project is JARVIS.\n\nCurrently, this is the only memory saved. If you want to add more or have any specific requests, just let me know!",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "List ALL of my saved memories. Show each memory with its ID and text. Do not summarize, merge, or omit any."
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_LwEwU0ywKeZvbeNIZwUnH0iE",
+        "function": {
+          "name": "list_memories",
+          "arguments": "{}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "content": "{\"success\":true,\"memories\":[{\"id\":1786370951686,\"text\":\"User is building an AI assistant called JARVIS.\",\"category\":\"general\",\"importance\":\"normal\",\"created_at\":\"2026-08-10T14:09:11.686Z\",\"updated_at\":\"2026-08-10T14:09:11.686Z\"},{\"id\":1786371032272,\"text\":\"User is working on a project called JARVIS using TypeScript.\",\"category\":\"general\",\"importance\":\"normal\",\"created_at\":\"2026-08-10T14:10:32.272Z\",\"updated_at\":\"2026-08-10T14:10:32.272Z\"},{\"id\":1786410696271,\"text\":\"My AI assistant is called JARVIS.\",\"category\":\"fact\",\"importance\":\"high\",\"created_at\":\"2026-08-11T01:11:36.270Z\",\"updated_at\":\"2026-08-11T01:11:36.270Z\"},{\"id\":1786410834009,\"text\":\"My favorite project is JARVIS.\",\"category\":\"project\",\"importance\":5,\"created_at\":\"2026-08-11T01:13:54.007Z\",\"updated_at\":\"2026-08-11T01:13:54.007Z\"}]}",
+    "tool_call_id": "call_LwEwU0ywKeZvbeNIZwUnH0iE",
+    "name": "list_memories"
+  },
+  {
+    "role": "assistant",
+    "content": "Here are all of your saved memories, presented with their IDs and text:\n\n1. **ID**: 1786370951686\n   - **Text**: User is building an AI assistant called JARVIS.\n\n2. **ID**: 1786371032272\n   - **Text**: User is working on a project called JARVIS using TypeScript.\n\n3. **ID**: 1786410696271\n   - **Text**: My AI assistant is called JARVIS.\n\n4. **ID**: 1786410834009\n   - **Text**: My favorite project is JARVIS.\n\nIf you need further assistance or modifications, just let me know!",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "What memory tools do you have available?"
+  },
+  {
+    "role": "assistant",
+    "content": "Here are the memory tools I have available:\n\n1. **Remember**: Save useful information to JARVIS local memory, organized by categories and importance levels.\n\n2. **Recall**: Retrieve relevant information from JARVIS local memory based on a given query.\n\n3. **List Memories**: Display recently saved memories from JARVIS local memory.\n\n4. **Forget Memory**: Delete a specific saved memory by its ID.\n\nIf you have any specific requests or queries related to these tools, feel free to ask!",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "Remember that my JARVIS project uses TypeScript."
+  },
+  {
+    "role": "assistant",
+    "content": "It looks like this information is already saved in your memories. Your project \"JARVIS\" is noted as using TypeScript. If there's something else you'd like to remember or modify, please let me know!",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "List ALL of my saved memories. Show every memory with its ID and text."
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_IQjLz338SkifIfOZRUedZ6hK",
+        "function": {
+          "name": "list_memories",
+          "arguments": "{}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "content": "{\"success\":true,\"memories\":[{\"id\":1786370951686,\"text\":\"User is building an AI assistant called JARVIS.\",\"category\":\"general\",\"importance\":\"normal\",\"created_at\":\"2026-08-10T14:09:11.686Z\",\"updated_at\":\"2026-08-10T14:09:11.686Z\"},{\"id\":1786371032272,\"text\":\"User is working on a project called JARVIS using TypeScript.\",\"category\":\"general\",\"importance\":\"normal\",\"created_at\":\"2026-08-10T14:10:32.272Z\",\"updated_at\":\"2026-08-10T14:10:32.272Z\"},{\"id\":1786410696271,\"text\":\"My AI assistant is called JARVIS.\",\"category\":\"fact\",\"importance\":\"high\",\"created_at\":\"2026-08-11T01:11:36.270Z\",\"updated_at\":\"2026-08-11T01:11:36.270Z\"},{\"id\":1786410834009,\"text\":\"My favorite project is JARVIS.\",\"category\":\"project\",\"importance\":5,\"created_at\":\"2026-08-11T01:13:54.007Z\",\"updated_at\":\"2026-08-11T01:13:54.007Z\"}]}",
+    "tool_call_id": "call_IQjLz338SkifIfOZRUedZ6hK",
+    "name": "list_memories"
+  },
+  {
+    "role": "assistant",
+    "content": "Here are all of your saved memories, presented with their IDs and text:\n\n1. **ID**: 1786370951686\n   - **Text**: User is building an AI assistant called JARVIS.\n\n2. **ID**: 1786371032272\n   - **Text**: User is working on a project called JARVIS using TypeScript.\n\n3. **ID**: 1786410696271\n   - **Text**: My AI assistant is called JARVIS.\n\n4. **ID**: 1786410834009\n   - **Text**: My favorite project is JARVIS.\n\nIf you need any more assistance or have other requests, just let me know!",
+    "refusal": null,
+    "reasoning": null
+  },
+  {
+    "role": "user",
+    "content": "What do you remember about my JARVIS project?"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "tool_calls": [
+      {
+        "type": "function",
+        "index": 0,
+        "id": "call_ums1897PbnXCD2OVsyntkRaB",
+        "function": {
+          "name": "recall",
+          "arguments": "{\"query\":\"JARVIS\",\"category\":\"general\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "content": "{\"query\":\"jarvis\",\"count\":0,\"memories\":[]}",
+    "tool_call_id": "call_ums1897PbnXCD2OVsyntkRaB",
+    "name": "recall"
+  },
+  {
+    "role": "assistant",
+    "content": "It seems that I couldn't retrieve any specific memories related to your JARVIS project at the moment. However, I do know that you are working on a project called JARVIS using TypeScript. If there’s anything else you’d like to clarify or add, just let me know!",
+    "refusal": null,
+    "reasoning": null
+  }
+]

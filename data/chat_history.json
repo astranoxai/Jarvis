@@ -1,0 +1,90 @@
+[
+  {
+    "role": "user",
+    "content": "Send an email to astranoxai@gmail.com with the subject JARVIS Test and the body: JARVIS email system is working. Use the send_email tool and actually send it."
+  },
+  {
+    "role": "assistant",
+    "content": "The email has been successfully sent to **astranoxai@gmail.com** with the subject \"JARVIS Test\" and the body \"JARVIS email system is working.\" If you need anything else, just let me know!"
+  },
+  {
+    "role": "user",
+    "content": "Check my latest emails using the read_emails tool. Show the sender, subject, date, and preview. Do not guess anything."
+  },
+  {
+    "role": "assistant",
+    "content": "I encountered an error while trying to access your emails due to a self-signed certificate issue. Unfortunately, I can't retrieve your emails right now. \n\nIf there’s anything else you’d like to do or any other way I can assist you, please let me know!"
+  },
+  {
+    "role": "user",
+    "content": "Check my latest emails using the read_emails tool. Show the sender, subject, date, and preview. Do not guess anything."
+  },
+  {
+    "role": "assistant",
+    "content": "Here are your latest emails:\n\n1. **From:** \"James from Freebuff\" <james@mail.freebuff.app>  \n   **Subject:** Welcome to Freebuff  \n   **Date:** August 10, 2026  \n   **Preview:** Hi Kanha, Welcome to Freebuff. My name is James, and I’ll be your point of contact here. You can email me any time at support@codebuff.com. You can also get live support from our team in our Discord:...\n\n2. **From:** \"Microsoft account team\" <account-security-noreply@accountprotection.microsoft.com>  \n   **Subject:** Personal Microsoft account security code  \n   **Date:** August 10, 2026  \n   **Preview:** Please use the following security code for your personal Microsoft account kr**8@gmail.com. Security code: 272665 Only enter this code on an official website or app. \n\n3. **From:** \"Google\" <noreply-accounts@google.com>  \n   **Subject:** You shared some Google Account data with cursor.sh  \n   **Date:** August 10, 2026  \n   **Preview:** Keep track of your Google Account data kartavyasingh298@gmail.com You're receiving this email because you used Sign in with Google to sign in to...\n\n4. **From:** \"Google\" <no-reply@accounts.google.com>  \n   **Subject:** 2-Step Verification turned on  \n   **Date:** August 11, 2026  \n   **Preview:** 2-Step Verification turned on kartavyasingh298@gmail.com Your Google Account kartavyasingh298@gmail.com is now protected with 2-Step Verification...\n\n5. **From:** \"Google\" <no-reply@accounts.google.com>  \n   **Subject:** Security alert  \n   **Date:** August 11, 2026  \n   **Preview:** App password created to sign in to your account kartavyasingh298@gmail.com If you didn't generate this password for Jarvis, someone else might be using your account. \n\nIf there's anything more you need, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "Use read_emails to show my latest emails with their IDs."
+  },
+  {
+    "role": "assistant",
+    "content": "Here are your latest emails along with their IDs:\n\n1. **ID:** 114  \n   **From:** \"Crunchyroll\" <hello@mail.crunchyroll.com>  \n   **Subject:** Join the Demon Slayer Corps and Enter the Fray ⚔️  \n   **Date:** August 4, 2026  \n   **Preview:** Experience the entire journey in one place...\n\n2. **ID:** 115  \n   **From:** \"Crunchyroll\" <hello@mail.crunchyroll.com>  \n   **Subject:** Hanging up the cleats? ⚽  \n   **Date:** August 6, 2026  \n   **Preview:** Don’t let the feeling fade...\n\n3. **ID:** 116  \n   **From:** \"Google\" <no-reply@accounts.google.com>  \n   **Subject:** Security alert  \n   **Date:** August 6, 2026  \n   **Preview:** A new sign-in on Google AMD Raven Ridge Chromebook...\n\n4. **ID:** 117  \n   **From:** \"Crunchyroll\" <hello@mail.crunchyroll.com>  \n   **Subject:** Fight With Daemons, Find Your Parents  \n   **Date:** August 8, 2026  \n   **Preview:** Tune in to Daemons of the Shadow Realm today...\n\n5. **ID:** 118  \n   **From:** \"Google\" <noreply-accounts@google.com>  \n   **Subject:** You shared some Google Account data with freebuff.com  \n   **Date:** August 10, 2026  \n   **Preview:** Keep track of your Google Account data...\n\n6. **ID:** 119  \n   **From:** \"James from Freebuff\" <james@mail.freebuff.app>  \n   **Subject:** Welcome to Freebuff  \n   **Date:** August 10, 2026  \n   **Preview:** Hi Kanha, Welcome to Freebuff...\n\n7. **ID:** 120  \n   **From:** \"Microsoft account team\" <account-security-noreply@accountprotection.microsoft.com>  \n   **Subject:** Personal Microsoft account security code  \n   **Date:** August 10, 2026  \n   **Preview:** Please use the following security code for your personal Microsoft account...\n\n8. **ID:** 121  \n   **From:** \"Google\" <noreply-accounts@google.com>  \n   **Subject:** You shared some Google Account data with cursor.sh  \n   **Date:** August 10, 2026  \n   **Preview:** Keep track of your Google Account data...\n\n9. **ID:** 122  \n   **From:** \"Google\" <no-reply@accounts.google.com>  \n   **Subject:** 2-Step Verification turned on  \n   **Date:** August 11, 2026  \n   **Preview:** 2-Step Verification turned on...\n\n10. **ID:** 123  \n    **From:** \"Google\" <no-reply@accounts.google.com>  \n    **Subject:** Security alert  \n    **Date:** August 11, 2026  \n    **Preview:** App password created to sign in to your account...\n\nIf you have any questions or need further assistance, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "Use the read_email tool to read email ID 123 and show its full contents. Do not guess anything."
+  },
+  {
+    "role": "assistant",
+    "content": "Here are the full contents of email ID 123:\n\n- **From:** \"Google\" <no-reply@accounts.google.com>\n- **To:** kartavyasingh298@gmail.com\n- **Subject:** Security alert\n- **Date:** August 11, 2026\n\n**Text Content:**\n```\nApp password created to sign in to your account kartavyasingh298@gmail.com.\nIf you didn't generate this password for Jarvis, someone else might be using your account. Check and secure your account now.\nCheck activity: [https://accounts.google.com/AccountChooser?Email=kartavyasingh298@gmail.com&continue=https://myaccount.google.com/alert/nt/1786448450112?rfn%3D20%26rfnc%3D1%26eid%3D1000425077845774449%26et%3D0](https://accounts.google.com/AccountChooser?Email=kartavyasingh298@gmail.com&continue=https://myaccount.google.com/alert/nt/1786448450112?rfn%3D20%26rfnc%3D1%26eid%3D1000425077845774449%26et%3D0)\nYou can also see security activity at [https://myaccount.google.com/notifications](https://myaccount.google.com/notifications).\nYou received this email to let you know about important changes to your Google Account and services.\n© 2026 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\n```\n\nIf you have any further questions or need assistance, just let me know!"
+  },
+  {
+    "role": "user",
+    "content": "Open https://www.google.com using the browser tool."
+  },
+  {
+    "role": "assistant",
+    "content": "The browser has successfully opened Google at [https://www.google.com](https://www.google.com). If you need anything else, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "Search the web for latest Android news using the browser search tool."
+  },
+  {
+    "role": "assistant",
+    "content": "I've initiated a web search for the latest Android news. You can view the results at this link: [Latest Android News](https://www.google.com/search?q=latest%20Android%20news). If you need further assistance, just let me know!"
+  },
+  {
+    "role": "user",
+    "content": "Use the read_webpage tool to read https://example.com and tell me what it says. Do not guess anything."
+  },
+  {
+    "role": "assistant",
+    "content": "The webpage at [https://example.com](https://example.com) contains the following content:\n\n**Title:** Example Domain\n\n**Text:**\n```\nExample Domain\n\nThis domain is for use in documentation examples without needing permission. Avoid use in operations.\n\nLearn more\n```\n\nIf you have any further questions or need assistance, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "Open https://example.com in my browser."
+  },
+  {
+    "role": "assistant",
+    "content": "The browser has successfully opened [https://example.com](https://example.com). If there's anything else you need, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "Use the browser_back tool to go back one page."
+  },
+  {
+    "role": "assistant",
+    "content": "I encountered an error while trying to go back one page in the browser. Unfortunately, I'm unable to perform that action at the moment. If there's anything else you need or another action you'd like to take, just let me know!"
+  },
+  {
+    "role": "user",
+    "content": "Send an email to kristinajohn018@gmail.com with the subject Hello This Is Jarvis Here   and the body: JARVIS HelloMs. KRISTINA JOHN. Use the send_email tool and actually send it."
+  },
+  {
+    "role": "assistant",
+    "content": "The email has been successfully sent to **kristinajohn018@gmail.com** with the subject \"Hello This Is Jarvis Here\" and the body \"JARVIS HelloMs. KRISTINA JOHN.\" If you need anything else, just let me know!"
+  }
+]
