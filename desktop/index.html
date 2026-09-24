@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>JARVIS Command Center</title>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <main class="jarvis-shell">
+
+    <!-- LEFT NAVIGATION -->
+    <aside class="sidebar">
+
+      <div class="sidebar-brand">
+        <div class="mini-core"></div>
+
+        <div>
+          <div class="jarvis-title">JARVIS</div>
+          <div class="jarvis-subtitle">AI SYSTEM</div>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+
+        <button class="nav-item active">
+          <span class="nav-icon">◉</span>
+          <span>Command Center</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon">◎</span>
+          <span>AI Core</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon">◇</span>
+          <span>Tools</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon">◫</span>
+          <span>Memory</span>
+        </button>
+
+        <button class="nav-item">
+          <span class="nav-icon">⌁</span>
+          <span>System</span>
+        </button>
+
+      </nav>
+
+      <div class="sidebar-footer">
+
+        <div class="sidebar-status">
+          <span class="status-dot"></span>
+
+          <div>
+            <div class="status-main">SYSTEM ONLINE</div>
+            <div class="status-small">JARVIS CORE ACTIVE</div>
+          </div>
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- MAIN AREA -->
+    <section class="main-interface">
+
+      <!-- TOP HEADER -->
+      <header class="top-header">
+
+        <div>
+          <div class="page-label">COMMAND CENTER</div>
+          <div class="page-title">JARVIS Neural Interface</div>
+        </div>
+
+        <div class="header-status">
+
+          <div class="header-module">
+            <span class="module-label">BACKEND</span>
+            <span class="module-value online">ONLINE</span>
+          </div>
+
+          <div class="header-module">
+            <span class="module-label">NETWORK</span>
+            <span class="module-value">CONNECTED</span>
+          </div>
+
+          <div class="header-module">
+            <span class="module-label">TIME</span>
+            <span class="module-value" id="systemClock">
+              --:--:--
+            </span>
+          </div>
+
+        </div>
+
+      </header>
+
+      <!-- DASHBOARD -->
+      <section class="dashboard">
+
+        <!-- LEFT SYSTEM PANEL -->
+        <section class="glass-panel system-panel">
+
+          <div class="panel-heading">
+            SYSTEM STATUS
+          </div>
+
+          <div class="system-stat">
+            <div>
+              <span class="stat-label">AI CORE</span>
+              <span class="stat-value">ACTIVE</span>
+            </div>
+
+            <div class="status-light"></div>
+          </div>
+
+          <div class="system-stat">
+            <div>
+              <span class="stat-label">OPENROUTER</span>
+              <span class="stat-value">CONNECTED</span>
+            </div>
+
+            <div class="status-light"></div>
+          </div>
+
+          <div class="system-stat">
+            <div>
+              <span class="stat-label">TOOLS</span>
+              <span class="stat-value">READY</span>
+            </div>
+
+            <div class="status-light"></div>
+          </div>
+
+          <div class="system-stat">
+            <div>
+              <span class="stat-label">MEMORY</span>
+              <span class="stat-value">AVAILABLE</span>
+            </div>
+
+            <div class="status-light"></div>
+          </div>
+
+          <div class="system-stat">
+            <div>
+              <span class="stat-label">VOICE</span>
+              <span class="stat-value muted">OFFLINE</span>
+            </div>
+
+            <div class="status-light offline"></div>
+          </div>
+
+        </section>
+
+        <!-- CENTER CORE -->
+        <section class="core-zone">
+
+          <div class="core-scanner scanner-one"></div>
+          <div class="core-scanner scanner-two"></div>
+
+          <div class="core-orbit orbit-one"></div>
+          <div class="core-orbit orbit-two"></div>
+          <div class="core-orbit orbit-three"></div>
+
+          <div class="core-energy"></div>
+
+          <div
+            class="core"
+            id="jarvisCore"
+          ></div>
+
+          <div class="core-label">
+            <span id="statusText">
+              SYSTEMS ONLINE
+            </span>
+
+            <small>
+              ARTIFICIAL INTELLIGENCE CORE
+            </small>
+          </div>
+
+        </section>
+
+        <!-- RIGHT ACTIVITY PANEL -->
+        <section class="glass-panel activity-panel">
+
+          <div class="panel-heading">
+            LIVE ACTIVITY
+          </div>
+
+          <div class="activity-card">
+            <span class="activity-label">
+              CURRENT STATE
+            </span>
+
+            <span
+              class="activity-value"
+              id="activityStatus"
+            >
+              IDLE
+            </span>
+          </div>
+
+          <div class="activity-card">
+            <span class="activity-label">
+              ACTIVE TASK
+            </span>
+
+            <span
+              class="activity-value"
+              id="currentTask"
+            >
+              STANDBY
+            </span>
+          </div>
+
+          <div class="activity-card">
+            <span class="activity-label">
+              MICROPHONE
+            </span>
+
+            <span class="activity-value dim">
+              NOT INITIALIZED
+            </span>
+          </div>
+
+          <div class="activity-card">
+            <span class="activity-label">
+              RESPONSE ENGINE
+            </span>
+
+            <span class="activity-value">
+              READY
+            </span>
+          </div>
+
+        </section>
+
+      </section>
+
+      <!-- RESPONSE AREA -->
+      <section class="response-console">
+
+        <div class="console-header">
+
+          <div>
+            JARVIS RESPONSE
+          </div>
+
+          <div class="console-indicator">
+            LIVE
+          </div>
+
+        </div>
+
+        <div
+          class="response-box"
+          id="responseBox"
+        >
+          JARVIS is ready to use, boss.
+        </div>
+
+      </section>
+
+      <!-- COMMAND BAR -->
+      <section class="command-bar">
+
+        <div class="command-symbol">
+          ›
+        </div>
+
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="Enter command for JARVIS..."
+          autocomplete="off"
+        >
+
+        <button
+          id="micButton"
+          class="mic-button"
+          title="Voice input"
+        >
+          ◉
+        </button>
+
+        <button
+          id="sendButton"
+          class="send-button"
+        >
+          EXECUTE
+        </button>
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <script src="renderer.js"></script>
+
+</body>
+</html>
