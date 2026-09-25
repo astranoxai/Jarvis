@@ -86,5 +86,37 @@
   {
     "role": "assistant",
     "content": "The email has been successfully sent to **kristinajohn018@gmail.com** with the subject \"Hello This Is Jarvis Here\" and the body \"JARVIS HelloMs. KRISTINA JOHN.\" If you need anything else, just let me know!"
+  },
+  {
+    "role": "user",
+    "content": "hello jarvis"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I see you might have referred to \"Jarvis.\" I'm NOVA, your AI assistant. How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "who made u"
+  },
+  {
+    "role": "assistant",
+    "content": "I was created by a team of developers and researchers working to build AI technology that assists users with various tasks. If you have any specific questions or need assistance, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "yo open my wifi admin page"
+  },
+  {
+    "role": "assistant",
+    "content": "It seems that the details for your router's admin page URL were not retrieved. However, you can typically access your Wi-Fi router's admin page by entering its default gateway IP address into your browser. \n\nFor many routers, this is often one of the following:\n\n- **192.168.1.1**\n- **192.168.0.1**\n\nPlease check your router's documentation or the manufacturer's website for specific information. If you know the IP address, I can help you open it in your browser. Let me know what you would like to do!"
+  },
+  {
+    "role": "user",
+    "content": "can u change my wifi password to @Kar7tavya"
+  },
+  {
+    "role": "assistant",
+    "content": "I am unable to change your Wi-Fi password directly as it requires access to your router's admin interface, which usually entails entering a username and password. \n\nYou can change your Wi-Fi password manually by following these steps:\n\n1. Open a web browser.\n2. Enter your router's IP address (like 192.168.1.1 or 192.168.0.1) into the address bar and press Enter.\n3. Log in with your admin credentials (consult your router's manual if you don't have them).\n4. Look for the Wi-Fi settings or wireless security section.\n5. Change your Wi-Fi password to “@Kar7tavya”.\n6. Save your changes.\n\nIf you need additional guidance or specific instructions, feel free to ask!"
   }
 ]

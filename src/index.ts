@@ -14,11 +14,10 @@ import { batteryTool } from './tools/battery.js';
 import { wifiTool } from './tools/wifi.js';
 import { bluetoothTool } from './tools/bluetooth.js';
 import { weatherTool } from './tools/weather.js';
+import { newsTool } from './tools/news.js';
 
 const historyFile =
-  path.resolve(
-    'data/chat_history.json'
-  );
+  path.resolve('data/chat_history.json');
 
 type Message = {
   role:
@@ -39,6 +38,25 @@ type Message = {
   tool_calls?:
     any[];
 };
+
+/* =========================================
+   DASHBOARD CACHE
+========================================= */
+
+const DASHBOARD_EXTERNAL_CACHE_MS =
+  5 * 60 * 1000;
+
+let cachedWeather:
+  unknown = null;
+
+let cachedWeatherTime =
+  0;
+
+let cachedNews:
+  unknown = null;
+
+let cachedNewsTime =
+  0;
 
 /* =========================================
    HISTORY
@@ -63,10 +81,8 @@ Promise<Message[]> {
     return parsed.filter(
       (message: any) =>
         (
-          message?.role ===
-          'user' ||
-          message?.role ===
-          'assistant'
+          message?.role === 'user' ||
+          message?.role === 'assistant'
         ) &&
         typeof message?.content ===
         'string'
@@ -84,19 +100,15 @@ async function saveHistory(
     history.filter(
       (message) =>
         (
-          message.role ===
-          'user' ||
-          message.role ===
-          'assistant'
+          message.role === 'user' ||
+          message.role === 'assistant'
         ) &&
         typeof message.content ===
         'string'
     );
 
   await fs.mkdir(
-    path.dirname(
-      historyFile
-    ),
+    path.dirname(historyFile),
     {
       recursive: true
     }
@@ -151,6 +163,88 @@ app.get(
 );
 
 /* =========================================
+   EXTERNAL DASHBOARD DATA
+========================================= */
+
+async function getDashboardWeather(
+  city: string
+) {
+  const now =
+    Date.now();
+
+  if (
+    cachedWeather &&
+    now - cachedWeatherTime <
+      DASHBOARD_EXTERNAL_CACHE_MS
+  ) {
+    return cachedWeather;
+  }
+
+  try {
+    cachedWeather =
+      await weatherTool.execute(
+        {
+          city
+        },
+        {}
+      );
+
+    cachedWeatherTime =
+      now;
+
+    return cachedWeather;
+
+  } catch (error) {
+    return {
+      success: false,
+
+      error:
+        error instanceof Error
+          ? error.message
+          : String(error)
+    };
+  }
+}
+
+async function getDashboardNews() {
+  const now =
+    Date.now();
+
+  if (
+    cachedNews &&
+    now - cachedNewsTime <
+      DASHBOARD_EXTERNAL_CACHE_MS
+  ) {
+    return cachedNews;
+  }
+
+  try {
+    cachedNews =
+      await newsTool.execute(
+        {
+          limit: 8
+        },
+        {}
+      );
+
+    cachedNewsTime =
+      now;
+
+    return cachedNews;
+
+  } catch (error) {
+    return {
+      success: false,
+
+      error:
+        error instanceof Error
+          ? error.message
+          : String(error)
+    };
+  }
+}
+
+/* =========================================
    LIVE DASHBOARD
 ========================================= */
 
@@ -193,32 +287,6 @@ app.get(
         )
       ]);
 
-    let weatherResult:
-      unknown = null;
-
-    if (dashboardCity) {
-      try {
-        weatherResult =
-          await weatherTool.execute(
-            {
-              city:
-                dashboardCity
-            },
-            {}
-          );
-
-      } catch (error) {
-        weatherResult = {
-          success: false,
-
-          error:
-            error instanceof Error
-              ? error.message
-              : String(error)
-        };
-      }
-    }
-
     function unwrap(
       result:
         PromiseSettledResult<unknown>
@@ -236,11 +304,27 @@ app.get(
         error:
           result.reason instanceof Error
             ? result.reason.message
-            : String(
-                result.reason
-              )
+            : String(result.reason)
       };
     }
+
+    const [
+      weatherResult,
+      newsResult
+    ] =
+      await Promise.all([
+        dashboardCity
+          ? getDashboardWeather(
+              dashboardCity
+            )
+          : Promise.resolve({
+              success: false,
+              error:
+                'DASHBOARD_CITY is not configured.'
+            }),
+
+        getDashboardNews()
+      ]);
 
     return {
       success: true,
@@ -254,34 +338,22 @@ app.get(
       },
 
       system:
-        unwrap(
-          systemResult
-        ),
+        unwrap(systemResult),
 
       battery:
-        unwrap(
-          batteryResult
-        ),
+        unwrap(batteryResult),
 
       wifi:
-        unwrap(
-          wifiResult
-        ),
+        unwrap(wifiResult),
 
       bluetooth:
-        unwrap(
-          bluetoothResult
-        ),
+        unwrap(bluetoothResult),
 
       weather:
-        dashboardCity
-          ? weatherResult
-          : {
-              success: false,
+        weatherResult,
 
-              error:
-                'DASHBOARD_CITY is not configured.'
-            }
+      news:
+        newsResult
     };
   }
 );
@@ -297,6 +369,7 @@ app.post(
 
     return {
       success: true,
+
       message:
         'Nova chat history cleared.'
     };
@@ -359,6 +432,7 @@ app.post(
                 '- For Wi-Fi information, use get_wifi_status.',
                 '- For Bluetooth information, use get_bluetooth_status.',
                 '- For current weather, use get_weather.',
+                '- For current news headlines, use get_news.',
                 '- For recent or current information from the web, use web_search.',
                 '- For memory requests, use the memory tools.',
                 '- For email sending, use send_email only when the user explicitly asks to send an email.',
@@ -371,16 +445,11 @@ app.post(
               ].join('\n')
           },
 
-          ...history.slice(
-            -20
-          ),
+          ...history.slice(-20),
 
           {
-            role:
-              'user',
-
-            content:
-              message
+            role: 'user',
+            content: message
           }
         ];
 
@@ -398,11 +467,8 @@ app.post(
         firstResponse;
 
       if (
-        Array.isArray(
-          toolCalls
-        ) &&
-        toolCalls.length >
-        0
+        Array.isArray(toolCalls) &&
+        toolCalls.length > 0
       ) {
 
         const toolMessages:
@@ -452,8 +518,7 @@ app.post(
         typeof finalResponse
           ?.content ===
         'string'
-          ? finalResponse
-              .content
+          ? finalResponse.content
           : 'Nova completed the request.';
 
       const updatedHistory:
@@ -461,19 +526,13 @@ app.post(
           ...history,
 
           {
-            role:
-              'user',
-
-            content:
-              message
+            role: 'user',
+            content: message
           },
 
           {
-            role:
-              'assistant',
-
-            content:
-              answer
+            role: 'assistant',
+            content: answer
           }
         ];
 
@@ -489,7 +548,6 @@ app.post(
       };
 
     } catch (error) {
-
       request.log.error(
         error
       );

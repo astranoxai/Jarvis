@@ -3,6 +3,7 @@ import { calculatorTool } from './calculator.js';
 import { systemTool } from './system.js';
 import { weatherTool } from './weather.js';
 import { webSearchTool } from './web_search.js';
+import { newsTool } from './news.js';
 
 import {
   memoryTool,
@@ -15,16 +16,16 @@ import { batteryTool } from './battery.js';
 import { setAlarmTool } from './set_alarm.js';
 
 import { sendEmailTool } from './send_email.js';
-
-import {
-  readEmailsTool
-} from './read_emails.js';
+import { readEmailsTool } from './read_emails.js';
+import { readEmailTool } from './read_email.js';
 
 import { locationTool } from './location.js';
+
 import { wifiTool } from './wifi.js';
 import { bluetoothTool } from './bluetooth.js';
 
 import { volumeTool } from './volume.js';
+import { setVolumeTool } from './set_volume.js';
 
 import { deviceInfoTool } from './device_info.js';
 
@@ -49,6 +50,7 @@ const tools: ToolDefinition[] = [
   systemTool,
   weatherTool,
   webSearchTool,
+  newsTool,
 
   memoryTool,
   recallTool,
@@ -60,6 +62,7 @@ const tools: ToolDefinition[] = [
 
   sendEmailTool,
   readEmailsTool,
+  readEmailTool,
 
   locationTool,
 
@@ -67,6 +70,7 @@ const tools: ToolDefinition[] = [
   bluetoothTool,
 
   volumeTool,
+  setVolumeTool,
 
   deviceInfoTool,
 

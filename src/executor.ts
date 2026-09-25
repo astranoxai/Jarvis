@@ -3,6 +3,7 @@ import { calculatorTool } from './tools/calculator.js';
 import { systemTool } from './tools/system.js';
 import { weatherTool } from './tools/weather.js';
 import { webSearchTool } from './tools/web_search.js';
+import { newsTool } from './tools/news.js';
 
 import {
   memoryTool,
@@ -40,7 +41,6 @@ import {
   browserForwardTool
 } from './tools/browser_navigation.js';
 
-
 export async function executeToolCall(
   toolCall: any
 ) {
@@ -61,242 +61,118 @@ export async function executeToolCall(
 
   let result: unknown;
 
-
   switch (name) {
 
     case 'get_current_time':
-      result =
-        await timeTool.execute(
-          args,
-          {}
-        );
+      result = await timeTool.execute(args, {});
       break;
-
 
     case 'calculate':
-      result =
-        await calculatorTool.execute(
-          args,
-          {}
-        );
+      result = await calculatorTool.execute(args, {});
       break;
-
 
     case 'get_system_info':
-      result =
-        await systemTool.execute(
-          args,
-          {}
-        );
+      result = await systemTool.execute(args, {});
       break;
-
 
     case 'get_weather':
-      result =
-        await weatherTool.execute(
-          args,
-          {}
-        );
+      result = await weatherTool.execute(args, {});
       break;
-
 
     case 'web_search':
-      result =
-        await webSearchTool.execute(
-          args,
-          {}
-        );
+      result = await webSearchTool.execute(args, {});
       break;
 
+    case 'get_news':
+      result = await newsTool.execute(args, {});
+      break;
 
     case 'remember':
-      result =
-        await memoryTool.execute(
-          args,
-          {}
-        );
+      result = await memoryTool.execute(args, {});
       break;
-
 
     case 'recall':
-      result =
-        await recallTool.execute(
-          args,
-          {}
-        );
+      result = await recallTool.execute(args, {});
       break;
-
 
     case 'list_memories':
-      result =
-        await listMemoriesTool.execute(
-          args,
-          {}
-        );
+      result = await listMemoriesTool.execute(args, {});
       break;
-
 
     case 'forget_memory':
-      result =
-        await forgetMemoryTool.execute(
-          args,
-          {}
-        );
+      result = await forgetMemoryTool.execute(args, {});
       break;
-
 
     case 'get_battery_status':
-      result =
-        await batteryTool.execute(
-          args,
-          {}
-        );
+      result = await batteryTool.execute(args, {});
       break;
-
 
     case 'set_alarm':
-      result =
-        await setAlarmTool.execute(
-          args,
-          {}
-        );
+      result = await setAlarmTool.execute(args, {});
       break;
-
 
     case 'send_email':
-      result =
-        await sendEmailTool.execute(
-          args,
-          {}
-        );
+      result = await sendEmailTool.execute(args, {});
       break;
-
 
     case 'read_emails':
-      result =
-        await readEmailsTool.execute(
-          args,
-          {}
-        );
+      result = await readEmailsTool.execute(args, {});
       break;
-
 
     case 'read_email':
-      result =
-        await readEmailTool.execute(
-          args,
-          {}
-        );
+      result = await readEmailTool.execute(args, {});
       break;
-
 
     case 'get_location':
-      result =
-        await locationTool.execute(
-          args,
-          {}
-        );
+      result = await locationTool.execute(args, {});
       break;
-
 
     case 'get_wifi_status':
-      result =
-        await wifiTool.execute(
-          args,
-          {}
-        );
+      result = await wifiTool.execute(args, {});
       break;
-
 
     case 'get_bluetooth_status':
-      result =
-        await bluetoothTool.execute(
-          args,
-          {}
-        );
+      result = await bluetoothTool.execute(args, {});
       break;
-
 
     case 'get_volume_status':
-      result =
-        await volumeTool.execute(
-          args,
-          {}
-        );
+      result = await volumeTool.execute(args, {});
       break;
-
 
     case 'set_volume':
-      result =
-        await setVolumeTool.execute(
-          args,
-          {}
-        );
+      result = await setVolumeTool.execute(args, {});
       break;
-
 
     case 'get_device_info':
-      result =
-        await deviceInfoTool.execute(
-          args,
-          {}
-        );
+      result = await deviceInfoTool.execute(args, {});
       break;
-
 
     case 'open_browser':
-      result =
-        await browserTool.execute(
-          args,
-          {}
-        );
+      result = await browserTool.execute(args, {});
       break;
-
 
     case 'browser_search':
-      result =
-        await browserSearchTool.execute(
-          args,
-          {}
-        );
+      result = await browserSearchTool.execute(args, {});
       break;
-
 
     case 'read_webpage':
-      result =
-        await readWebpageTool.execute(
-          args,
-          {}
-        );
+      result = await readWebpageTool.execute(args, {});
       break;
-
 
     case 'browser_back':
-      result =
-        await browserBackTool.execute(
-          args,
-          {}
-        );
+      result = await browserBackTool.execute(args, {});
       break;
-
 
     case 'browser_forward':
-      result =
-        await browserForwardTool.execute(
-          args,
-          {}
-        );
+      result = await browserForwardTool.execute(args, {});
       break;
-
 
     default:
       result = {
         success: false,
-        error:
-          `Unknown Nova tool: ${name}`
+        error: `Unknown Nova tool: ${name}`
       };
   }
-
 
   return {
     tool_call_id:
@@ -308,8 +184,6 @@ export async function executeToolCall(
     name,
 
     content:
-      JSON.stringify(
-        result
-      )
+      JSON.stringify(result)
   };
 }

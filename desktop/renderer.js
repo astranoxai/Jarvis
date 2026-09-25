@@ -94,40 +94,37 @@ const posterCaption =
 
 
 /* =========================================
-   CLOCK + DATE
+   CLOCK
 ========================================= */
 
 function updateClock() {
   const now =
     new Date();
 
-  systemClock.textContent =
-    now.toLocaleTimeString(
-      [],
-      {
-        hour:
-          '2-digit',
-        minute:
-          '2-digit',
-        second:
-          '2-digit'
-      }
-    );
+  if (systemClock) {
+    systemClock.textContent =
+      now.toLocaleTimeString(
+        [],
+        {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        }
+      );
+  }
 
-  systemDate.textContent =
-    now.toLocaleDateString(
-      [],
-      {
-        weekday:
-          'long',
-        day:
-          '2-digit',
-        month:
-          'long',
-        year:
-          'numeric'
-      }
-    );
+  if (systemDate) {
+    systemDate.textContent =
+      now.toLocaleDateString(
+        [],
+        {
+          weekday: 'long',
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric'
+        }
+      );
+  }
 }
 
 updateClock();
@@ -145,6 +142,10 @@ setInterval(
 function setCoreState(
   state
 ) {
+  if (!novaCore) {
+    return;
+  }
+
   novaCore.classList.remove(
     'thinking',
     'speaking',
@@ -152,29 +153,12 @@ function setCoreState(
   );
 
   if (
-    state ===
-    'thinking'
+    state === 'thinking' ||
+    state === 'speaking' ||
+    state === 'error'
   ) {
     novaCore.classList.add(
-      'thinking'
-    );
-  }
-
-  if (
-    state ===
-    'speaking'
-  ) {
-    novaCore.classList.add(
-      'speaking'
-    );
-  }
-
-  if (
-    state ===
-    'error'
-  ) {
-    novaCore.classList.add(
-      'error'
+      state
     );
   }
 }
@@ -232,6 +216,10 @@ function createFeedCard(
 
 
 function scrollCommandFeed() {
+  if (!commandFeed) {
+    return;
+  }
+
   commandFeed.scrollTo({
     top:
       commandFeed.scrollHeight,
@@ -245,6 +233,10 @@ function scrollCommandFeed() {
 function addUserMessage(
   text
 ) {
+  if (!commandFeed) {
+    return;
+  }
+
   const card =
     createFeedCard(
       'user-message',
@@ -260,11 +252,31 @@ function addUserMessage(
 }
 
 
+let firstNovaMessageUsed =
+  false;
+
+
 function addNovaMessage(
   text
 ) {
-  responseBox.textContent =
-    text;
+  if (
+    !firstNovaMessageUsed &&
+    responseBox
+  ) {
+    responseBox.textContent =
+      text;
+
+    firstNovaMessageUsed =
+      true;
+
+    scrollCommandFeed();
+
+    return;
+  }
+
+  if (!commandFeed) {
+    return;
+  }
 
   const card =
     createFeedCard(
@@ -284,6 +296,10 @@ function addNovaMessage(
 function addSystemMessage(
   text
 ) {
+  if (!commandFeed) {
+    return;
+  }
+
   const card =
     createFeedCard(
       'system-message',
@@ -311,8 +327,7 @@ function chooseNovaVoice() {
     [];
 
   if (
-    voices.length ===
-    0
+    voices.length === 0
   ) {
     return null;
   }
@@ -324,22 +339,22 @@ function chooseNovaVoice() {
   ];
 
   for (
-    const preferred
+    const preferredName
     of preferredNames
   ) {
-    const found =
+    const voice =
       voices.find(
-        (voice) =>
-          voice.name
+        (item) =>
+          item.name
             .toLowerCase()
             .includes(
-              preferred
+              preferredName
                 .toLowerCase()
             )
       );
 
-    if (found) {
-      return found;
+    if (voice) {
+      return voice;
     }
   }
 
@@ -396,58 +411,58 @@ function speakText(
 
   utterance.onstart =
     () => {
-
       setCoreState(
         'speaking'
       );
 
-      activityStatus
-        .textContent =
-        'SPEAKING';
+      if (activityStatus) {
+        activityStatus.textContent =
+          'SPEAKING';
+      }
 
-      currentTask
-        .textContent =
-        'VOICE RESPONSE';
+      if (currentTask) {
+        currentTask.textContent =
+          'VOICE RESPONSE';
+      }
 
-      statusText
-        .textContent =
-        'NOVA SPEAKING';
+      if (statusText) {
+        statusText.textContent =
+          'NOVA SPEAKING';
+      }
     };
 
   utterance.onend =
     () => {
-
       setCoreState(
         'idle'
       );
 
-      activityStatus
-        .textContent =
-        'IDLE';
+      if (activityStatus) {
+        activityStatus.textContent =
+          'IDLE';
+      }
 
-      currentTask
-        .textContent =
-        'STANDBY';
+      if (currentTask) {
+        currentTask.textContent =
+          'STANDBY';
+      }
 
-      statusText
-        .textContent =
-        'SYSTEMS ONLINE';
+      if (statusText) {
+        statusText.textContent =
+          'SYSTEMS ONLINE';
+      }
     };
 
   utterance.onerror =
     () => {
-
       setCoreState(
         'idle'
       );
 
-      activityStatus
-        .textContent =
-        'IDLE';
-
-      statusText
-        .textContent =
-        'SYSTEMS ONLINE';
+      if (activityStatus) {
+        activityStatus.textContent =
+          'IDLE';
+      }
     };
 
   window
@@ -459,14 +474,14 @@ function speakText(
 
 
 /* =========================================
-   SEND MESSAGE
+   CHAT
 ========================================= */
 
 async function sendMessage() {
   const message =
     messageInput
-      .value
-      .trim();
+      ?.value
+      ?.trim();
 
   if (!message) {
     return;
@@ -493,30 +508,37 @@ async function sendMessage() {
     'thinking'
   );
 
-  activityStatus.textContent =
-    'THINKING';
+  if (activityStatus) {
+    activityStatus.textContent =
+      'THINKING';
+  }
 
-  currentTask.textContent =
-    message
-      .toUpperCase()
-      .slice(
-        0,
-        32
-      );
+  if (currentTask) {
+    currentTask.textContent =
+      message
+        .toUpperCase()
+        .slice(
+          0,
+          32
+        );
+  }
 
-  statusText.textContent =
-    'PROCESSING COMMAND';
+  if (statusText) {
+    statusText.textContent =
+      'PROCESSING COMMAND';
+  }
 
-  aiStatus.textContent =
-    'THINKING';
+  if (aiStatus) {
+    aiStatus.textContent =
+      'THINKING';
+  }
 
   try {
     const response =
       await fetch(
         'http://127.0.0.1:3000/chat',
         {
-          method:
-            'POST',
+          method: 'POST',
 
           headers: {
             'Content-Type':
@@ -533,9 +555,7 @@ async function sendMessage() {
     const data =
       await response.json();
 
-    if (
-      !response.ok
-    ) {
+    if (!response.ok) {
       throw new Error(
         data?.error ||
         'Nova request failed'
@@ -552,11 +572,15 @@ async function sendMessage() {
       answer
     );
 
-    backendStatus.textContent =
-      'ONLINE';
+    if (backendStatus) {
+      backendStatus.textContent =
+        'ONLINE';
+    }
 
-    aiStatus.textContent =
-      'READY';
+    if (aiStatus) {
+      aiStatus.textContent =
+        'READY';
+    }
 
     speakText(
       answer
@@ -564,6 +588,7 @@ async function sendMessage() {
 
   } catch (error) {
     console.error(
+      'Chat error:',
       error
     );
 
@@ -575,20 +600,30 @@ async function sendMessage() {
       'error'
     );
 
-    backendStatus.textContent =
-      'OFFLINE';
+    if (backendStatus) {
+      backendStatus.textContent =
+        'OFFLINE';
+    }
 
-    aiStatus.textContent =
-      'ERROR';
+    if (aiStatus) {
+      aiStatus.textContent =
+        'ERROR';
+    }
 
-    activityStatus.textContent =
-      'ERROR';
+    if (activityStatus) {
+      activityStatus.textContent =
+        'ERROR';
+    }
 
-    currentTask.textContent =
-      'CONNECTION FAILURE';
+    if (currentTask) {
+      currentTask.textContent =
+        'CONNECTION FAILURE';
+    }
 
-    statusText.textContent =
-      'CONNECTION ERROR';
+    if (statusText) {
+      statusText.textContent =
+        'CONNECTION ERROR';
+    }
 
   } finally {
     messageInput.disabled =
@@ -603,66 +638,132 @@ async function sendMessage() {
 
 
 /* =========================================
-   WEATHER CODE
+   WEATHER
 ========================================= */
 
 function weatherCodeToText(
   code
 ) {
-  const weatherCodes = {
-    0:
-      'Clear sky',
-    1:
-      'Mostly clear',
-    2:
-      'Partly cloudy',
-    3:
-      'Overcast',
-    45:
-      'Fog',
-    48:
-      'Fog',
-    51:
-      'Light drizzle',
-    53:
-      'Drizzle',
-    55:
-      'Heavy drizzle',
-    61:
-      'Light rain',
-    63:
-      'Rain',
-    65:
-      'Heavy rain',
-    71:
-      'Light snow',
-    73:
-      'Snow',
-    75:
-      'Heavy snow',
-    80:
-      'Rain showers',
-    81:
-      'Rain showers',
-    82:
-      'Heavy showers',
-    95:
-      'Thunderstorm',
-    96:
-      'Thunderstorm',
-    99:
-      'Thunderstorm'
+  const map = {
+    0: 'Clear',
+    1: 'Mostly Clear',
+    2: 'Partly Cloudy',
+    3: 'Overcast',
+
+    45: 'Fog',
+    48: 'Fog',
+
+    51: 'Light Drizzle',
+    53: 'Drizzle',
+    55: 'Heavy Drizzle',
+
+    56: 'Freezing Drizzle',
+    57: 'Freezing Drizzle',
+
+    61: 'Light Rain',
+    63: 'Rain',
+    65: 'Heavy Rain',
+
+    66: 'Freezing Rain',
+    67: 'Freezing Rain',
+
+    71: 'Light Snow',
+    73: 'Snow',
+    75: 'Heavy Snow',
+
+    77: 'Snow Grains',
+
+    80: 'Rain Showers',
+    81: 'Rain Showers',
+    82: 'Heavy Showers',
+
+    85: 'Snow Showers',
+    86: 'Heavy Snow Showers',
+
+    95: 'Thunderstorm',
+    96: 'Thunderstorm',
+    99: 'Thunderstorm'
   };
 
   return (
-    weatherCodes[code] ||
-    'Weather'
+    map[code] ||
+    'Unknown'
   );
 }
 
 
+function updateWeather(
+  weather
+) {
+  if (
+    !weather ||
+    weather.success !== true
+  ) {
+    if (weatherTemperature) {
+      weatherTemperature.textContent =
+        '--°C';
+    }
+
+    if (weatherCondition) {
+      weatherCondition.textContent =
+        'Unavailable';
+    }
+
+    if (weatherLocation) {
+      weatherLocation.textContent =
+        '';
+    }
+
+    if (weatherHumidity) {
+      weatherHumidity.textContent =
+        '--';
+    }
+
+    if (weatherWind) {
+      weatherWind.textContent =
+        '--';
+    }
+
+    return;
+  }
+
+  if (weatherTemperature) {
+    weatherTemperature.textContent =
+      `${weather.temperature_c ?? '--'}°C`;
+  }
+
+  if (weatherCondition) {
+    weatherCondition.textContent =
+      weatherCodeToText(
+        weather.weather_code
+      );
+  }
+
+  if (weatherLocation) {
+    weatherLocation.textContent =
+      [
+        weather.city,
+        weather.region,
+        weather.country
+      ]
+        .filter(Boolean)
+        .join(', ');
+  }
+
+  if (weatherHumidity) {
+    weatherHumidity.textContent =
+      `${weather.humidity_percent ?? '--'}%`;
+  }
+
+  if (weatherWind) {
+    weatherWind.textContent =
+      `${weather.wind_speed_kmh ?? '--'} km/h`;
+  }
+}
+
+
 /* =========================================
-   BLUETOOTH DEVICE PICKER
+   BLUETOOTH
 ========================================= */
 
 function findUsefulBluetoothDevice(
@@ -704,8 +805,7 @@ function findUsefulBluetoothDevice(
       (device) => {
         const name =
           String(
-            device
-              ?.name ||
+            device?.name ||
             ''
           ).trim();
 
@@ -732,6 +832,147 @@ function findUsefulBluetoothDevice(
 
 
 /* =========================================
+   NEWS
+========================================= */
+
+function formatNewsTime(
+  published
+) {
+  if (!published) {
+    return '';
+  }
+
+  const date =
+    new Date(
+      published
+    );
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+    return '';
+  }
+
+  return date.toLocaleTimeString(
+    [],
+    {
+      hour: '2-digit',
+      minute: '2-digit'
+    }
+  );
+}
+
+
+function updateNews(
+  news
+) {
+  if (!newsList) {
+    return;
+  }
+
+  newsList.innerHTML =
+    '';
+
+  if (
+    !news ||
+    news.success !== true ||
+    !Array.isArray(
+      news.headlines
+    ) ||
+    news.headlines.length === 0
+  ) {
+    if (newsStatus) {
+      newsStatus.textContent =
+        'OFFLINE';
+    }
+
+    const empty =
+      document.createElement(
+        'div'
+      );
+
+    empty.className =
+      'news-item';
+
+    empty.textContent =
+      'No live headlines available.';
+
+    newsList.appendChild(
+      empty
+    );
+
+    return;
+  }
+
+  if (newsStatus) {
+    newsStatus.textContent =
+      'LIVE';
+  }
+
+  for (
+    const headline
+    of news.headlines
+  ) {
+    const item =
+      document.createElement(
+        'div'
+      );
+
+    item.className =
+      'news-item';
+
+    const title =
+      document.createElement(
+        'div'
+      );
+
+    title.className =
+      'news-title';
+
+    title.textContent =
+      headline.title ||
+      'Untitled headline';
+
+    const metadata =
+      document.createElement(
+        'div'
+      );
+
+    metadata.className =
+      'news-meta';
+
+    const source =
+      headline.source ||
+      'News';
+
+    const time =
+      formatNewsTime(
+        headline.published
+      );
+
+    metadata.textContent =
+      time
+        ? `${source} • ${time}`
+        : source;
+
+    item.appendChild(
+      title
+    );
+
+    item.appendChild(
+      metadata
+    );
+
+    newsList.appendChild(
+      item
+    );
+  }
+}
+
+
+/* =========================================
    LIVE DASHBOARD
 ========================================= */
 
@@ -742,9 +983,7 @@ async function refreshDashboard() {
         'http://127.0.0.1:3000/dashboard'
       );
 
-    if (
-      !response.ok
-    ) {
+    if (!response.ok) {
       throw new Error(
         'Dashboard request failed'
       );
@@ -753,8 +992,10 @@ async function refreshDashboard() {
     const data =
       await response.json();
 
-    backendStatus.textContent =
-      'ONLINE';
+    if (backendStatus) {
+      backendStatus.textContent =
+        'ONLINE';
+    }
 
 
     /* SYSTEM */
@@ -763,21 +1004,18 @@ async function refreshDashboard() {
       data?.system;
 
     if (
-      system?.success
+      system?.success ===
+      true
     ) {
-      cpuUsage.textContent =
-        `${system.cpu_usage_percent ?? '--'}%`;
+      if (cpuUsage) {
+        cpuUsage.textContent =
+          `${system.cpu_usage_percent ?? '--'}%`;
+      }
 
-      ramUsage.textContent =
-        `${system.memory_usage_percent ?? '--'}%`;
-
-      /*
-        Your HTML currently has only
-        CPU / RAM / BATTERY boxes.
-
-        For now GPU name goes into
-        the CPU title tooltip.
-      */
+      if (ramUsage) {
+        ramUsage.textContent =
+          `${system.memory_usage_percent ?? '--'}%`;
+      }
 
       const gpu =
         Array.isArray(
@@ -786,9 +1024,12 @@ async function refreshDashboard() {
           ? system.gpu[0]
           : null;
 
-      if (gpu?.name) {
+      if (
+        gpu &&
+        cpuUsage
+      ) {
         cpuUsage.title =
-          `GPU: ${gpu.name}`;
+          `GPU: ${gpu.name || 'Unknown'} | ${gpu.memory_gb ?? '--'} GB`;
       }
     }
 
@@ -802,13 +1043,18 @@ async function refreshDashboard() {
       battery
         ?.battery_present
     ) {
-      batteryLevel.textContent =
-        `${battery.percentage ?? '--'}%`;
+      if (batteryLevel) {
+        batteryLevel.textContent =
+          `${battery.percentage ?? '--'}%`;
 
-      batteryLevel.title =
-        battery.status ||
-        'Battery';
-    } else {
+        batteryLevel.title =
+          battery.status ||
+          'Battery';
+      }
+
+    } else if (
+      batteryLevel
+    ) {
       batteryLevel.textContent =
         'N/A';
     }
@@ -817,23 +1063,33 @@ async function refreshDashboard() {
     /* WIFI */
 
     const wifi =
-      data?.wifi
+      data
+        ?.wifi
         ?.current_connection;
 
     if (wifi) {
-      wifiName.textContent =
-        wifi.ssid ||
-        'Connected';
+      if (wifiName) {
+        wifiName.textContent =
+          wifi.ssid ||
+          'Connected';
+      }
 
-      wifiSignal.textContent =
-        wifi.signal ||
-        '--';
+      if (wifiSignal) {
+        wifiSignal.textContent =
+          wifi.signal ||
+          '--';
+      }
+
     } else {
-      wifiName.textContent =
-        'Not connected';
+      if (wifiName) {
+        wifiName.textContent =
+          'Not connected';
+      }
 
-      wifiSignal.textContent =
-        '--';
+      if (wifiSignal) {
+        wifiSignal.textContent =
+          '--';
+      }
     }
 
 
@@ -851,75 +1107,44 @@ async function refreshDashboard() {
       bluetooth
         ?.bluetooth_available
     ) {
-      bluetoothStatus.textContent =
-        'ON';
+      if (bluetoothStatus) {
+        bluetoothStatus.textContent =
+          'AVAILABLE';
+      }
 
-      bluetoothDevice.textContent =
-        btDevice
-          ?.name
-          ?.trim() ||
-        'Bluetooth active';
+      if (bluetoothDevice) {
+        bluetoothDevice.textContent =
+          btDevice
+            ?.name
+            ?.trim() ||
+          'Bluetooth enabled';
+      }
 
     } else {
-      bluetoothStatus.textContent =
-        'OFF';
+      if (bluetoothStatus) {
+        bluetoothStatus.textContent =
+          'OFF';
+      }
 
-      bluetoothDevice.textContent =
-        'Unavailable';
+      if (bluetoothDevice) {
+        bluetoothDevice.textContent =
+          'Unavailable';
+      }
     }
 
 
     /* WEATHER */
 
-    const weather =
-      data?.weather;
+    updateWeather(
+      data?.weather
+    );
 
-    if (
-      weather &&
-      weather.success !==
-      false
-    ) {
-      weatherTemperature.textContent =
-        `${
-          weather.temperature_c ??
-          '--'
-        }°C`;
 
-      weatherCondition.textContent =
-        weatherCodeToText(
-          weather.weather_code
-        );
+    /* NEWS */
 
-      weatherLocation.textContent =
-        [
-          weather.city,
-          weather.country
-        ]
-          .filter(Boolean)
-          .join(', ');
-
-      weatherHumidity.textContent =
-        `${
-          weather.humidity_percent ??
-          '--'
-        }%`;
-
-      weatherWind.textContent =
-        `${
-          weather.wind_speed_kmh ??
-          '--'
-        } km/h`;
-
-    } else {
-      weatherTemperature.textContent =
-        '--°';
-
-      weatherCondition.textContent =
-        'Weather unavailable';
-
-      weatherLocation.textContent =
-        '';
-    }
+    updateNews(
+      data?.news
+    );
 
   } catch (error) {
     console.error(
@@ -927,8 +1152,15 @@ async function refreshDashboard() {
       error
     );
 
-    backendStatus.textContent =
-      'OFFLINE';
+    if (backendStatus) {
+      backendStatus.textContent =
+        'OFFLINE';
+    }
+
+    if (newsStatus) {
+      newsStatus.textContent =
+        'OFFLINE';
+    }
   }
 }
 
@@ -942,7 +1174,7 @@ setInterval(
 
 
 /* =========================================
-   BACKEND HEALTH
+   HEALTH CHECK
 ========================================= */
 
 async function checkBackendHealth() {
@@ -952,18 +1184,20 @@ async function checkBackendHealth() {
         'http://127.0.0.1:3000/health'
       );
 
-    if (
-      !response.ok
-    ) {
+    if (!response.ok) {
       throw new Error();
     }
 
-    backendStatus.textContent =
-      'ONLINE';
+    if (backendStatus) {
+      backendStatus.textContent =
+        'ONLINE';
+    }
 
   } catch {
-    backendStatus.textContent =
-      'OFFLINE';
+    if (backendStatus) {
+      backendStatus.textContent =
+        'OFFLINE';
+    }
   }
 }
 
@@ -976,7 +1210,7 @@ setInterval(
 
 
 /* =========================================
-   POSTER / MEME ROTATION
+   MEDIA ROTATION
 ========================================= */
 
 const mediaItems = [
@@ -985,7 +1219,7 @@ const mediaItems = [
       './media/poster1.jpg',
 
     caption:
-      'Nova Poster 01'
+      'NOVA // POSTER 01'
   },
 
   {
@@ -993,7 +1227,7 @@ const mediaItems = [
       './media/poster2.jpg',
 
     caption:
-      'Nova Poster 02'
+      'NOVA // POSTER 02'
   },
 
   {
@@ -1001,7 +1235,7 @@ const mediaItems = [
       './media/poster3.png',
 
     caption:
-      'Nova Poster 03'
+      'NOVA // POSTER 03'
   },
 
   {
@@ -1009,7 +1243,7 @@ const mediaItems = [
       './media/meme1.jpg',
 
     caption:
-      'Meme 01'
+      'MEME // 01'
   },
 
   {
@@ -1017,7 +1251,7 @@ const mediaItems = [
       './media/meme2.jpg',
 
     caption:
-      'Meme 02'
+      'MEME // 02'
   },
 
   {
@@ -1025,7 +1259,7 @@ const mediaItems = [
       './media/meme3.png',
 
     caption:
-      'Meme 03'
+      'MEME // 03'
   }
 ];
 
@@ -1037,19 +1271,26 @@ let failedMediaCount =
 
 
 function showPosterPlaceholder() {
-  posterImage.style.display =
-    'none';
+  if (posterImage) {
+    posterImage.style.display =
+      'none';
+  }
 
-  posterPlaceholder.style.display =
-    'flex';
+  if (posterPlaceholder) {
+    posterPlaceholder.style.display =
+      'flex';
+  }
 
-  posterCaption.textContent =
-    'Add images to desktop/media/';
+  if (posterCaption) {
+    posterCaption.textContent =
+      'Add images to desktop/media/';
+  }
 }
 
 
 function displayMediaItem() {
   if (
+    !posterImage ||
     mediaItems.length ===
     0
   ) {
@@ -1068,19 +1309,18 @@ function displayMediaItem() {
       failedMediaCount =
         0;
 
-      posterPlaceholder
-        .style
-        .display =
-        'none';
+      if (posterPlaceholder) {
+        posterPlaceholder.style.display =
+          'none';
+      }
 
-      posterImage
-        .style
-        .display =
+      posterImage.style.display =
         'block';
 
-      posterCaption
-        .textContent =
-        item.caption;
+      if (posterCaption) {
+        posterCaption.textContent =
+          item.caption;
+      }
     };
 
   posterImage.onerror =
@@ -1137,51 +1377,25 @@ setInterval(
 
 
 /* =========================================
-   NEWS PLACEHOLDER
-========================================= */
-
-function initializeNews() {
-  newsStatus.textContent =
-    'WAIT';
-
-  newsList.innerHTML =
-    '';
-
-  const item =
-    document.createElement(
-      'div'
-    );
-
-  item.className =
-    'news-item';
-
-  item.textContent =
-    'News backend coming next...';
-
-  newsList.appendChild(
-    item
-  );
-}
-
-initializeNews();
-
-
-/* =========================================
    EVENTS
 ========================================= */
 
-sendButton.addEventListener(
+sendButton?.addEventListener(
   'click',
   sendMessage
 );
 
-messageInput.addEventListener(
+
+messageInput?.addEventListener(
   'keydown',
   (event) => {
     if (
       event.key ===
-      'Enter'
+      'Enter' &&
+      !event.shiftKey
     ) {
+      event.preventDefault();
+
       sendMessage();
     }
   }
@@ -1195,6 +1409,7 @@ messageInput.addEventListener(
 window
   .speechSynthesis
   ?.getVoices();
+
 
 if (
   window
@@ -1210,4 +1425,13 @@ if (
       };
 }
 
-messageInput.focus();
+
+if (newsStatus) {
+  newsStatus.textContent =
+    'SYNCING';
+}
+
+
+if (messageInput) {
+  messageInput.focus();
+}

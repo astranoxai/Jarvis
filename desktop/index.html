@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
 
@@ -18,16 +19,28 @@
 
 <body>
 
+  <!-- =========================================
+       ANIMATED BACKGROUND
+  ========================================== -->
+
   <div class="animated-background">
     <div class="nebula nebula-red"></div>
     <div class="nebula nebula-purple"></div>
     <div class="stars stars-one"></div>
     <div class="stars stars-two"></div>
     <div class="grid-overlay"></div>
+
+    <div class="energy-line energy-line-one"></div>
+    <div class="energy-line energy-line-two"></div>
   </div>
 
 
+  <!-- =========================================
+       MAIN SHELL
+  ========================================== -->
+
   <main class="nova-shell">
+
 
     <!-- =========================================
          LEFT SIDEBAR
@@ -35,13 +48,12 @@
 
     <aside class="left-sidebar">
 
-      <!-- BRAND -->
-
       <div class="sidebar-brand">
 
         <div class="mini-core"></div>
 
         <div class="brand-text">
+
           <div class="nova-title">
             NOVA
           </div>
@@ -49,19 +61,45 @@
           <div class="nova-subtitle">
             NEURAL COMMAND SYSTEM
           </div>
+
         </div>
 
       </div>
 
 
-      <!-- COMMAND HEADER -->
+      <div class="sidebar-actions">
+
+        <button
+          id="settingsButton"
+          class="sidebar-action-button"
+          type="button"
+        >
+          SETTINGS
+        </button>
+
+        <button
+          id="notificationsButton"
+          class="sidebar-action-button"
+          type="button"
+        >
+          ALERTS
+
+          <span
+            id="notificationBadge"
+            class="notification-badge"
+            hidden
+          >
+            0
+          </span>
+        </button>
+
+      </div>
+
 
       <div class="section-title">
         COMMAND FEED
       </div>
 
-
-      <!-- COMMAND HISTORY -->
 
       <div
         class="command-feed"
@@ -99,8 +137,6 @@
       </div>
 
 
-      <!-- LEFT FOOTER STATUS -->
-
       <div class="left-footer">
 
         <div class="mini-status-row">
@@ -108,6 +144,7 @@
           <span class="status-dot"></span>
 
           <div>
+
             <div class="mini-status-title">
               SYSTEM ONLINE
             </div>
@@ -115,6 +152,7 @@
             <div class="mini-status-subtitle">
               NOVA CORE ACTIVE
             </div>
+
           </div>
 
         </div>
@@ -125,12 +163,10 @@
 
 
     <!-- =========================================
-         CENTER INTERFACE
+         CENTER
     ========================================== -->
 
     <section class="center-interface">
-
-      <!-- TOP BAR -->
 
       <header class="center-header">
 
@@ -180,12 +216,30 @@
 
           </div>
 
+
+          <div class="header-status-item">
+
+            <span class="header-status-label">
+              CAMERA
+            </span>
+
+            <span
+              class="header-status-value"
+              id="cameraHeaderStatus"
+            >
+              OFF
+            </span>
+
+          </div>
+
         </div>
 
       </header>
 
 
-      <!-- CORE -->
+      <!-- =========================================
+           NOVA CORE
+      ========================================== -->
 
       <section class="core-stage">
 
@@ -194,12 +248,13 @@
         <div class="core-scanner scanner-one"></div>
         <div class="core-scanner scanner-two"></div>
 
+        <div class="core-orbit orbit-four"></div>
         <div class="core-orbit orbit-three"></div>
         <div class="core-orbit orbit-two"></div>
         <div class="core-orbit orbit-one"></div>
 
         <div class="core-energy"></div>
-
+        <div class="core-energy-pulse"></div>
 
         <div
           class="core"
@@ -222,8 +277,6 @@
 
         </div>
 
-
-        <!-- ACTIVITY STRIP -->
 
         <div class="activity-strip">
 
@@ -271,7 +324,10 @@
               VOICE
             </span>
 
-            <span class="activity-value">
+            <span
+              class="activity-value"
+              id="voiceStatus"
+            >
               ENABLED
             </span>
 
@@ -282,14 +338,15 @@
       </section>
 
 
-      <!-- COMMAND INPUT -->
+      <!-- =========================================
+           COMMAND INPUT
+      ========================================== -->
 
       <section class="command-bar">
 
         <div class="command-prefix">
           &gt;
         </div>
-
 
         <input
           id="messageInput"
@@ -299,10 +356,6 @@
           placeholder="Ask Nova anything..."
         />
 
-
-        <!-- Compatibility only.
-             Hidden because voice input is disabled. -->
-
         <button
           id="micButton"
           class="mic-button"
@@ -310,9 +363,7 @@
           hidden
           tabindex="-1"
           aria-hidden="true"
-        >
-        </button>
-
+        ></button>
 
         <button
           id="sendButton"
@@ -333,7 +384,8 @@
 
     <aside class="right-sidebar">
 
-      <!-- LIVE TIME -->
+
+      <!-- TIME -->
 
       <section class="dashboard-card time-card">
 
@@ -366,14 +418,13 @@
           WEATHER
         </div>
 
-
         <div class="weather-main">
 
           <div
             class="weather-temperature"
             id="weatherTemperature"
           >
-            --°
+            --°C
           </div>
 
           <div class="weather-meta">
@@ -395,7 +446,6 @@
           </div>
 
         </div>
-
 
         <div class="weather-bottom">
 
@@ -491,14 +541,13 @@
       </section>
 
 
-      <!-- SYSTEM STATS -->
+      <!-- SYSTEM -->
 
       <section class="dashboard-card stats-card">
 
         <div class="card-heading">
           SYSTEM
         </div>
-
 
         <div class="stat-grid">
 
@@ -554,6 +603,57 @@
       </section>
 
 
+      <!-- CAMERA -->
+
+      <section
+        class="dashboard-card camera-card"
+        id="cameraCard"
+        hidden
+      >
+
+        <div class="card-heading-row">
+
+          <span class="card-heading">
+            CAMERA
+          </span>
+
+          <span
+            class="live-badge"
+            id="cameraLiveBadge"
+          >
+            ACTIVE
+          </span>
+
+        </div>
+
+        <div class="camera-frame">
+
+          <video
+            id="cameraPreview"
+            autoplay
+            muted
+            playsinline
+          ></video>
+
+          <div
+            class="camera-placeholder"
+            id="cameraPlaceholder"
+          >
+            CAMERA OFF
+          </div>
+
+        </div>
+
+        <div
+          class="camera-device-name"
+          id="cameraDeviceName"
+        >
+          No camera selected
+        </div>
+
+      </section>
+
+
       <!-- NEWS -->
 
       <section class="dashboard-card news-card">
@@ -568,11 +668,10 @@
             class="live-badge"
             id="newsStatus"
           >
-            LIVE
+            SYNCING
           </span>
 
         </div>
-
 
         <div
           class="news-list"
@@ -588,7 +687,7 @@
       </section>
 
 
-      <!-- POSTER / MEME ROTATOR -->
+      <!-- MEDIA -->
 
       <section class="dashboard-card media-card">
 
@@ -604,7 +703,6 @@
 
         </div>
 
-
         <div class="poster-frame">
 
           <img
@@ -617,14 +715,14 @@
             class="poster-placeholder"
             id="posterPlaceholder"
           >
-            ADD POSTERS OR MEMES
+            SEARCHING MEDIA
+
             <span>
               desktop/media/
             </span>
           </div>
 
         </div>
-
 
         <div
           class="poster-caption"
@@ -640,7 +738,460 @@
   </main>
 
 
+  <!-- =========================================
+       NOTIFICATIONS PANEL
+  ========================================== -->
+
+  <aside
+    class="notification-panel"
+    id="notificationPanel"
+    hidden
+  >
+
+    <div class="panel-header">
+
+      <div>
+
+        <div class="settings-eyebrow">
+          NOVA
+        </div>
+
+        <h2>
+          Notifications
+        </h2>
+
+      </div>
+
+      <button
+        id="closeNotificationsButton"
+        class="panel-close-button"
+        type="button"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <div
+      class="notification-list"
+      id="notificationList"
+    >
+
+      <div class="notification-empty">
+        No notifications.
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================
+       SETTINGS MODAL
+  ========================================== -->
+
+  <div
+    class="settings-overlay"
+    id="settingsOverlay"
+    hidden
+  >
+
+    <section class="settings-panel">
+
+      <div class="panel-header">
+
+        <div>
+
+          <div class="settings-eyebrow">
+            NOVA CONTROL
+          </div>
+
+          <h2>
+            Settings
+          </h2>
+
+        </div>
+
+        <button
+          id="closeSettingsButton"
+          class="panel-close-button"
+          type="button"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <!-- CAMERA SETTINGS -->
+
+      <section class="settings-section">
+
+        <div class="settings-section-title">
+          CAMERA
+        </div>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Enable Camera
+            </strong>
+
+            <span>
+              Allow NOVA to access your webcam.
+            </span>
+
+          </div>
+
+          <input
+            id="cameraEnabledSetting"
+            type="checkbox"
+          />
+
+        </label>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Show Camera in Sidebar
+            </strong>
+
+            <span>
+              Display the live preview in the right sidebar.
+            </span>
+
+          </div>
+
+          <input
+            id="cameraSidebarSetting"
+            type="checkbox"
+          />
+
+        </label>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Mirror Camera
+            </strong>
+
+            <span>
+              Flip the preview horizontally.
+            </span>
+
+          </div>
+
+          <input
+            id="cameraMirrorSetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+
+        <label class="setting-select-row">
+
+          <span>
+            Camera device
+          </span>
+
+          <select id="cameraDeviceSelect">
+
+            <option value="">
+              Default Camera
+            </option>
+
+          </select>
+
+        </label>
+
+      </section>
+
+
+      <!-- MEDIA SETTINGS -->
+
+      <section class="settings-section">
+
+        <div class="settings-section-title">
+          MEDIA
+        </div>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Media Rotation
+            </strong>
+
+            <span>
+              Automatically rotate posters and memes.
+            </span>
+
+          </div>
+
+          <input
+            id="mediaRotationSetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+
+        <label class="setting-select-row">
+
+          <span>
+            Rotation speed
+          </span>
+
+          <select id="mediaRotationSpeedSetting">
+
+            <option value="5000">
+              5 seconds
+            </option>
+
+            <option
+              value="8000"
+              selected
+            >
+              8 seconds
+            </option>
+
+            <option value="12000">
+              12 seconds
+            </option>
+
+            <option value="20000">
+              20 seconds
+            </option>
+
+          </select>
+
+        </label>
+
+      </section>
+
+
+      <!-- NOTIFICATIONS -->
+
+      <section class="settings-section">
+
+        <div class="settings-section-title">
+          NOTIFICATIONS
+        </div>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Desktop Notifications
+            </strong>
+
+            <span>
+              Allow NOVA to show Windows notifications.
+            </span>
+
+          </div>
+
+          <input
+            id="desktopNotificationsSetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Battery Alerts
+            </strong>
+
+            <span>
+              Warn when battery becomes low.
+            </span>
+
+          </div>
+
+          <input
+            id="batteryNotificationsSetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              News Alerts
+            </strong>
+
+            <span>
+              Notify when fresh headlines arrive.
+            </span>
+
+          </div>
+
+          <input
+            id="newsNotificationsSetting"
+            type="checkbox"
+          />
+
+        </label>
+
+      </section>
+
+
+      <!-- STARTUP -->
+
+      <section class="settings-section">
+
+        <div class="settings-section-title">
+          STARTUP
+        </div>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Start NOVA with Windows
+            </strong>
+
+            <span>
+              Launch NOVA automatically after sign-in.
+            </span>
+
+          </div>
+
+          <input
+            id="startupSetting"
+            type="checkbox"
+          />
+
+        </label>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Minimize to Tray
+            </strong>
+
+            <span>
+              Keep NOVA available from the system tray.
+            </span>
+
+          </div>
+
+          <input
+            id="traySetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+      </section>
+
+
+      <!-- UI -->
+
+      <section class="settings-section">
+
+        <div class="settings-section-title">
+          INTERFACE
+        </div>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Enhanced Animations
+            </strong>
+
+            <span>
+              Enable stronger NOVA core and background effects.
+            </span>
+
+          </div>
+
+          <input
+            id="enhancedAnimationsSetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Voice Replies
+            </strong>
+
+            <span>
+              Read NOVA responses aloud.
+            </span>
+
+          </div>
+
+          <input
+            id="voiceRepliesSetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+      </section>
+
+
+      <div class="settings-footer">
+
+        <span id="settingsSaveStatus">
+          Settings saved automatically.
+        </span>
+
+      </div>
+
+    </section>
+
+  </div>
+
+
   <script src="./renderer.js"></script>
 
 </body>
+
 </html>
