@@ -23,7 +23,7 @@ async function askOpenRouter(messages) {
             Authorization: `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
             'HTTP-Referer': 'http://localhost:3000',
-            'X-Title': 'JARVIS'
+            'X-Title': 'NOVA'
         },
         body: JSON.stringify({
             model,

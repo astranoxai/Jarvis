@@ -35,7 +35,7 @@ exports.setAlarmTool = {
         const minute = args.minute;
         const message = typeof args.message === 'string' && args.message.trim()
             ? args.message.trim()
-            : 'JARVIS Alarm';
+            : 'NOVA Alarm';
         if (typeof hour !== 'number' ||
             !Number.isInteger(hour) ||
             hour < 0 ||

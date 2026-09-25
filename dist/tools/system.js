@@ -7,7 +7,7 @@ exports.systemTool = void 0;
 const node_os_1 = __importDefault(require("node:os"));
 exports.systemTool = {
     name: 'get_system_info',
-    description: 'Get basic information about the computer running JARVIS.',
+    description: 'Get basic information about the computer running NOVA.',
     permission: 'read_only',
     parameters: {
         type: 'object',

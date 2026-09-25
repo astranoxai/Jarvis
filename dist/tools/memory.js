@@ -22,7 +22,7 @@ async function saveMemories(memories) {
 }
 exports.memoryTool = {
     name: 'remember',
-    description: 'Save useful information to JARVIS local memory. Use categories and importance to organize memories and avoid unnecessary duplicates.',
+    description: 'Save useful information to NOVA local memory. Use categories and importance to organize memories and avoid unnecessary duplicates.',
     permission: 'write_low_risk',
     parameters: {
         type: 'object',
@@ -84,7 +84,7 @@ exports.memoryTool = {
 };
 exports.recallTool = {
     name: 'recall',
-    description: 'Recall relevant information from JARVIS local memory. Results are ranked by relevance and importance.',
+    description: 'Recall relevant information from NOVA local memory. Results are ranked by relevance and importance.',
     permission: 'read_only',
     parameters: {
         type: 'object',
@@ -138,7 +138,7 @@ exports.recallTool = {
 };
 exports.listMemoriesTool = {
     name: 'list_memories',
-    description: 'List recently saved memories from JARVIS local memory.',
+    description: 'List recently saved memories from NOVA local memory.',
     permission: 'read_only',
     parameters: {
         type: 'object',

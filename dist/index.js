@@ -48,7 +48,7 @@ async function main() {
     const app = (0, fastify_1.default)({ logger: true });
     await app.register(cors_1.default, { origin: true });
     app.get('/', async () => ({
-        name: 'JARVIS',
+        name: 'NOVA',
         status: 'online',
         version: '1.0.0'
     }));
@@ -83,7 +83,7 @@ async function main() {
             const messages = [
                 {
                     role: 'system',
-                    content: `You are JARVIS, a capable personal AI assistant with access to tools.
+                    content: `You are NOVA, a capable personal AI assistant with access to tools.
 
 GENERAL RULES:
 - Use tools whenever they can provide more accurate or useful information.
@@ -151,16 +151,16 @@ PERSONALITY:
         catch (error) {
             request.log.error(error);
             return reply.code(500).send({
-                error: 'JARVIS AI request failed'
+                error: 'NOVA AI request failed'
             });
         }
     });
     const port = Number(process.env.PORT || 3000);
     const host = process.env.HOST || '0.0.0.0';
     await app.listen({ port, host });
-    console.log(`JARVIS running on http://${host}:${port}`);
+    console.log(`NOVA running on http://${host}:${port}`);
 }
 main().catch((error) => {
-    console.error('Failed to start JARVIS:', error);
+    console.error('Failed to start NOVA:', error);
     process.exit(1);
 });

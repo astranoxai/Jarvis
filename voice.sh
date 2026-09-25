@@ -1,6 +1,6 @@
-#!/data/data/com.termux/files/usr/bin/bash
+﻿#!/data/data/com.termux/files/usr/bin/bash
 
-echo "🎙️ JARVIS voice mode started"
+echo "ðŸŽ™ï¸ NOVA voice mode started"
 echo "Press ENTER, then speak. CTRL+C to exit."
 
 while true; do
@@ -32,9 +32,10 @@ except Exception:
     print("Sorry, I could not process that.")
 ' <<< "$RESULT")
 
-    echo "JARVIS: $ANSWER"
+    echo "NOVA: $ANSWER"
 
     if [ -n "$ANSWER" ]; then
         termux-tts-speak "$ANSWER"
     fi
 done
+

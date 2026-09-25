@@ -1,4 +1,4 @@
-import { ToolDefinition } from './types.js';
+﻿import { ToolDefinition } from './types.js';
 import * as cheerio from 'cheerio';
 
 export const readWebpageTool: ToolDefinition = {
@@ -48,7 +48,7 @@ export const readWebpageTool: ToolDefinition = {
       const response = await fetch(url, {
         headers: {
           'User-Agent':
-            'JARVIS/1.0 webpage reader'
+            'NOVA/1.0 webpage reader'
         },
         redirect: 'follow'
       });
@@ -109,3 +109,4 @@ export const readWebpageTool: ToolDefinition = {
     }
   }
 };
+

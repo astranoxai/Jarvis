@@ -1,4 +1,4 @@
-import { promises as fs } from 'node:fs';
+﻿import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { ToolDefinition } from './types.js';
 
@@ -34,7 +34,7 @@ async function saveMemories(memories: Memory[]) {
 export const memoryTool: ToolDefinition = {
   name: 'remember',
   description:
-    'Save useful information to JARVIS local memory. Use categories and importance to organize memories and avoid unnecessary duplicates.',
+    'Save useful information to NOVA local memory. Use categories and importance to organize memories and avoid unnecessary duplicates.',
 
   permission: 'write_low_risk',
 
@@ -121,7 +121,7 @@ export const memoryTool: ToolDefinition = {
 export const recallTool: ToolDefinition = {
   name: 'recall',
   description:
-    'Recall relevant information from JARVIS local memory. Results are ranked by relevance and importance.',
+    'Recall relevant information from NOVA local memory. Results are ranked by relevance and importance.',
 
   permission: 'read_only',
 
@@ -191,7 +191,7 @@ export const recallTool: ToolDefinition = {
 
 export const listMemoriesTool: ToolDefinition = {
   name: 'list_memories',
-  description: 'List recently saved memories from JARVIS local memory.',
+  description: 'List recently saved memories from NOVA local memory.',
   permission: 'read_only',
 
   parameters: {
@@ -253,3 +253,4 @@ export const forgetMemoryTool: ToolDefinition = {
     };
   }
 };
+

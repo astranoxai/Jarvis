@@ -12,7 +12,7 @@ const smtpUser = process.env.SMTP_USER;
 const smtpPass = process.env.SMTP_PASS;
 exports.sendEmailTool = {
     name: 'send_email',
-    description: 'Send an email through the configured Gmail SMTP account. Use only when the user explicitly asks JARVIS to send an email.',
+    description: 'Send an email through the configured Gmail SMTP account. Use only when the user explicitly asks NOVA to send an email.',
     permission: 'write_low_risk',
     parameters: {
         type: 'object',

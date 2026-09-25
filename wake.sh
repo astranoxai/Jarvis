@@ -1,12 +1,12 @@
-#!/data/data/com.termux/files/usr/bin/bash
+﻿#!/data/data/com.termux/files/usr/bin/bash
 
-echo "🤖 JARVIS wake mode"
+echo "ðŸ¤– NOVA wake mode"
 echo 'Say "Wake up" to activate.'
 echo "Press CTRL+C to stop."
 
 while true; do
     echo
-    echo "👂 Listening for wake phrase..."
+    echo "ðŸ‘‚ Listening for wake phrase..."
 
     TEXT=$(termux-speech-to-text | tr '[:upper:]' '[:lower:]' | xargs)
 
@@ -20,12 +20,12 @@ while true; do
        [[ "$TEXT" == "up" ]] ||
        [[ "$TEXT" == "wake up" ]] ||
        [[ "$TEXT" == *"wake up"* ]] ||
-       [[ "$TEXT" == *"jarvis"* ]]; then
+       [[ "$TEXT" == *"nova"* ]]; then
 
-        echo "🎙️ Wake detected!"
+        echo "ðŸŽ™ï¸ Wake detected!"
         termux-tts-speak "Yes?"
 
-        echo "👂 Listening for command..."
+        echo "ðŸ‘‚ Listening for command..."
 
         COMMAND=$(termux-speech-to-text)
 
@@ -51,10 +51,11 @@ except Exception:
     print("Sorry, I could not process that.")
 ' <<< "$RESULT")
 
-        echo "JARVIS: $ANSWER"
+        echo "NOVA: $ANSWER"
 
         if [ -n "$ANSWER" ]; then
             termux-tts-speak "$ANSWER"
         fi
     fi
 done
+

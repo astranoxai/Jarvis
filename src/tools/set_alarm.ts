@@ -1,4 +1,4 @@
-import { execFile } from 'node:child_process';
+﻿import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { ToolDefinition } from './types.js';
 
@@ -41,7 +41,7 @@ export const setAlarmTool: ToolDefinition = {
     const message =
       typeof args.message === 'string' && args.message.trim()
         ? args.message.trim()
-        : 'JARVIS Alarm';
+        : 'NOVA Alarm';
 
     if (
       typeof hour !== 'number' ||
@@ -109,3 +109,4 @@ export const setAlarmTool: ToolDefinition = {
     }
   }
 };
+

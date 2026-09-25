@@ -1,4 +1,4 @@
-import { getTools } from '../tools/registry.js';
+﻿import { getTools } from '../tools/registry.js';
 
 const OPENROUTER_URL =
   'https://openrouter.ai/api/v1/chat/completions';
@@ -36,7 +36,7 @@ export async function askOpenRouter(
       Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
       'HTTP-Referer': 'http://localhost:3000',
-      'X-Title': 'JARVIS'
+      'X-Title': 'NOVA'
     },
     body: JSON.stringify({
       model,
@@ -57,3 +57,4 @@ export async function askOpenRouter(
 
   return body.choices?.[0]?.message;
 }
+

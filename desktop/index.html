@@ -1,208 +1,236 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
-  >
+  />
 
-  <title>JARVIS Command Center</title>
+  <title>NOVA Command Center</title>
 
-  <link rel="stylesheet" href="styles.css">
+  <link
+    rel="stylesheet"
+    href="./styles.css"
+  />
 </head>
 
 <body>
 
-  <main class="jarvis-shell">
+  <div class="animated-background">
+    <div class="nebula nebula-red"></div>
+    <div class="nebula nebula-purple"></div>
+    <div class="stars stars-one"></div>
+    <div class="stars stars-two"></div>
+    <div class="grid-overlay"></div>
+  </div>
 
-    <!-- LEFT NAVIGATION -->
-    <aside class="sidebar">
+
+  <main class="nova-shell">
+
+    <!-- =========================================
+         LEFT SIDEBAR
+    ========================================== -->
+
+    <aside class="left-sidebar">
+
+      <!-- BRAND -->
 
       <div class="sidebar-brand">
+
         <div class="mini-core"></div>
 
-        <div>
-          <div class="jarvis-title">JARVIS</div>
-          <div class="jarvis-subtitle">AI SYSTEM</div>
+        <div class="brand-text">
+          <div class="nova-title">
+            NOVA
+          </div>
+
+          <div class="nova-subtitle">
+            NEURAL COMMAND SYSTEM
+          </div>
         </div>
+
       </div>
 
-      <nav class="nav-menu">
 
-        <button class="nav-item active">
-          <span class="nav-icon">◉</span>
-          <span>Command Center</span>
-        </button>
+      <!-- COMMAND HEADER -->
 
-        <button class="nav-item">
-          <span class="nav-icon">◎</span>
-          <span>AI Core</span>
-        </button>
+      <div class="section-title">
+        COMMAND FEED
+      </div>
 
-        <button class="nav-item">
-          <span class="nav-icon">◇</span>
-          <span>Tools</span>
-        </button>
 
-        <button class="nav-item">
-          <span class="nav-icon">◫</span>
-          <span>Memory</span>
-        </button>
+      <!-- COMMAND HISTORY -->
 
-        <button class="nav-item">
-          <span class="nav-icon">⌁</span>
-          <span>System</span>
-        </button>
+      <div
+        class="command-feed"
+        id="commandFeed"
+      >
 
-      </nav>
+        <div class="feed-card system-message">
 
-      <div class="sidebar-footer">
+          <div class="feed-card-header">
+            SYSTEM
+          </div>
 
-        <div class="sidebar-status">
+          <div class="feed-card-body">
+            Nova command interface initialized.
+          </div>
+
+        </div>
+
+
+        <div class="feed-card nova-message">
+
+          <div class="feed-card-header">
+            NOVA
+          </div>
+
+          <div
+            class="feed-card-body"
+            id="responseBox"
+          >
+            Nova is ready to use, boss.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- LEFT FOOTER STATUS -->
+
+      <div class="left-footer">
+
+        <div class="mini-status-row">
+
           <span class="status-dot"></span>
 
           <div>
-            <div class="status-main">SYSTEM ONLINE</div>
-            <div class="status-small">JARVIS CORE ACTIVE</div>
+            <div class="mini-status-title">
+              SYSTEM ONLINE
+            </div>
+
+            <div class="mini-status-subtitle">
+              NOVA CORE ACTIVE
+            </div>
           </div>
+
         </div>
 
       </div>
 
     </aside>
 
-    <!-- MAIN AREA -->
-    <section class="main-interface">
 
-      <!-- TOP HEADER -->
-      <header class="top-header">
+    <!-- =========================================
+         CENTER INTERFACE
+    ========================================== -->
+
+    <section class="center-interface">
+
+      <!-- TOP BAR -->
+
+      <header class="center-header">
 
         <div>
-          <div class="page-label">COMMAND CENTER</div>
-          <div class="page-title">JARVIS Neural Interface</div>
+
+          <div class="header-eyebrow">
+            COMMAND CENTER
+          </div>
+
+          <div class="header-title">
+            NOVA Neural Interface
+          </div>
+
         </div>
 
-        <div class="header-status">
 
-          <div class="header-module">
-            <span class="module-label">BACKEND</span>
-            <span class="module-value online">ONLINE</span>
-          </div>
+        <div class="center-header-status">
 
-          <div class="header-module">
-            <span class="module-label">NETWORK</span>
-            <span class="module-value">CONNECTED</span>
-          </div>
+          <div class="header-status-item">
 
-          <div class="header-module">
-            <span class="module-label">TIME</span>
-            <span class="module-value" id="systemClock">
-              --:--:--
+            <span class="header-status-label">
+              BACKEND
             </span>
+
+            <span
+              class="header-status-value online"
+              id="backendStatus"
+            >
+              ONLINE
+            </span>
+
+          </div>
+
+
+          <div class="header-status-item">
+
+            <span class="header-status-label">
+              AI
+            </span>
+
+            <span
+              class="header-status-value online"
+              id="aiStatus"
+            >
+              READY
+            </span>
+
           </div>
 
         </div>
 
       </header>
 
-      <!-- DASHBOARD -->
-      <section class="dashboard">
 
-        <!-- LEFT SYSTEM PANEL -->
-        <section class="glass-panel system-panel">
+      <!-- CORE -->
 
-          <div class="panel-heading">
-            SYSTEM STATUS
-          </div>
+      <section class="core-stage">
 
-          <div class="system-stat">
-            <div>
-              <span class="stat-label">AI CORE</span>
-              <span class="stat-value">ACTIVE</span>
-            </div>
+        <div class="core-atmosphere"></div>
 
-            <div class="status-light"></div>
-          </div>
+        <div class="core-scanner scanner-one"></div>
+        <div class="core-scanner scanner-two"></div>
 
-          <div class="system-stat">
-            <div>
-              <span class="stat-label">OPENROUTER</span>
-              <span class="stat-value">CONNECTED</span>
-            </div>
+        <div class="core-orbit orbit-three"></div>
+        <div class="core-orbit orbit-two"></div>
+        <div class="core-orbit orbit-one"></div>
 
-            <div class="status-light"></div>
-          </div>
+        <div class="core-energy"></div>
 
-          <div class="system-stat">
-            <div>
-              <span class="stat-label">TOOLS</span>
-              <span class="stat-value">READY</span>
-            </div>
 
-            <div class="status-light"></div>
-          </div>
+        <div
+          class="core"
+          id="novaCore"
+        ></div>
 
-          <div class="system-stat">
-            <div>
-              <span class="stat-label">MEMORY</span>
-              <span class="stat-value">AVAILABLE</span>
-            </div>
 
-            <div class="status-light"></div>
-          </div>
+        <div class="core-center-text">
 
-          <div class="system-stat">
-            <div>
-              <span class="stat-label">VOICE</span>
-              <span class="stat-value muted">OFFLINE</span>
-            </div>
+          <span
+            class="core-status"
+            id="statusText"
+          >
+            SYSTEMS ONLINE
+          </span>
 
-            <div class="status-light offline"></div>
-          </div>
+          <span class="core-subtext">
+            NOVA ARTIFICIAL INTELLIGENCE
+          </span>
 
-        </section>
+        </div>
 
-        <!-- CENTER CORE -->
-        <section class="core-zone">
 
-          <div class="core-scanner scanner-one"></div>
-          <div class="core-scanner scanner-two"></div>
+        <!-- ACTIVITY STRIP -->
 
-          <div class="core-orbit orbit-one"></div>
-          <div class="core-orbit orbit-two"></div>
-          <div class="core-orbit orbit-three"></div>
+        <div class="activity-strip">
 
-          <div class="core-energy"></div>
+          <div class="activity-module">
 
-          <div
-            class="core"
-            id="jarvisCore"
-          ></div>
-
-          <div class="core-label">
-            <span id="statusText">
-              SYSTEMS ONLINE
-            </span>
-
-            <small>
-              ARTIFICIAL INTELLIGENCE CORE
-            </small>
-          </div>
-
-        </section>
-
-        <!-- RIGHT ACTIVITY PANEL -->
-        <section class="glass-panel activity-panel">
-
-          <div class="panel-heading">
-            LIVE ACTIVITY
-          </div>
-
-          <div class="activity-card">
             <span class="activity-label">
-              CURRENT STATE
+              STATE
             </span>
 
             <span
@@ -211,11 +239,17 @@
             >
               IDLE
             </span>
+
           </div>
 
-          <div class="activity-card">
+
+          <div class="activity-divider"></div>
+
+
+          <div class="activity-module">
+
             <span class="activity-label">
-              ACTIVE TASK
+              CURRENT TASK
             </span>
 
             <span
@@ -224,81 +258,66 @@
             >
               STANDBY
             </span>
+
           </div>
 
-          <div class="activity-card">
-            <span class="activity-label">
-              MICROPHONE
-            </span>
 
-            <span class="activity-value dim">
-              NOT INITIALIZED
-            </span>
-          </div>
+          <div class="activity-divider"></div>
 
-          <div class="activity-card">
+
+          <div class="activity-module">
+
             <span class="activity-label">
-              RESPONSE ENGINE
+              VOICE
             </span>
 
             <span class="activity-value">
-              READY
+              ENABLED
             </span>
-          </div>
 
-        </section>
-
-      </section>
-
-      <!-- RESPONSE AREA -->
-      <section class="response-console">
-
-        <div class="console-header">
-
-          <div>
-            JARVIS RESPONSE
-          </div>
-
-          <div class="console-indicator">
-            LIVE
           </div>
 
         </div>
 
-        <div
-          class="response-box"
-          id="responseBox"
-        >
-          JARVIS is ready to use, boss.
-        </div>
-
       </section>
 
-      <!-- COMMAND BAR -->
+
+      <!-- COMMAND INPUT -->
+
       <section class="command-bar">
 
-        <div class="command-symbol">
-          ›
+        <div class="command-prefix">
+          &gt;
         </div>
+
 
         <input
           id="messageInput"
           type="text"
-          placeholder="Enter command for JARVIS..."
           autocomplete="off"
-        >
+          spellcheck="false"
+          placeholder="Ask Nova anything..."
+        />
+
+
+        <!-- Compatibility only.
+             Hidden because voice input is disabled. -->
 
         <button
           id="micButton"
           class="mic-button"
-          title="Voice input"
+          type="button"
+          hidden
+          tabindex="-1"
+          aria-hidden="true"
         >
-          ◉
         </button>
+
 
         <button
           id="sendButton"
           class="send-button"
+          type="button"
         >
           EXECUTE
         </button>
@@ -307,9 +326,321 @@
 
     </section>
 
+
+    <!-- =========================================
+         RIGHT SIDEBAR
+    ========================================== -->
+
+    <aside class="right-sidebar">
+
+      <!-- LIVE TIME -->
+
+      <section class="dashboard-card time-card">
+
+        <div class="card-heading">
+          LOCAL TIME
+        </div>
+
+        <div
+          class="large-time"
+          id="systemClock"
+        >
+          --:--:--
+        </div>
+
+        <div
+          class="current-date"
+          id="systemDate"
+        >
+          Loading date...
+        </div>
+
+      </section>
+
+
+      <!-- WEATHER -->
+
+      <section class="dashboard-card weather-card">
+
+        <div class="card-heading">
+          WEATHER
+        </div>
+
+
+        <div class="weather-main">
+
+          <div
+            class="weather-temperature"
+            id="weatherTemperature"
+          >
+            --°
+          </div>
+
+          <div class="weather-meta">
+
+            <div
+              class="weather-condition"
+              id="weatherCondition"
+            >
+              Waiting for weather
+            </div>
+
+            <div
+              class="weather-location"
+              id="weatherLocation"
+            >
+              Location unavailable
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="weather-bottom">
+
+          <span>
+            HUM
+            <strong id="weatherHumidity">
+              --%
+            </strong>
+          </span>
+
+          <span>
+            WIND
+            <strong id="weatherWind">
+              --
+            </strong>
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- CONNECTIONS -->
+
+      <section class="dashboard-card connection-card">
+
+        <div class="card-heading">
+          CONNECTIONS
+        </div>
+
+
+        <div class="connection-row">
+
+          <div class="connection-icon">
+            WIFI
+          </div>
+
+          <div class="connection-info">
+
+            <span class="connection-label">
+              Wi-Fi
+            </span>
+
+            <span
+              class="connection-value"
+              id="wifiName"
+            >
+              Checking...
+            </span>
+
+          </div>
+
+          <span
+            class="connection-extra"
+            id="wifiSignal"
+          >
+            --
+          </span>
+
+        </div>
+
+
+        <div class="connection-row">
+
+          <div class="connection-icon">
+            BT
+          </div>
+
+          <div class="connection-info">
+
+            <span class="connection-label">
+              Bluetooth
+            </span>
+
+            <span
+              class="connection-value"
+              id="bluetoothDevice"
+            >
+              Checking...
+            </span>
+
+          </div>
+
+          <span
+            class="connection-extra"
+            id="bluetoothStatus"
+          >
+            --
+          </span>
+
+        </div>
+
+      </section>
+
+
+      <!-- SYSTEM STATS -->
+
+      <section class="dashboard-card stats-card">
+
+        <div class="card-heading">
+          SYSTEM
+        </div>
+
+
+        <div class="stat-grid">
+
+          <div class="stat-box">
+
+            <span class="stat-title">
+              CPU
+            </span>
+
+            <span
+              class="stat-number"
+              id="cpuUsage"
+            >
+              --%
+            </span>
+
+          </div>
+
+
+          <div class="stat-box">
+
+            <span class="stat-title">
+              RAM
+            </span>
+
+            <span
+              class="stat-number"
+              id="ramUsage"
+            >
+              --%
+            </span>
+
+          </div>
+
+
+          <div class="stat-box">
+
+            <span class="stat-title">
+              BATTERY
+            </span>
+
+            <span
+              class="stat-number"
+              id="batteryLevel"
+            >
+              --%
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- NEWS -->
+
+      <section class="dashboard-card news-card">
+
+        <div class="card-heading-row">
+
+          <span class="card-heading">
+            LIVE NEWS
+          </span>
+
+          <span
+            class="live-badge"
+            id="newsStatus"
+          >
+            LIVE
+          </span>
+
+        </div>
+
+
+        <div
+          class="news-list"
+          id="newsList"
+        >
+
+          <div class="news-item">
+            Waiting for latest headlines...
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- POSTER / MEME ROTATOR -->
+
+      <section class="dashboard-card media-card">
+
+        <div class="card-heading-row">
+
+          <span class="card-heading">
+            MEDIA ROTATION
+          </span>
+
+          <span class="rotation-time">
+            8 SEC
+          </span>
+
+        </div>
+
+
+        <div class="poster-frame">
+
+          <img
+            id="posterImage"
+            src=""
+            alt="Nova rotating poster"
+          />
+
+          <div
+            class="poster-placeholder"
+            id="posterPlaceholder"
+          >
+            ADD POSTERS OR MEMES
+            <span>
+              desktop/media/
+            </span>
+          </div>
+
+        </div>
+
+
+        <div
+          class="poster-caption"
+          id="posterCaption"
+        >
+          Nova Media
+        </div>
+
+      </section>
+
+    </aside>
+
   </main>
 
-  <script src="renderer.js"></script>
+
+  <script src="./renderer.js"></script>
 
 </body>
 </html>

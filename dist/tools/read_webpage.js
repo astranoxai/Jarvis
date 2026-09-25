@@ -68,7 +68,7 @@ exports.readWebpageTool = {
         try {
             const response = await fetch(url, {
                 headers: {
-                    'User-Agent': 'JARVIS/1.0 webpage reader'
+                    'User-Agent': 'NOVA/1.0 webpage reader'
                 },
                 redirect: 'follow'
             });
