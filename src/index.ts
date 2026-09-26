@@ -3,7 +3,10 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 
-import { promises as fs } from 'node:fs';
+import {
+  promises as fs
+} from 'node:fs';
+
 import path from 'node:path';
 
 import {
@@ -11,54 +14,104 @@ import {
   type OpenRouterMessage
 } from './orchestrator/openrouter.js';
 
-import { executeToolCall } from './executor.js';
+import {
+  executeToolCall
+} from './executor.js';
 
-import { systemTool } from './tools/system.js';
-import { batteryTool } from './tools/battery.js';
-import { wifiTool } from './tools/wifi.js';
-import { bluetoothTool } from './tools/bluetooth.js';
-import { weatherTool } from './tools/weather.js';
-import { newsTool } from './tools/news.js';
+import {
+  systemTool
+} from './tools/system.js';
+
+import {
+  batteryTool
+} from './tools/battery.js';
+
+import {
+  wifiTool
+} from './tools/wifi.js';
+
+import {
+  bluetoothTool
+} from './tools/bluetooth.js';
+
+import {
+  weatherTool
+} from './tools/weather.js';
+
+import {
+  newsTool
+} from './tools/news.js';
+
+
+/* ============================================================
+   CONSTANTS
+============================================================ */
 
 const historyFile =
   path.resolve(
     'data/chat_history.json'
   );
 
+
+const DASHBOARD_CACHE_MS =
+  5 * 60 * 1000;
+
+
+/* ============================================================
+   TYPES
+============================================================ */
+
 type StoredMessage = {
   role:
     | 'user'
     | 'assistant';
 
-  content: string;
+  content:
+    string;
 };
+
 
 type ChatBody = {
-  message?: unknown;
-  image?: unknown;
+  message?:
+    unknown;
+
+  image?:
+    unknown;
+
+  voiceMode?:
+    unknown;
 };
 
-const DASHBOARD_EXTERNAL_CACHE_MS =
-  5 * 60 * 1000;
+
+/* ============================================================
+   CACHE
+============================================================ */
 
 let cachedWeather:
-  unknown = null;
+  unknown =
+  null;
+
 
 let cachedWeatherTime =
   0;
 
+
 let cachedNews:
-  unknown = null;
+  unknown =
+  null;
+
 
 let cachedNewsTime =
   0;
 
-/* =========================================
+
+/* ============================================================
    HISTORY
-========================================= */
+============================================================ */
 
 async function loadHistory():
 Promise<StoredMessage[]> {
+
   try {
     const raw =
       await fs.readFile(
@@ -66,166 +119,160 @@ Promise<StoredMessage[]> {
         'utf8'
       );
 
-    const parsed =
-      JSON.parse(raw);
 
-    if (!Array.isArray(parsed)) {
+    const parsed =
+      JSON.parse(
+        raw
+      );
+
+
+    if (
+      !Array.isArray(
+        parsed
+      )
+    ) {
       return [];
     }
 
+
     return parsed.filter(
-      (message: any) =>
+      (
+        item: any
+      ): item is StoredMessage =>
+
         (
-          message?.role === 'user' ||
-          message?.role === 'assistant'
+          item?.role ===
+            'user' ||
+
+          item?.role ===
+            'assistant'
         ) &&
-        typeof message?.content === 'string'
+
+        typeof item?.content ===
+          'string'
     );
+
 
   } catch {
     return [];
   }
 }
 
+
 async function saveHistory(
   history: StoredMessage[]
 ) {
-  const cleanHistory =
-    history.filter(
-      message =>
-        (
-          message.role === 'user' ||
-          message.role === 'assistant'
-        ) &&
-        typeof message.content === 'string'
-    );
 
   await fs.mkdir(
-    path.dirname(historyFile),
+    path.dirname(
+      historyFile
+    ),
+
     {
-      recursive: true
+      recursive:
+        true
     }
   );
 
+
   await fs.writeFile(
     historyFile,
+
     JSON.stringify(
-      cleanHistory,
+      history,
       null,
       2
     ),
+
     'utf8'
   );
 }
 
-/* =========================================
+
+/* ============================================================
    CAMERA IMAGE VALIDATION
-========================================= */
+============================================================ */
 
 function validateCameraImage(
-  image: unknown
+  value: unknown
 ): string | null {
+
   if (
-    typeof image !== 'string'
+    typeof value !==
+      'string'
   ) {
     return null;
   }
 
-  const trimmed =
-    image.trim();
 
-  if (!trimmed) {
+  const image =
+    value.trim();
+
+
+  if (
+    !image
+  ) {
     return null;
   }
+
 
   const validDataUrl =
     /^data:image\/(jpeg|jpg|png|webp);base64,/i;
 
+
   if (
     !validDataUrl.test(
-      trimmed
+      image
     )
   ) {
     throw new Error(
-      'Invalid camera image format.'
+      'Unsupported camera image format.'
     );
   }
 
-  const MAX_IMAGE_LENGTH =
-    8_000_000;
+
+  /*
+    Keep requests reasonable.
+
+    The renderer sends a resized JPEG,
+    so it should normally be much smaller.
+  */
 
   if (
-    trimmed.length >
-    MAX_IMAGE_LENGTH
+    image.length >
+    12_000_000
   ) {
     throw new Error(
       'Camera image is too large.'
     );
   }
 
-  return trimmed;
+
+  return image;
 }
 
-/* =========================================
-   SERVER
-========================================= */
 
-const app =
-  Fastify({
-    logger: true,
-    bodyLimit:
-      10 * 1024 * 1024
-  });
+/* ============================================================
+   DASHBOARD CACHE
+============================================================ */
 
-/* =========================================
-   ROOT
-========================================= */
-
-app.get(
-  '/',
-  async () => {
-    return {
-      name: 'NOVA',
-      creator: 'Kartavya Singh',
-      status: 'online',
-      version: '1.1.0',
-      vision: true
-    };
-  }
-);
-
-/* =========================================
-   HEALTH
-========================================= */
-
-app.get(
-  '/health',
-  async () => {
-    return {
-      status: 'ok',
-      name: 'NOVA',
-      creator: 'Kartavya Singh'
-    };
-  }
-);
-
-/* =========================================
-   DASHBOARD EXTERNAL DATA
-========================================= */
-
-async function getDashboardWeather(
+async function cachedWeatherRequest(
   city: string
 ) {
+
   const now =
     Date.now();
 
+
   if (
     cachedWeather &&
-    now - cachedWeatherTime <
-      DASHBOARD_EXTERNAL_CACHE_MS
+    now -
+      cachedWeatherTime <
+      DASHBOARD_CACHE_MS
   ) {
     return cachedWeather;
   }
+
 
   try {
     cachedWeather =
@@ -233,77 +280,200 @@ async function getDashboardWeather(
         {
           city
         },
+
         {}
       );
+
 
     cachedWeatherTime =
       now;
 
+
     return cachedWeather;
 
-  } catch (error) {
+
+  } catch (
+    error
+  ) {
+
     return {
-      success: false,
+      success:
+        false,
 
       error:
         error instanceof Error
           ? error.message
-          : String(error)
+          : String(
+              error
+            )
     };
   }
 }
 
-async function getDashboardNews() {
+
+async function cachedNewsRequest() {
+
   const now =
     Date.now();
 
+
   if (
     cachedNews &&
-    now - cachedNewsTime <
-      DASHBOARD_EXTERNAL_CACHE_MS
+    now -
+      cachedNewsTime <
+      DASHBOARD_CACHE_MS
   ) {
     return cachedNews;
   }
+
 
   try {
     cachedNews =
       await newsTool.execute(
         {
-          limit: 8
+          limit:
+            8
         },
+
         {}
       );
+
 
     cachedNewsTime =
       now;
 
+
     return cachedNews;
 
-  } catch (error) {
+
+  } catch (
+    error
+  ) {
+
     return {
-      success: false,
+      success:
+        false,
 
       error:
         error instanceof Error
           ? error.message
-          : String(error)
+          : String(
+              error
+            )
     };
   }
 }
 
-/* =========================================
-   LIVE DASHBOARD
-========================================= */
+
+/* ============================================================
+   FASTIFY
+============================================================ */
+
+const app =
+  Fastify(
+    {
+      logger:
+        true,
+
+      bodyLimit:
+        15 * 1024 * 1024
+    }
+  );
+
+
+/* ============================================================
+   ROOT
+============================================================ */
+
+app.get(
+  '/',
+
+  async () => {
+
+    return {
+      name:
+        'NOVA',
+
+      creator:
+        'Kartavya Singh',
+
+      status:
+        'online',
+
+      version:
+        '1.5.0',
+
+      features: {
+        chat:
+          true,
+
+        localWhisper:
+          true,
+
+        voice:
+          true,
+
+        cameraVision:
+          true,
+
+        liveVision:
+          true
+      }
+    };
+  }
+);
+
+
+/* ============================================================
+   HEALTH
+============================================================ */
+
+app.get(
+  '/health',
+
+  async () => {
+
+    return {
+      status:
+        'ok',
+
+      name:
+        'NOVA',
+
+      creator:
+        'Kartavya Singh',
+
+      vision:
+        'enabled',
+
+      localVoice:
+        'enabled'
+    };
+  }
+);
+
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
 
 app.get(
   '/dashboard',
+
   async () => {
+
     const dashboardCity =
       String(
-        process.env.DASHBOARD_CITY ||
-        process.env.WEATHER_CITY ||
+        process.env
+          .DASHBOARD_CITY ||
+
+        process.env
+          .WEATHER_CITY ||
+
         ''
-      ).trim();
+      )
+        .trim();
+
 
     const [
       systemResult,
@@ -311,323 +481,470 @@ app.get(
       wifiResult,
       bluetoothResult
     ] =
-      await Promise.allSettled([
-        systemTool.execute(
-          {},
-          {}
-        ),
+      await Promise.allSettled(
+        [
+          systemTool.execute(
+            {},
+            {}
+          ),
 
-        batteryTool.execute(
-          {},
-          {}
-        ),
+          batteryTool.execute(
+            {},
+            {}
+          ),
 
-        wifiTool.execute(
-          {},
-          {}
-        ),
+          wifiTool.execute(
+            {},
+            {}
+          ),
 
-        bluetoothTool.execute(
-          {},
-          {}
-        )
-      ]);
+          bluetoothTool.execute(
+            {},
+            {}
+          )
+        ]
+      );
+
 
     function unwrap(
       result:
         PromiseSettledResult<unknown>
     ) {
+
       if (
         result.status ===
-        'fulfilled'
+          'fulfilled'
       ) {
         return result.value;
       }
 
+
       return {
-        success: false,
+        success:
+          false,
 
         error:
           result.reason instanceof Error
             ? result.reason.message
-            : String(result.reason)
+            : String(
+                result.reason
+              )
       };
     }
 
+
     const [
-      weatherResult,
-      newsResult
+      weather,
+      news
     ] =
-      await Promise.all([
-        dashboardCity
-          ? getDashboardWeather(
-              dashboardCity
-            )
-          : Promise.resolve({
-              success: false,
+      await Promise.all(
+        [
+          dashboardCity
 
-              error:
-                'DASHBOARD_CITY is not configured.'
-            }),
+            ? cachedWeatherRequest(
+                dashboardCity
+              )
 
-        getDashboardNews()
-      ]);
+            : Promise.resolve(
+                {
+                  success:
+                    false,
+
+                  error:
+                    'Dashboard weather location is not configured.'
+                }
+              ),
+
+          cachedNewsRequest()
+        ]
+      );
+
 
     return {
-      success: true,
+      success:
+        true,
 
       timestamp:
         new Date()
           .toISOString(),
 
       backend: {
-        status: 'online',
-        vision: true
+        status:
+          'online'
       },
 
       system:
-        unwrap(systemResult),
+        unwrap(
+          systemResult
+        ),
 
       battery:
-        unwrap(batteryResult),
+        unwrap(
+          batteryResult
+        ),
 
       wifi:
-        unwrap(wifiResult),
+        unwrap(
+          wifiResult
+        ),
 
       bluetooth:
-        unwrap(bluetoothResult),
+        unwrap(
+          bluetoothResult
+        ),
 
-      weather:
-        weatherResult,
+      weather,
 
-      news:
-        newsResult
+      news
     };
   }
 );
 
-/* =========================================
+
+/* ============================================================
    CLEAR HISTORY
-========================================= */
+============================================================ */
 
 app.post(
   '/clear-history',
+
   async () => {
-    await saveHistory([]);
+
+    await saveHistory(
+      []
+    );
+
 
     return {
-      success: true,
+      success:
+        true,
 
       message:
-        'Nova chat history cleared.'
+        'NOVA chat history cleared.'
     };
   }
 );
 
-/* =========================================
+
+/* ============================================================
    CHAT
-========================================= */
+============================================================ */
 
 app.post(
   '/chat',
+
   async (
     request,
     reply
   ) => {
+
     try {
+
       const body =
         request.body as ChatBody;
+
 
       const message =
         String(
           body?.message ??
           ''
-        ).trim();
+        )
+          .trim();
 
-      if (!message) {
+
+      if (
+        !message
+      ) {
+
         return reply
-          .code(400)
-          .send({
-            success: false,
+          .code(
+            400
+          )
+          .send(
+            {
+              success:
+                false,
 
-            error:
-              'Message is required.'
-          });
+              error:
+                'Message is required.'
+            }
+          );
       }
+
+
+      const voiceMode =
+        body?.voiceMode ===
+          true;
+
 
       const cameraImage =
         validateCameraImage(
           body?.image
         );
 
+
+      /*
+        This log proves whether the renderer
+        actually sent a camera frame.
+      */
+
+      request.log.info(
+        {
+          voiceMode,
+
+          visionReceived:
+            Boolean(
+              cameraImage
+            ),
+
+          imageDataLength:
+            cameraImage
+              ?.length ??
+            0
+        },
+
+        'NOVA chat request'
+      );
+
+
       const history =
         await loadHistory();
 
+
+      const systemPromptParts = [
+        'You are NOVA, a Windows desktop AI assistant.',
+
+        'You were created by Kartavya Singh.',
+
+        'If asked who made, created, built, or developed you, say you were created by Kartavya Singh.',
+
+        '',
+
+        'PERSONALITY:',
+
+        '- Be natural, useful, confident, and concise.',
+
+        '- Speak conversationally rather than sounding robotic.',
+
+        voiceMode
+          ? '- This is a spoken Live Voice conversation. Keep most replies short and natural.'
+          : '- This is a normal text conversation.',
+
+        '',
+
+        'VISION RULES:'
+      ];
+
+
+      if (
+        cameraImage
+      ) {
+
+        systemPromptParts.push(
+          '- IMPORTANT: A current webcam image IS attached to the current user message.',
+
+          '- You have access to that attached image for this request.',
+
+          '- Inspect the actual image before answering.',
+
+          '- Answer questions about visible objects, hands, colors, text, surroundings, or other visible details from the attached frame.',
+
+          '- Do not say that you cannot analyze images when an image is attached.',
+
+          '- Ignore any older assistant message claiming images cannot be analyzed; the current request includes a real image.',
+
+          '- Do not invent things that are not clearly visible.',
+
+          '- If part of the image is blurry, blocked, dark, or unclear, say specifically what is unclear.',
+
+          '- Treat the image as a single current webcam frame, not continuous video.'
+        );
+
+      } else {
+
+        systemPromptParts.push(
+          '- No camera image is attached to this request.',
+
+          '- Do not claim you can currently see through the webcam when there is no attached image.'
+        );
+      }
+
+
+      systemPromptParts.push(
+        '',
+
+        'TOOLS:',
+
+        '- Use available tools when useful.',
+
+        '- Never claim a tool action succeeded unless its result confirms success.'
+      );
+
+
       const systemPrompt =
-        [
-          'You are NOVA, a capable Windows desktop AI assistant.',
+        systemPromptParts.join(
+          '\n'
+        );
 
-          'You were created by Kartavya Singh.',
 
-          'If asked who created, built, made, or developed you, answer that you were created by Kartavya Singh.',
-
-          '',
-
-          'You run as part of a Windows desktop assistant application.',
-
-          '',
-
-          'Vision rules:',
-
-          '- When an image is attached to the current user message, you may analyze that image.',
-
-          '- An attached image may be a live snapshot from the user-selected webcam.',
-
-          '- Only claim you can see something when an image is actually attached to the current message.',
-
-          '- If no image is attached, do not claim that you can currently see through the camera.',
-
-          '- Describe only what is reasonably visible in the supplied image.',
-
-          '- Do not claim that the camera is continuously recording or continuously visible to you.',
-
-          '',
-
-          'Use tools whenever they are useful.',
-
-          '',
-
-          'Tool rules:',
-
-          '- For current time, use get_current_time.',
-
-          '- For calculations, use calculate.',
-
-          '- For live system information, use get_system_info.',
-
-          '- For battery information, use get_battery_status.',
-
-          '- For Wi-Fi information, use get_wifi_status.',
-
-          '- For Bluetooth information, use get_bluetooth_status.',
-
-          '- For current weather, use get_weather.',
-
-          '- For current news headlines, use get_news.',
-
-          '- For recent or current information from the web, use web_search.',
-
-          '- For memory requests, use the memory tools.',
-
-          '- For email sending, use send_email only when the user explicitly asks to send an email.',
-
-          '- For reading email, use read_emails or read_email.',
-
-          '- For browser actions, use open_browser or browser_search.',
-
-          '',
-
-          'Do not claim a tool action succeeded unless the tool result says it succeeded.',
-
-          '',
-
-          'Be concise and helpful.'
-        ]
-          .join('\n');
-
-      let currentUserMessage:
+      let currentUser:
         OpenRouterMessage;
 
-      if (cameraImage) {
-        currentUserMessage = {
-          role: 'user',
+
+      if (
+        cameraImage
+      ) {
+
+        /*
+          OpenRouter multimodal format:
+
+          text comes FIRST,
+          image_url comes SECOND.
+        */
+
+        currentUser = {
+          role:
+            'user',
 
           content: [
             {
-              type: 'text',
+              type:
+                'text',
 
-              text: message
+              text:
+                `${message}
+
+A current webcam frame is attached to this message. Use the attached image when answering.`
             },
 
             {
-              type: 'image_url',
+              type:
+                'image_url',
 
               image_url: {
-                url: cameraImage
+                url:
+                  cameraImage
               }
             }
           ]
         };
 
-      } else {
-        currentUserMessage = {
-          role: 'user',
 
-          content: message
+      } else {
+
+        currentUser = {
+          role:
+            'user',
+
+          content:
+            message
         };
       }
+
+
+      const historyMessages:
+        OpenRouterMessage[] =
+        history
+          .slice(
+            -20
+          )
+          .map(
+            (
+              item
+            ): OpenRouterMessage => (
+              {
+                role:
+                  item.role,
+
+                content:
+                  item.content
+              }
+            )
+          );
+
 
       const messages:
         OpenRouterMessage[] =
         [
           {
-            role: 'system',
+            role:
+              'system',
 
             content:
               systemPrompt
           },
 
-          ...history
-            .slice(-20)
-            .map(
-              stored => ({
-                role:
-                  stored.role,
+          ...historyMessages,
 
-                content:
-                  stored.content
-              })
-            ),
-
-          currentUserMessage
+          currentUser
         ];
 
-      const firstResponse:
-        any =
+
+      /*
+        openrouter.ts automatically detects
+        the image_url part.
+
+        If an image exists:
+          model = NOVA_VISION_MODEL
+          OR openrouter/free
+
+        If there is no image:
+          model = OPENROUTER_MODEL
+      */
+
+      const firstResponse =
         await askOpenRouter(
           messages
         );
+
+
+      let finalResponse =
+        firstResponse;
+
 
       const toolCalls =
         firstResponse
           ?.tool_calls;
 
-      let finalResponse =
-        firstResponse;
+
+      /*
+        Vision calls intentionally have no
+        tool definitions in openrouter.ts.
+
+        Normal text requests can still use
+        NOVA's existing tools.
+      */
 
       if (
+        !cameraImage &&
         Array.isArray(
           toolCalls
         ) &&
-        toolCalls.length > 0
+        toolCalls.length >
+          0
       ) {
+
         const toolMessages:
           OpenRouterMessage[] =
           [];
+
 
         for (
           const toolCall
           of toolCalls
         ) {
+
           const toolResult =
             await executeToolCall(
               toolCall
             );
 
+
           toolMessages.push(
             toolResult as OpenRouterMessage
           );
         }
+
 
         const secondMessages:
           OpenRouterMessage[] =
@@ -635,7 +952,8 @@ app.post(
             ...messages,
 
             {
-              role: 'assistant',
+              role:
+                'assistant',
 
               content:
                 firstResponse
@@ -649,94 +967,176 @@ app.post(
             ...toolMessages
           ];
 
+
         finalResponse =
           await askOpenRouter(
             secondMessages
           );
       }
 
+
       const answer =
         typeof finalResponse
           ?.content ===
           'string'
-          ? finalResponse.content
-          : 'Nova completed the request.';
 
-      const historyUserText =
+          ? finalResponse
+              .content
+              .trim()
+
+          : 'NOVA completed the request.';
+
+
+      if (
+        !answer
+      ) {
+        throw new Error(
+          'NOVA returned an empty response.'
+        );
+      }
+
+
+      const savedUserMessage =
         cameraImage
-          ? `${message} [camera image attached]`
+
+          ? `${message} [current webcam frame attached]`
+
           : message;
+
+
+      const userHistoryEntry:
+        StoredMessage =
+        {
+          role:
+            'user',
+
+          content:
+            savedUserMessage
+        };
+
+
+      const assistantHistoryEntry:
+        StoredMessage =
+        {
+          role:
+            'assistant',
+
+          content:
+            answer
+        };
+
 
       const updatedHistory:
         StoredMessage[] =
         [
           ...history,
 
-          {
-            role: 'user',
+          userHistoryEntry,
 
-            content:
-              historyUserText
-          },
+          assistantHistoryEntry
+        ]
+          .slice(
+            -60
+          );
 
-          {
-            role:
-              'assistant',
-
-            content:
-              answer
-          }
-        ];
 
       await saveHistory(
         updatedHistory
       );
 
+
+      request.log.info(
+        {
+          visionReceived:
+            Boolean(
+              cameraImage
+            ),
+
+          voiceMode,
+
+          answerLength:
+            answer.length
+        },
+
+        'NOVA response complete'
+      );
+
+
       return {
-        success: true,
+        success:
+          true,
+
+        /*
+          Kept because your renderer already
+          checks this property.
+        */
 
         visionUsed:
           Boolean(
             cameraImage
           ),
 
+        visionReceived:
+          Boolean(
+            cameraImage
+          ),
+
+        voiceMode,
+
         response:
           finalResponse
       };
 
-    } catch (error) {
+
+    } catch (
+      error
+    ) {
+
       request.log.error(
         error
       );
 
+
       return reply
-        .code(500)
-        .send({
-          success: false,
+        .code(
+          500
+        )
+        .send(
+          {
+            success:
+              false,
 
-          error:
-            'NOVA AI request failed',
+            error:
+              'NOVA request failed.',
 
-          details:
-            error instanceof Error
-              ? error.message
-              : String(error)
-        });
+            details:
+              error instanceof Error
+                ? error.message
+                : String(
+                    error
+                  )
+          }
+        );
     }
   }
 );
 
-/* =========================================
-   START
-========================================= */
 
-async function main() {
+/* ============================================================
+   START SERVER
+============================================================ */
+
+async function start() {
+
   await app.register(
     cors,
+
     {
-      origin: true
+      origin:
+        true
     }
   );
+
 
   const port =
     Number(
@@ -744,27 +1144,63 @@ async function main() {
       3000
     );
 
-  const host =
-    process.env.HOST ||
-    '0.0.0.0';
 
-  await app.listen({
-    port,
-    host
-  });
+  await app.listen(
+    {
+      host:
+        '127.0.0.1',
+
+      port
+    }
+  );
+
 
   console.log(
-    `NOVA running on http://${host}:${port}`
+    ''
+  );
+
+  console.log(
+    '=============================================='
+  );
+
+  console.log(
+    `NOVA backend: http://127.0.0.1:${port}`
+  );
+
+  console.log(
+    'Normal AI: OpenRouter configured model'
+  );
+
+  console.log(
+    'Vision AI: OpenRouter vision-capable route'
+  );
+
+  console.log(
+    'Speech recognition: Local faster-whisper'
+  );
+
+  console.log(
+    'Speech output: Windows TTS'
+  );
+
+  console.log(
+    '=============================================='
   );
 }
 
-main().catch(
-  error => {
-    console.error(
-      'Failed to start NOVA:',
-      error
-    );
 
-    process.exit(1);
-  }
-);
+start()
+  .catch(
+    error => {
+
+      console.error(
+        'NOVA failed to start:',
+        error
+      );
+
+
+      process.exit(
+        1
+      );
+    }
+  );

@@ -9,7 +9,7 @@
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>NOVA Command Center</title>
+  <title>NOVA</title>
 
   <link
     rel="stylesheet"
@@ -19,67 +19,61 @@
 
 <body>
 
-  <!-- =========================================
-       ANIMATED BACKGROUND
-  ========================================== -->
+  <div class="background">
 
-  <div class="animated-background">
-    <div class="nebula nebula-red"></div>
-    <div class="nebula nebula-purple"></div>
+    <div class="mist mist-one"></div>
+    <div class="mist mist-two"></div>
+    <div class="mist mist-three"></div>
+
     <div class="stars stars-one"></div>
     <div class="stars stars-two"></div>
+
     <div class="grid-overlay"></div>
 
-    <div class="energy-line energy-line-one"></div>
-    <div class="energy-line energy-line-two"></div>
   </div>
 
 
-  <!-- =========================================
-       MAIN SHELL
-  ========================================== -->
+  <main class="nova-layout">
 
-  <main class="nova-shell">
+    <!-- LEFT PANEL -->
 
+    <aside class="side-panel left-panel">
 
-    <!-- =========================================
-         LEFT SIDEBAR
-    ========================================== -->
+      <header class="brand">
 
-    <aside class="left-sidebar">
+        <div class="brand-icon">
+          N
+        </div>
 
-      <div class="sidebar-brand">
+        <div>
 
-        <div class="mini-core"></div>
-
-        <div class="brand-text">
-
-          <div class="nova-title">
+          <h1>
             NOVA
-          </div>
+          </h1>
 
-          <div class="nova-subtitle">
-            NEURAL COMMAND SYSTEM
-          </div>
+          <p>
+            PERSONAL INTELLIGENCE SYSTEM
+          </p>
 
         </div>
 
-      </div>
+      </header>
 
 
-      <div class="sidebar-actions">
+      <div class="action-row">
 
         <button
           id="settingsButton"
-          class="sidebar-action-button"
+          class="panel-button"
           type="button"
         >
           SETTINGS
         </button>
 
+
         <button
           id="notificationsButton"
-          class="sidebar-action-button"
+          class="panel-button"
           type="button"
         >
           ALERTS
@@ -91,145 +85,150 @@
           >
             0
           </span>
+
         </button>
 
       </div>
 
 
       <div class="section-title">
-        COMMAND FEED
+        COMMAND LOG
       </div>
 
 
-      <div
-        class="command-feed"
+      <section
         id="commandFeed"
+        class="command-feed"
       >
 
-        <div class="feed-card system-message">
+        <article class="feed-card system-message">
 
-          <div class="feed-card-header">
+          <span>
             SYSTEM
-          </div>
+          </span>
 
-          <div class="feed-card-body">
-            Nova command interface initialized.
-          </div>
+          <p>
+            NOVA initialized.
+          </p>
 
-        </div>
+        </article>
 
 
-        <div class="feed-card nova-message">
+        <article class="feed-card nova-message">
 
-          <div class="feed-card-header">
+          <span>
             NOVA
-          </div>
+          </span>
 
-          <div
-            class="feed-card-body"
-            id="responseBox"
-          >
-            Nova is ready to use, boss.
-          </div>
+          <p id="responseBox">
+            Ready.
+          </p>
 
-        </div>
+        </article>
 
-      </div>
+      </section>
 
 
-      <div class="left-footer">
+      <footer class="creator">
 
-        <div class="mini-status-row">
+        <div class="online-dot"></div>
 
-          <span class="status-dot"></span>
+        <div>
 
-          <div>
+          <strong>
+            SYSTEM ONLINE
+          </strong>
 
-            <div class="mini-status-title">
-              SYSTEM ONLINE
-            </div>
-
-            <div class="mini-status-subtitle">
-              NOVA CORE ACTIVE
-            </div>
-
-          </div>
+          <small>
+            Created by Kartavya Singh
+          </small>
 
         </div>
 
-      </div>
+      </footer>
 
     </aside>
 
 
-    <!-- =========================================
-         CENTER
-    ========================================== -->
+    <!-- CENTER -->
 
-    <section class="center-interface">
+    <section class="center-panel">
 
-      <header class="center-header">
+      <header class="topbar">
 
         <div>
 
-          <div class="header-eyebrow">
-            COMMAND CENTER
-          </div>
+          <span class="eyebrow">
+            NEURAL INTERFACE
+          </span>
 
-          <div class="header-title">
-            NOVA Neural Interface
-          </div>
+          <h2>
+            NOVA
+          </h2>
 
         </div>
 
 
-        <div class="center-header-status">
+        <div class="top-status">
 
-          <div class="header-status-item">
-
-            <span class="header-status-label">
+          <div>
+            <span>
               BACKEND
             </span>
 
-            <span
-              class="header-status-value online"
+            <strong
               id="backendStatus"
+              class="online-text"
             >
               ONLINE
-            </span>
-
+            </strong>
           </div>
 
 
-          <div class="header-status-item">
-
-            <span class="header-status-label">
+          <div>
+            <span>
               AI
             </span>
 
-            <span
-              class="header-status-value online"
+            <strong
               id="aiStatus"
+              class="online-text"
             >
               READY
-            </span>
-
+            </strong>
           </div>
 
 
-          <div class="header-status-item">
-
-            <span class="header-status-label">
+          <div>
+            <span>
               CAMERA
             </span>
 
-            <span
-              class="header-status-value"
-              id="cameraHeaderStatus"
-            >
+            <strong id="cameraHeaderStatus">
               OFF
+            </strong>
+          </div>
+
+
+          <div>
+            <span>
+              MIC
             </span>
 
+            <strong id="micHeaderStatus">
+              OFF
+            </strong>
+          </div>
+
+
+          <div>
+            <span>
+              VISION
+            </span>
+
+            <strong id="visionHeaderStatus">
+              OFF
+            </strong>
           </div>
 
         </div>
@@ -237,41 +236,139 @@
       </header>
 
 
-      <!-- =========================================
-           NOVA CORE
-      ========================================== -->
+      <!-- CORE -->
 
       <section class="core-stage">
 
         <div class="core-atmosphere"></div>
 
-        <div class="core-scanner scanner-one"></div>
-        <div class="core-scanner scanner-two"></div>
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="orbit orbit-three"></div>
 
-        <div class="core-orbit orbit-four"></div>
-        <div class="core-orbit orbit-three"></div>
-        <div class="core-orbit orbit-two"></div>
-        <div class="core-orbit orbit-one"></div>
+        <div class="scanner"></div>
 
-        <div class="core-energy"></div>
-        <div class="core-energy-pulse"></div>
 
         <div
-          class="core"
           id="novaCore"
-        ></div>
+          class="nova-core"
+        >
 
-
-        <div class="core-center-text">
-
-          <span
-            class="core-status"
-            id="statusText"
+          <svg
+            class="crescent-svg"
+            viewBox="0 0 300 300"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
           >
-            SYSTEMS ONLINE
-          </span>
 
-          <span class="core-subtext">
+            <defs>
+
+              <linearGradient
+                id="crescentGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+
+                <stop
+                  offset="0%"
+                  stop-color="#f8ffff"
+                />
+
+                <stop
+                  offset="20%"
+                  stop-color="#d5fffc"
+                />
+
+                <stop
+                  offset="44%"
+                  stop-color="#8ff5ed"
+                />
+
+                <stop
+                  offset="70%"
+                  stop-color="#3abfc8"
+                />
+
+                <stop
+                  offset="100%"
+                  stop-color="#17687c"
+                />
+
+              </linearGradient>
+
+
+              <filter
+                id="crescentGlow"
+                x="-100%"
+                y="-100%"
+                width="300%"
+                height="300%"
+              >
+
+                <feDropShadow
+                  dx="0"
+                  dy="0"
+                  stdDeviation="5"
+                  flood-color="#eaffff"
+                  flood-opacity="1"
+                />
+
+                <feDropShadow
+                  dx="0"
+                  dy="0"
+                  stdDeviation="15"
+                  flood-color="#7afff4"
+                  flood-opacity="0.75"
+                />
+
+                <feDropShadow
+                  dx="0"
+                  dy="0"
+                  stdDeviation="34"
+                  flood-color="#41cbd2"
+                  flood-opacity="0.4"
+                />
+
+              </filter>
+
+            </defs>
+
+
+            <g
+              class="crescent-group"
+              transform="rotate(-28 150 150)"
+            >
+
+              <path
+                class="crescent-shape"
+                filter="url(#crescentGlow)"
+                fill="url(#crescentGradient)"
+                d="
+                  M 185 32
+                  C 105 56, 72 128, 90 190
+                  C 108 252, 170 280, 235 251
+                  C 190 236, 158 204, 148 162
+                  C 137 116, 150 72, 185 32
+                  Z
+                "
+              />
+
+            </g>
+
+          </svg>
+
+        </div>
+
+
+        <div class="core-state">
+
+          <strong id="statusText">
+            SYSTEMS ONLINE
+          </strong>
+
+          <span>
             NOVA ARTIFICIAL INTELLIGENCE
           </span>
 
@@ -280,56 +377,41 @@
 
         <div class="activity-strip">
 
-          <div class="activity-module">
+          <div>
 
-            <span class="activity-label">
+            <span>
               STATE
             </span>
 
-            <span
-              class="activity-value"
-              id="activityStatus"
-            >
+            <strong id="activityStatus">
               IDLE
-            </span>
+            </strong>
 
           </div>
 
 
-          <div class="activity-divider"></div>
+          <div>
 
-
-          <div class="activity-module">
-
-            <span class="activity-label">
+            <span>
               CURRENT TASK
             </span>
 
-            <span
-              class="activity-value"
-              id="currentTask"
-            >
+            <strong id="currentTask">
               STANDBY
-            </span>
+            </strong>
 
           </div>
 
 
-          <div class="activity-divider"></div>
+          <div>
 
-
-          <div class="activity-module">
-
-            <span class="activity-label">
+            <span>
               VOICE
             </span>
 
-            <span
-              class="activity-value"
-              id="voiceStatus"
-            >
+            <strong id="voiceStatus">
               ENABLED
-            </span>
+            </strong>
 
           </div>
 
@@ -338,36 +420,54 @@
       </section>
 
 
-      <!-- =========================================
-           COMMAND INPUT
-      ========================================== -->
+      <!-- COMMAND BAR -->
 
       <section class="command-bar">
 
-        <div class="command-prefix">
-          &gt;
-        </div>
+        <span class="command-symbol">
+          ›
+        </span>
+
 
         <input
           id="messageInput"
           type="text"
           autocomplete="off"
           spellcheck="false"
-          placeholder="Ask Nova anything..."
+          placeholder="Ask NOVA anything..."
         />
 
+
         <button
-          id="micButton"
-          class="mic-button"
+          id="liveVoiceButton"
+          class="live-voice-button"
           type="button"
-          hidden
-          tabindex="-1"
-          aria-hidden="true"
-        ></button>
+        >
+          LIVE VOICE
+        </button>
+
+
+        <button
+          id="liveVisionButton"
+          class="live-vision-button"
+          type="button"
+        >
+          LIVE VISION
+        </button>
+
+
+        <button
+          id="visionButton"
+          class="vision-button"
+          type="button"
+        >
+          VISION
+        </button>
+
 
         <button
           id="sendButton"
-          class="send-button"
+          class="execute-button"
           type="button"
         >
           EXECUTE
@@ -378,76 +478,66 @@
     </section>
 
 
-    <!-- =========================================
-         RIGHT SIDEBAR
-    ========================================== -->
+    <!-- RIGHT PANEL -->
 
-    <aside class="right-sidebar">
+    <aside class="side-panel right-panel">
 
+      <section class="info-card">
 
-      <!-- TIME -->
-
-      <section class="dashboard-card time-card">
-
-        <div class="card-heading">
+        <span class="card-title">
           LOCAL TIME
-        </div>
+        </span>
 
         <div
-          class="large-time"
           id="systemClock"
+          class="clock"
         >
           --:--:--
         </div>
 
         <div
-          class="current-date"
           id="systemDate"
+          class="muted"
         >
-          Loading date...
+          Loading...
         </div>
 
       </section>
 
 
-      <!-- WEATHER -->
+      <section class="info-card">
 
-      <section class="dashboard-card weather-card">
-
-        <div class="card-heading">
+        <span class="card-title">
           WEATHER
-        </div>
+        </span>
+
 
         <div class="weather-main">
 
-          <div
-            class="weather-temperature"
-            id="weatherTemperature"
-          >
+          <strong id="weatherTemperature">
             --°C
-          </div>
+          </strong>
 
-          <div class="weather-meta">
 
-            <div
-              class="weather-condition"
-              id="weatherCondition"
-            >
-              Waiting for weather
+          <div>
+
+            <div id="weatherCondition">
+              Waiting...
             </div>
 
             <div
-              class="weather-location"
               id="weatherLocation"
+              class="muted"
             >
-              Location unavailable
+              Unavailable
             </div>
 
           </div>
 
         </div>
 
-        <div class="weather-bottom">
+
+        <div class="weather-meta">
 
           <span>
             HUM
@@ -455,6 +545,7 @@
               --%
             </strong>
           </span>
+
 
           <span>
             WIND
@@ -468,134 +559,28 @@
       </section>
 
 
-      <!-- CONNECTIONS -->
+      <section class="info-card">
 
-      <section class="dashboard-card connection-card">
-
-        <div class="card-heading">
-          CONNECTIONS
-        </div>
-
-
-        <div class="connection-row">
-
-          <div class="connection-icon">
-            WIFI
-          </div>
-
-          <div class="connection-info">
-
-            <span class="connection-label">
-              Wi-Fi
-            </span>
-
-            <span
-              class="connection-value"
-              id="wifiName"
-            >
-              Checking...
-            </span>
-
-          </div>
-
-          <span
-            class="connection-extra"
-            id="wifiSignal"
-          >
-            --
-          </span>
-
-        </div>
-
-
-        <div class="connection-row">
-
-          <div class="connection-icon">
-            BT
-          </div>
-
-          <div class="connection-info">
-
-            <span class="connection-label">
-              Bluetooth
-            </span>
-
-            <span
-              class="connection-value"
-              id="bluetoothDevice"
-            >
-              Checking...
-            </span>
-
-          </div>
-
-          <span
-            class="connection-extra"
-            id="bluetoothStatus"
-          >
-            --
-          </span>
-
-        </div>
-
-      </section>
-
-
-      <!-- SYSTEM -->
-
-      <section class="dashboard-card stats-card">
-
-        <div class="card-heading">
+        <span class="card-title">
           SYSTEM
-        </div>
+        </span>
 
-        <div class="stat-grid">
 
-          <div class="stat-box">
+        <div class="system-stats">
 
-            <span class="stat-title">
-              CPU
-            </span>
-
-            <span
-              class="stat-number"
-              id="cpuUsage"
-            >
-              --%
-            </span>
-
+          <div>
+            <span>CPU</span>
+            <strong id="cpuUsage">--%</strong>
           </div>
 
-
-          <div class="stat-box">
-
-            <span class="stat-title">
-              RAM
-            </span>
-
-            <span
-              class="stat-number"
-              id="ramUsage"
-            >
-              --%
-            </span>
-
+          <div>
+            <span>RAM</span>
+            <strong id="ramUsage">--%</strong>
           </div>
 
-
-          <div class="stat-box">
-
-            <span class="stat-title">
-              BATTERY
-            </span>
-
-            <span
-              class="stat-number"
-              id="batteryLevel"
-            >
-              --%
-            </span>
-
+          <div>
+            <span>BAT</span>
+            <strong id="batteryLevel">--%</strong>
           </div>
 
         </div>
@@ -603,28 +588,70 @@
       </section>
 
 
-      <!-- CAMERA -->
+      <section class="info-card">
+
+        <span class="card-title">
+          CONNECTIONS
+        </span>
+
+
+        <div class="connection-row">
+
+          <span>
+            Wi-Fi
+          </span>
+
+          <strong id="wifiName">
+            Checking...
+          </strong>
+
+          <em id="wifiSignal">
+            --
+          </em>
+
+        </div>
+
+
+        <div class="connection-row">
+
+          <span>
+            Bluetooth
+          </span>
+
+          <strong id="bluetoothDevice">
+            Checking...
+          </strong>
+
+          <em id="bluetoothStatus">
+            --
+          </em>
+
+        </div>
+
+      </section>
+
 
       <section
-        class="dashboard-card camera-card"
         id="cameraCard"
+        class="info-card camera-card"
         hidden
       >
 
-        <div class="card-heading-row">
+        <div class="card-header">
 
-          <span class="card-heading">
-            CAMERA
+          <span class="card-title">
+            NOVA VISION
           </span>
 
           <span
-            class="live-badge"
             id="cameraLiveBadge"
+            class="live-badge"
           >
-            ACTIVE
+            OFF
           </span>
 
         </div>
+
 
         <div class="camera-frame">
 
@@ -635,51 +662,101 @@
             playsinline
           ></video>
 
+
           <div
-            class="camera-placeholder"
             id="cameraPlaceholder"
+            class="camera-placeholder"
           >
             CAMERA OFF
           </div>
 
+
+          <div class="camera-scan"></div>
+
         </div>
 
+
         <div
-          class="camera-device-name"
           id="cameraDeviceName"
+          class="muted camera-device"
         >
           No camera selected
+        </div>
+
+
+        <div
+          id="liveVisionState"
+          class="vision-state"
+        >
+          LIVE VISION OFF
         </div>
 
       </section>
 
 
-      <!-- NEWS -->
+      <section class="info-card live-voice-card">
 
-      <section class="dashboard-card news-card">
+        <div class="card-header">
 
-        <div class="card-heading-row">
-
-          <span class="card-heading">
-            LIVE NEWS
+          <span class="card-title">
+            LIVE VOICE
           </span>
 
           <span
+            id="liveVoiceBadge"
             class="live-badge"
-            id="newsStatus"
           >
-            SYNCING
+            OFF
           </span>
 
         </div>
 
+
         <div
-          class="news-list"
+          id="liveVoiceState"
+          class="voice-state-display"
+        >
+          Press LIVE VOICE to begin
+        </div>
+
+
+        <div class="voice-meter-shell">
+
+          <div
+            id="voiceMeter"
+            class="voice-meter"
+          ></div>
+
+        </div>
+
+      </section>
+
+
+      <section class="info-card news-card">
+
+        <div class="card-header">
+
+          <span class="card-title">
+            LIVE NEWS
+          </span>
+
+          <span
+            id="newsStatus"
+            class="live-badge"
+          >
+            SYNC
+          </span>
+
+        </div>
+
+
+        <div
           id="newsList"
+          class="news-list"
         >
 
           <div class="news-item">
-            Waiting for latest headlines...
+            Loading headlines...
           </div>
 
         </div>
@@ -687,48 +764,44 @@
       </section>
 
 
-      <!-- MEDIA -->
+      <section class="info-card media-card">
 
-      <section class="dashboard-card media-card">
+        <div class="card-header">
 
-        <div class="card-heading-row">
-
-          <span class="card-heading">
-            MEDIA ROTATION
+          <span class="card-title">
+            MEDIA
           </span>
 
-          <span class="rotation-time">
-            8 SEC
+          <span class="muted">
+            AUTO
           </span>
 
         </div>
+
 
         <div class="poster-frame">
 
           <img
             id="posterImage"
             src=""
-            alt="Nova rotating poster"
+            alt="NOVA media"
           />
 
           <div
-            class="poster-placeholder"
             id="posterPlaceholder"
+            class="poster-placeholder"
           >
-            SEARCHING MEDIA
-
-            <span>
-              desktop/media/
-            </span>
+            desktop/media/
           </div>
 
         </div>
 
+
         <div
-          class="poster-caption"
           id="posterCaption"
+          class="muted"
         >
-          Nova Media
+          NOVA Media
         </div>
 
       </section>
@@ -738,74 +811,23 @@
   </main>
 
 
-  <!-- =========================================
-       NOTIFICATIONS PANEL
-  ========================================== -->
-
-  <aside
-    class="notification-panel"
-    id="notificationPanel"
-    hidden
-  >
-
-    <div class="panel-header">
-
-      <div>
-
-        <div class="settings-eyebrow">
-          NOVA
-        </div>
-
-        <h2>
-          Notifications
-        </h2>
-
-      </div>
-
-      <button
-        id="closeNotificationsButton"
-        class="panel-close-button"
-        type="button"
-      >
-        ×
-      </button>
-
-    </div>
-
-
-    <div
-      class="notification-list"
-      id="notificationList"
-    >
-
-      <div class="notification-empty">
-        No notifications.
-      </div>
-
-    </div>
-
-  </aside>
-
-
-  <!-- =========================================
-       SETTINGS MODAL
-  ========================================== -->
+  <!-- SETTINGS -->
 
   <div
-    class="settings-overlay"
     id="settingsOverlay"
+    class="overlay"
     hidden
   >
 
     <section class="settings-panel">
 
-      <div class="panel-header">
+      <header class="modal-header">
 
         <div>
 
-          <div class="settings-eyebrow">
+          <span>
             NOVA CONTROL
-          </div>
+          </span>
 
           <h2>
             Settings
@@ -813,24 +835,23 @@
 
         </div>
 
+
         <button
           id="closeSettingsButton"
-          class="panel-close-button"
+          class="close-button"
           type="button"
         >
           ×
         </button>
 
-      </div>
+      </header>
 
 
-      <!-- CAMERA SETTINGS -->
+      <section class="settings-group">
 
-      <section class="settings-section">
-
-        <div class="settings-section-title">
-          CAMERA
-        </div>
+        <h3>
+          CAMERA & VISION
+        </h3>
 
 
         <label class="setting-row">
@@ -842,7 +863,7 @@
             </strong>
 
             <span>
-              Allow NOVA to access your webcam.
+              Allow NOVA to use your webcam.
             </span>
 
           </div>
@@ -860,11 +881,11 @@
           <div>
 
             <strong>
-              Show Camera in Sidebar
+              Show Camera Preview
             </strong>
 
             <span>
-              Display the live preview in the right sidebar.
+              Show the webcam in the sidebar.
             </span>
 
           </div>
@@ -882,11 +903,11 @@
           <div>
 
             <strong>
-              Mirror Camera
+              Mirror Preview
             </strong>
 
             <span>
-              Flip the preview horizontally.
+              Mirror the displayed preview only.
             </span>
 
           </div>
@@ -900,10 +921,10 @@
         </label>
 
 
-        <label class="setting-select-row">
+        <label class="setting-select">
 
           <span>
-            Camera device
+            Camera Device
           </span>
 
           <select id="cameraDeviceSelect">
@@ -919,13 +940,75 @@
       </section>
 
 
-      <!-- MEDIA SETTINGS -->
+      <section class="settings-group">
 
-      <section class="settings-section">
+        <h3>
+          VOICE
+        </h3>
 
-        <div class="settings-section-title">
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Voice Replies
+            </strong>
+
+            <span>
+              Speak text-chat answers.
+            </span>
+
+          </div>
+
+          <input
+            id="voiceRepliesSetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+      </section>
+
+
+      <section class="settings-group">
+
+        <h3>
+          INTERFACE
+        </h3>
+
+
+        <label class="setting-row">
+
+          <div>
+
+            <strong>
+              Enhanced Animations
+            </strong>
+
+            <span>
+              Enable mist and HUD effects.
+            </span>
+
+          </div>
+
+          <input
+            id="enhancedAnimationsSetting"
+            type="checkbox"
+            checked
+          />
+
+        </label>
+
+      </section>
+
+
+      <section class="settings-group">
+
+        <h3>
           MEDIA
-        </div>
+        </h3>
 
 
         <label class="setting-row">
@@ -937,7 +1020,7 @@
             </strong>
 
             <span>
-              Automatically rotate posters and memes.
+              Rotate images from desktop/media.
             </span>
 
           </div>
@@ -951,31 +1034,31 @@
         </label>
 
 
-        <label class="setting-select-row">
+        <label class="setting-select">
 
           <span>
-            Rotation speed
+            Rotation Speed
           </span>
 
           <select id="mediaRotationSpeedSetting">
 
             <option value="5000">
-              5 seconds
+              5 sec
             </option>
 
             <option
               value="8000"
               selected
             >
-              8 seconds
+              8 sec
             </option>
 
             <option value="12000">
-              12 seconds
+              12 sec
             </option>
 
             <option value="20000">
-              20 seconds
+              20 sec
             </option>
 
           </select>
@@ -985,13 +1068,11 @@
       </section>
 
 
-      <!-- NOTIFICATIONS -->
+      <section class="settings-group">
 
-      <section class="settings-section">
-
-        <div class="settings-section-title">
+        <h3>
           NOTIFICATIONS
-        </div>
+        </h3>
 
 
         <label class="setting-row">
@@ -1003,7 +1084,7 @@
             </strong>
 
             <span>
-              Allow NOVA to show Windows notifications.
+              Allow NOVA desktop alerts.
             </span>
 
           </div>
@@ -1026,7 +1107,7 @@
             </strong>
 
             <span>
-              Warn when battery becomes low.
+              Warn when battery is low.
             </span>
 
           </div>
@@ -1049,7 +1130,7 @@
             </strong>
 
             <span>
-              Notify when fresh headlines arrive.
+              Alert when a new headline appears.
             </span>
 
           </div>
@@ -1064,13 +1145,11 @@
       </section>
 
 
-      <!-- STARTUP -->
+      <section class="settings-group">
 
-      <section class="settings-section">
-
-        <div class="settings-section-title">
-          STARTUP
-        </div>
+        <h3>
+          WINDOWS
+        </h3>
 
 
         <label class="setting-row">
@@ -1078,11 +1157,11 @@
           <div>
 
             <strong>
-              Start NOVA with Windows
+              Start with Windows
             </strong>
 
             <span>
-              Launch NOVA automatically after sign-in.
+              Launch NOVA after sign-in.
             </span>
 
           </div>
@@ -1100,11 +1179,11 @@
           <div>
 
             <strong>
-              Minimize to Tray
+              System Tray
             </strong>
 
             <span>
-              Keep NOVA available from the system tray.
+              Keep NOVA available in the tray.
             </span>
 
           </div>
@@ -1120,74 +1199,63 @@
       </section>
 
 
-      <!-- UI -->
-
-      <section class="settings-section">
-
-        <div class="settings-section-title">
-          INTERFACE
-        </div>
-
-
-        <label class="setting-row">
-
-          <div>
-
-            <strong>
-              Enhanced Animations
-            </strong>
-
-            <span>
-              Enable stronger NOVA core and background effects.
-            </span>
-
-          </div>
-
-          <input
-            id="enhancedAnimationsSetting"
-            type="checkbox"
-            checked
-          />
-
-        </label>
-
-
-        <label class="setting-row">
-
-          <div>
-
-            <strong>
-              Voice Replies
-            </strong>
-
-            <span>
-              Read NOVA responses aloud.
-            </span>
-
-          </div>
-
-          <input
-            id="voiceRepliesSetting"
-            type="checkbox"
-            checked
-          />
-
-        </label>
-
-      </section>
-
-
-      <div class="settings-footer">
+      <footer class="settings-footer">
 
         <span id="settingsSaveStatus">
-          Settings saved automatically.
+          Settings save automatically.
         </span>
 
-      </div>
+        <strong>
+          NOVA
+        </strong>
+
+      </footer>
 
     </section>
 
   </div>
+
+
+  <!-- ALERTS -->
+
+  <aside
+    id="notificationPanel"
+    class="notification-panel"
+    hidden
+  >
+
+    <header class="modal-header">
+
+      <div>
+
+        <span>
+          NOVA
+        </span>
+
+        <h2>
+          Alerts
+        </h2>
+
+      </div>
+
+
+      <button
+        id="closeNotificationsButton"
+        class="close-button"
+        type="button"
+      >
+        ×
+      </button>
+
+    </header>
+
+
+    <div
+      id="notificationList"
+      class="notification-list"
+    ></div>
+
+  </aside>
 
 
   <script src="./renderer.js"></script>

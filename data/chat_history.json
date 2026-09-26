@@ -1,226 +1,242 @@
 [
   {
     "role": "user",
-    "content": "Send an email to astranoxai@gmail.com with the subject JARVIS Test and the body: JARVIS email system is working. Use the send_email tool and actually send it."
+    "content": "Open the score and log mean."
   },
   {
     "role": "assistant",
-    "content": "The email has been successfully sent to **astranoxai@gmail.com** with the subject \"JARVIS Test\" and the body \"JARVIS email system is working.\" If you need anything else, just let me know!"
+    "content": "It looks like there might be some confusion. Could you clarify what you mean by \"open the score and log mean\"? Are you referring to a specific app or website?"
   },
   {
     "role": "user",
-    "content": "Check my latest emails using the read_emails tool. Show the sender, subject, date, and preview. Do not guess anything."
+    "content": "Open, get to hubble."
   },
   {
     "role": "assistant",
-    "content": "I encountered an error while trying to access your emails due to a self-signed certificate issue. Unfortunately, I can't retrieve your emails right now. \n\nIf there’s anything else you’d like to do or any other way I can assist you, please let me know!"
+    "content": "I couldn’t find information on \"hubble.\" If you're looking for the Hubble Space Telescope's website or something related, please clarify!"
   },
   {
     "role": "user",
-    "content": "Check my latest emails using the read_emails tool. Show the sender, subject, date, and preview. Do not guess anything."
+    "content": "Hey Jarvis, open GitHub and log me in there. [current webcam frame attached]"
   },
   {
     "role": "assistant",
-    "content": "Here are your latest emails:\n\n1. **From:** \"James from Freebuff\" <james@mail.freebuff.app>  \n   **Subject:** Welcome to Freebuff  \n   **Date:** August 10, 2026  \n   **Preview:** Hi Kanha, Welcome to Freebuff. My name is James, and I’ll be your point of contact here. You can email me any time at support@codebuff.com. You can also get live support from our team in our Discord:...\n\n2. **From:** \"Microsoft account team\" <account-security-noreply@accountprotection.microsoft.com>  \n   **Subject:** Personal Microsoft account security code  \n   **Date:** August 10, 2026  \n   **Preview:** Please use the following security code for your personal Microsoft account kr**8@gmail.com. Security code: 272665 Only enter this code on an official website or app. \n\n3. **From:** \"Google\" <noreply-accounts@google.com>  \n   **Subject:** You shared some Google Account data with cursor.sh  \n   **Date:** August 10, 2026  \n   **Preview:** Keep track of your Google Account data kartavyasingh298@gmail.com You're receiving this email because you used Sign in with Google to sign in to...\n\n4. **From:** \"Google\" <no-reply@accounts.google.com>  \n   **Subject:** 2-Step Verification turned on  \n   **Date:** August 11, 2026  \n   **Preview:** 2-Step Verification turned on kartavyasingh298@gmail.com Your Google Account kartavyasingh298@gmail.com is now protected with 2-Step Verification...\n\n5. **From:** \"Google\" <no-reply@accounts.google.com>  \n   **Subject:** Security alert  \n   **Date:** August 11, 2026  \n   **Preview:** App password created to sign in to your account kartavyasingh298@gmail.com If you didn't generate this password for Jarvis, someone else might be using your account. \n\nIf there's anything more you need, feel free to ask!"
+    "content": "User Safety: safe\nResponse Safety: safe"
   },
   {
     "role": "user",
-    "content": "Use read_emails to show my latest emails with their IDs."
+    "content": "I love the two night green time."
   },
   {
     "role": "assistant",
-    "content": "Here are your latest emails along with their IDs:\n\n1. **ID:** 114  \n   **From:** \"Crunchyroll\" <hello@mail.crunchyroll.com>  \n   **Subject:** Join the Demon Slayer Corps and Enter the Fray ⚔️  \n   **Date:** August 4, 2026  \n   **Preview:** Experience the entire journey in one place...\n\n2. **ID:** 115  \n   **From:** \"Crunchyroll\" <hello@mail.crunchyroll.com>  \n   **Subject:** Hanging up the cleats? ⚽  \n   **Date:** August 6, 2026  \n   **Preview:** Don’t let the feeling fade...\n\n3. **ID:** 116  \n   **From:** \"Google\" <no-reply@accounts.google.com>  \n   **Subject:** Security alert  \n   **Date:** August 6, 2026  \n   **Preview:** A new sign-in on Google AMD Raven Ridge Chromebook...\n\n4. **ID:** 117  \n   **From:** \"Crunchyroll\" <hello@mail.crunchyroll.com>  \n   **Subject:** Fight With Daemons, Find Your Parents  \n   **Date:** August 8, 2026  \n   **Preview:** Tune in to Daemons of the Shadow Realm today...\n\n5. **ID:** 118  \n   **From:** \"Google\" <noreply-accounts@google.com>  \n   **Subject:** You shared some Google Account data with freebuff.com  \n   **Date:** August 10, 2026  \n   **Preview:** Keep track of your Google Account data...\n\n6. **ID:** 119  \n   **From:** \"James from Freebuff\" <james@mail.freebuff.app>  \n   **Subject:** Welcome to Freebuff  \n   **Date:** August 10, 2026  \n   **Preview:** Hi Kanha, Welcome to Freebuff...\n\n7. **ID:** 120  \n   **From:** \"Microsoft account team\" <account-security-noreply@accountprotection.microsoft.com>  \n   **Subject:** Personal Microsoft account security code  \n   **Date:** August 10, 2026  \n   **Preview:** Please use the following security code for your personal Microsoft account...\n\n8. **ID:** 121  \n   **From:** \"Google\" <noreply-accounts@google.com>  \n   **Subject:** You shared some Google Account data with cursor.sh  \n   **Date:** August 10, 2026  \n   **Preview:** Keep track of your Google Account data...\n\n9. **ID:** 122  \n   **From:** \"Google\" <no-reply@accounts.google.com>  \n   **Subject:** 2-Step Verification turned on  \n   **Date:** August 11, 2026  \n   **Preview:** 2-Step Verification turned on...\n\n10. **ID:** 123  \n    **From:** \"Google\" <no-reply@accounts.google.com>  \n    **Subject:** Security alert  \n    **Date:** August 11, 2026  \n    **Preview:** App password created to sign in to your account...\n\nIf you have any questions or need further assistance, feel free to ask!"
+    "content": "That sounds lovely! Are you referring to a specific place or experience you had at night?"
   },
   {
     "role": "user",
-    "content": "Use the read_email tool to read email ID 123 and show its full contents. Do not guess anything."
+    "content": "are we stuck to in Hindi?"
   },
   {
     "role": "assistant",
-    "content": "Here are the full contents of email ID 123:\n\n- **From:** \"Google\" <no-reply@accounts.google.com>\n- **To:** kartavyasingh298@gmail.com\n- **Subject:** Security alert\n- **Date:** August 11, 2026\n\n**Text Content:**\n```\nApp password created to sign in to your account kartavyasingh298@gmail.com.\nIf you didn't generate this password for Jarvis, someone else might be using your account. Check and secure your account now.\nCheck activity: [https://accounts.google.com/AccountChooser?Email=kartavyasingh298@gmail.com&continue=https://myaccount.google.com/alert/nt/1786448450112?rfn%3D20%26rfnc%3D1%26eid%3D1000425077845774449%26et%3D0](https://accounts.google.com/AccountChooser?Email=kartavyasingh298@gmail.com&continue=https://myaccount.google.com/alert/nt/1786448450112?rfn%3D20%26rfnc%3D1%26eid%3D1000425077845774449%26et%3D0)\nYou can also see security activity at [https://myaccount.google.com/notifications](https://myaccount.google.com/notifications).\nYou received this email to let you know about important changes to your Google Account and services.\n© 2026 Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA\n```\n\nIf you have any further questions or need assistance, just let me know!"
+    "content": "Yes, we can definitely continue in Hindi if you'd like! Just let me know how I can assist you."
   },
   {
     "role": "user",
-    "content": "Open https://www.google.com using the browser tool."
+    "content": "There is now always talk to me in Hindi."
   },
   {
     "role": "assistant",
-    "content": "The browser has successfully opened Google at [https://www.google.com](https://www.google.com). If you need anything else, feel free to ask!"
+    "content": "बिलकुल! मैं हमेशा आपसे हिंदी में बात करूंगा। आप क्या जानना चाहेंगे?"
   },
   {
     "role": "user",
-    "content": "Search the web for latest Android news using the browser search tool."
+    "content": "Hey Jarvis, open Gmail."
   },
   {
     "role": "assistant",
-    "content": "I've initiated a web search for the latest Android news. You can view the results at this link: [Latest Android News](https://www.google.com/search?q=latest%20Android%20news). If you need further assistance, just let me know!"
+    "content": "लेट्स ओपन गमेल! अभी एक पल।"
   },
   {
     "role": "user",
-    "content": "Use the read_webpage tool to read https://example.com and tell me what it says. Do not guess anything."
+    "content": "His are with stock in English always."
   },
   {
     "role": "assistant",
-    "content": "The webpage at [https://example.com](https://example.com) contains the following content:\n\n**Title:** Example Domain\n\n**Text:**\n```\nExample Domain\n\nThis domain is for use in documentation examples without needing permission. Avoid use in operations.\n\nLearn more\n```\n\nIf you have any further questions or need assistance, feel free to ask!"
+    "content": "Could you please clarify what you mean by \"His are with stock\"? I'm here to help!"
   },
   {
     "role": "user",
-    "content": "Open https://example.com in my browser."
+    "content": "Hey Jarvis, open Google mail!"
   },
   {
     "role": "assistant",
-    "content": "The browser has successfully opened [https://example.com](https://example.com). If there's anything else you need, feel free to ask!"
+    "content": "I've opened Gmail for you in Google Chrome!"
   },
   {
     "role": "user",
-    "content": "Use the browser_back tool to go back one page."
+    "content": "Hey Jarvis and I'm Kartavising 278, the RedGmail.com Hi [current webcam frame attached]"
   },
   {
     "role": "assistant",
-    "content": "I encountered an error while trying to go back one page in the browser. Unfortunately, I'm unable to perform that action at the moment. If there's anything else you need or another action you'd like to take, just let me know!"
+    "content": "Hey! I see a person in a dimly lit room, though the image is grainy and details are hard to make out. How can I help you with Gmail?"
   },
   {
     "role": "user",
-    "content": "Send an email to kristinajohn018@gmail.com with the subject Hello This Is Jarvis Here   and the body: JARVIS HelloMs. KRISTINA JOHN. Use the send_email tool and actually send it."
+    "content": "Here is service send an email to kartavising270 at the rate gmail.com. Subject should be that nova is working and the body should be that nova test is successfully completed."
   },
   {
     "role": "assistant",
-    "content": "The email has been successfully sent to **kristinajohn018@gmail.com** with the subject \"Hello This Is Jarvis Here\" and the body \"JARVIS HelloMs. KRISTINA JOHN.\" If you need anything else, just let me know!"
+    "content": "I've successfully sent the email to kartavising270@gmail.com with the subject \"nova is working.\""
   },
   {
     "role": "user",
-    "content": "hello jarvis"
+    "content": "send an email to kartavyasingh277@gmail.com using gmail smtp tool body should be nova working and subject that nova is working"
   },
   {
     "role": "assistant",
-    "content": "Hello! I see you might have referred to \"Jarvis.\" I'm NOVA, your AI assistant. How can I assist you today?"
+    "content": "I've successfully sent the email to kartavyasingh277@gmail.com with the subject \"nova is working\" and the body \"nova working.\""
   },
   {
     "role": "user",
-    "content": "who made u"
+    "content": "open github and log me in it"
   },
   {
     "role": "assistant",
-    "content": "I was created by a team of developers and researchers working to build AI technology that assists users with various tasks. If you have any specific questions or need assistance, feel free to ask!"
+    "content": "I can't log you into GitHub directly. However, I can open the GitHub website for you. Would you like me to do that?"
   },
   {
     "role": "user",
-    "content": "yo open my wifi admin page"
+    "content": "ok do that"
   },
   {
     "role": "assistant",
-    "content": "It seems that the details for your router's admin page URL were not retrieved. However, you can typically access your Wi-Fi router's admin page by entering its default gateway IP address into your browser. \n\nFor many routers, this is often one of the following:\n\n- **192.168.1.1**\n- **192.168.0.1**\n\nPlease check your router's documentation or the manufacturer's website for specific information. If you know the IP address, I can help you open it in your browser. Let me know what you would like to do!"
+    "content": "I've opened the GitHub login page for you in Google Chrome. You can log in from there!"
   },
   {
     "role": "user",
-    "content": "can u change my wifi password to @Kar7tavya"
+    "content": "send an gmail to kartavyasingh270@gmail.com using the gmail smtp user and password body should be Nova Test subject Nova Works"
   },
   {
     "role": "assistant",
-    "content": "I am unable to change your Wi-Fi password directly as it requires access to your router's admin interface, which usually entails entering a username and password. \n\nYou can change your Wi-Fi password manually by following these steps:\n\n1. Open a web browser.\n2. Enter your router's IP address (like 192.168.1.1 or 192.168.0.1) into the address bar and press Enter.\n3. Log in with your admin credentials (consult your router's manual if you don't have them).\n4. Look for the Wi-Fi settings or wireless security section.\n5. Change your Wi-Fi password to “@Kar7tavya”.\n6. Save your changes.\n\nIf you need additional guidance or specific instructions, feel free to ask!"
+    "content": "I've successfully sent the email to kartavyasingh270@gmail.com with the subject \"Nova Works\" and the body \"Nova Test.\""
   },
   {
     "role": "user",
-    "content": "yo jarvis can u see me?"
+    "content": "Hey Jarvis."
   },
   {
     "role": "assistant",
-    "content": "I can't see you or access any video or audio feeds. I'm just a text-based AI assistant here to help you with information and tasks. If you have any questions or need assistance, feel free to ask!"
+    "content": "Hey! How can I assist you today?"
   },
   {
     "role": "user",
-    "content": "open youtube"
+    "content": "Beep, beep, beep."
   },
   {
     "role": "assistant",
-    "content": "I've opened YouTube in your browser. If you have anything specific you want to do there or if you need further assistance, just let me know!"
+    "content": "Beep, beep! What's on your mind?"
   },
   {
     "role": "user",
-    "content": "yo can u see me"
+    "content": "Hey Jarvis open google chrome and open discord on there."
   },
   {
     "role": "assistant",
-    "content": "I can't see you. I'm just a text-based AI and do not have the capability to access cameras or visual inputs. I'm here to assist you through text. How can I help you today?"
+    "content": "I've opened Google Chrome for you, and now I'm opening Discord in a new tab."
   },
   {
     "role": "user",
-    "content": "yo"
+    "content": "Hey Jarvis Open Google Chrome."
   },
   {
     "role": "assistant",
-    "content": "Hey there! What's up? How can I assist you today?"
+    "content": "I've opened Google Chrome for you! What would you like to do next?"
   },
   {
     "role": "user",
-    "content": "yo"
+    "content": "Hey Jarvis open discord on google chrome."
   },
   {
     "role": "assistant",
-    "content": "Yo! How can I help you today?"
+    "content": "I've opened Discord in Google Chrome for you!"
   },
   {
     "role": "user",
-    "content": "wassup"
+    "content": "I don't wanna hear it correctly yet."
   },
   {
     "role": "assistant",
-    "content": "Not much! Just here, ready to assist you with anything you need. What's on your mind?"
+    "content": "Got it! Let me know how I can help you."
   },
   {
     "role": "user",
-    "content": "who made u"
+    "content": "Hey, Jarvis, open Gmail in Google Chrome."
   },
   {
     "role": "assistant",
-    "content": "I was developed by a team of engineers and researchers focused on creating advanced AI technologies. If you have any questions or need assistance, feel free to ask!"
+    "content": "I've opened Gmail in Google Chrome for you!"
   },
   {
     "role": "user",
-    "content": "hello nova"
+    "content": "Canova Open Google on Google Chrome."
   },
   {
     "role": "assistant",
-    "content": "Hello! How can I assist you today?"
+    "content": "I've opened Google in Google Chrome for you!"
   },
   {
     "role": "user",
-    "content": "yo open chrome"
+    "content": "Hey, Jarvis, open YouTube."
   },
   {
     "role": "assistant",
-    "content": "I've opened Google Chrome for you. If you need to search for anything or have specific tasks in mind, just let me know!"
+    "content": "I've opened YouTube in Google Chrome for you!"
   },
   {
     "role": "user",
-    "content": "What do you see through my camera?"
+    "content": "Hey Jarvis, open google.com and google chrome."
   },
   {
     "role": "assistant",
-    "content": "I don’t have access to your camera or any visual input. I can only assist you through text. If you have questions or need help, feel free to ask!"
+    "content": "I've opened Google.com in Google Chrome for you!"
   },
   {
     "role": "user",
-    "content": "who made u"
+    "content": "Hey, John, we're open on new tab and we'll welcome you."
   },
   {
     "role": "assistant",
-    "content": "I was created by a team of developers and researchers focused on artificial intelligence. If you have any specific questions or need assistance, feel free to ask!"
+    "content": "That sounds great! How can I assist you further?"
   },
   {
     "role": "user",
-    "content": "Who made you?"
+    "content": "Hey, Jarvis, open Google Chrome."
   },
   {
     "role": "assistant",
-    "content": "I was created by Kartavya Singh. If you have any other questions or need assistance, let me know!"
+    "content": "I've opened Google Chrome for you! What would you like to do next?"
   },
   {
     "role": "user",
-    "content": "hi"
+    "content": "Hey Jarvis open google chrome and search images for light origami."
   },
   {
     "role": "assistant",
-    "content": "Hi there! How can I help you today?"
+    "content": "I've opened Google Chrome and searched for images of light origami for you!"
+  },
+  {
+    "role": "user",
+    "content": "What's up guys? [current webcam frame attached]"
+  },
+  {
+    "role": "assistant",
+    "content": "Based on the attached webcam frame, the image is quite blurry, dark, and grainy. It mostly shows a blueish-grey surface with some darker shadows on the left and a brownish, textured area at the bottom, but it's hard to make out any specific objects due to the low light and lack of focus. \n\nWhat's up with you? How can I help today?"
+  },
+  {
+    "role": "user",
+    "content": "Hey, Darmus, how many fingers are here? [current webcam frame attached]"
+  },
+  {
+    "role": "assistant",
+    "content": "Based on the image attached, there are **5** fingers visible on the hand held up to the camera (including the thumb)."
   }
 ]

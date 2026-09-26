@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>NOVA</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+
+      margin: 0;
+
+      overflow: hidden;
+
+      background: transparent;
+
+      user-select: none;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+
+      font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+      cursor: pointer;
+    }
+
+    .nova-mini {
+      position: relative;
+
+      width: 82px;
+      height: 112px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      gap: 7px;
+
+      overflow: hidden;
+
+      border:
+        1px solid
+        rgba(136, 255, 247, 0.36);
+
+      border-radius:
+        22px;
+
+      background:
+        linear-gradient(
+          160deg,
+          rgba(9, 27, 31, 0.96),
+          rgba(2, 10, 13, 0.97)
+        );
+
+      box-shadow:
+        0 0 24px
+        rgba(61, 222, 215, 0.20),
+
+        inset
+        0 0 22px
+        rgba(99, 255, 247, 0.035);
+
+      backdrop-filter:
+        blur(18px);
+
+      transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+    }
+
+    .nova-mini:hover {
+      transform:
+        scale(1.045);
+
+      border-color:
+        rgba(172, 255, 250, 0.72);
+
+      box-shadow:
+        0 0 35px
+        rgba(77, 242, 232, 0.31);
+    }
+
+    .glow {
+      position: absolute;
+
+      width: 70px;
+      height: 70px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(94, 255, 245, 0.16),
+          transparent 67%
+        );
+
+      filter:
+        blur(5px);
+
+      animation:
+        pulse 2.2s
+        ease-in-out
+        infinite;
+    }
+
+    .moon {
+      position: relative;
+      z-index: 2;
+
+      width: 48px;
+      height: 48px;
+
+      filter:
+        drop-shadow(
+          0 0 8px
+          rgba(128, 255, 248, .9)
+        )
+
+        drop-shadow(
+          0 0 18px
+          rgba(68, 219, 221, .4)
+        );
+    }
+
+    .name {
+      position: relative;
+      z-index: 2;
+
+      color:
+        #dffffb;
+
+      font-size: 9px;
+      font-weight: 800;
+
+      letter-spacing: 2.2px;
+    }
+
+    .live-row {
+      position: relative;
+      z-index: 2;
+
+      display: flex;
+      align-items: center;
+
+      gap: 4px;
+
+      color:
+        #72dcd6;
+
+      font-size: 6px;
+      font-weight: 700;
+
+      letter-spacing: 1px;
+    }
+
+    .dot {
+      width: 5px;
+      height: 5px;
+
+      border-radius: 50%;
+
+      background:
+        #65f1b5;
+
+      box-shadow:
+        0 0 8px
+        #65f1b5;
+
+      animation:
+        dotPulse 1.4s
+        ease-in-out
+        infinite;
+    }
+
+    .hint {
+      position: absolute;
+
+      bottom: 4px;
+
+      color:
+        rgba(164, 213, 211, 0.45);
+
+      font-size: 5px;
+
+      letter-spacing: .7px;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: .45;
+
+        transform:
+          scale(.9);
+      }
+
+      50% {
+        opacity: 1;
+
+        transform:
+          scale(1.12);
+      }
+    }
+
+    @keyframes dotPulse {
+
+      0%,
+      100% {
+        opacity: .45;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <div class="nova-mini">
+
+    <div class="glow"></div>
+
+
+    <svg
+      class="moon"
+      viewBox="0 0 300 300"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+
+      <defs>
+
+        <linearGradient
+          id="moonGradient"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+
+          <stop
+            offset="0%"
+            stop-color="#ffffff"
+          />
+
+          <stop
+            offset="35%"
+            stop-color="#a9fff8"
+          />
+
+          <stop
+            offset="70%"
+            stop-color="#4ed2d5"
+          />
+
+          <stop
+            offset="100%"
+            stop-color="#197588"
+          />
+
+        </linearGradient>
+
+      </defs>
+
+
+      <g
+        transform="rotate(-28 150 150)"
+      >
+
+        <path
+          fill="url(#moonGradient)"
+          d="
+            M 185 32
+            C 105 56, 72 128, 90 190
+            C 108 252, 170 280, 235 251
+            C 190 236, 158 204, 148 162
+            C 137 116, 150 72, 185 32
+            Z
+          "
+        />
+
+      </g>
+
+    </svg>
+
+
+    <div class="name">
+      NOVA
+    </div>
+
+
+    <div class="live-row">
+
+      <span class="dot"></span>
+
+      VOICE
+
+    </div>
+
+
+    <div class="hint">
+      CLICK
+    </div>
+
+  </div>
+
+</body>
+
+</html>
