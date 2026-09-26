@@ -118,5 +118,109 @@
   {
     "role": "assistant",
     "content": "I am unable to change your Wi-Fi password directly as it requires access to your router's admin interface, which usually entails entering a username and password. \n\nYou can change your Wi-Fi password manually by following these steps:\n\n1. Open a web browser.\n2. Enter your router's IP address (like 192.168.1.1 or 192.168.0.1) into the address bar and press Enter.\n3. Log in with your admin credentials (consult your router's manual if you don't have them).\n4. Look for the Wi-Fi settings or wireless security section.\n5. Change your Wi-Fi password to “@Kar7tavya”.\n6. Save your changes.\n\nIf you need additional guidance or specific instructions, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "yo jarvis can u see me?"
+  },
+  {
+    "role": "assistant",
+    "content": "I can't see you or access any video or audio feeds. I'm just a text-based AI assistant here to help you with information and tasks. If you have any questions or need assistance, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "open youtube"
+  },
+  {
+    "role": "assistant",
+    "content": "I've opened YouTube in your browser. If you have anything specific you want to do there or if you need further assistance, just let me know!"
+  },
+  {
+    "role": "user",
+    "content": "yo can u see me"
+  },
+  {
+    "role": "assistant",
+    "content": "I can't see you. I'm just a text-based AI and do not have the capability to access cameras or visual inputs. I'm here to assist you through text. How can I help you today?"
+  },
+  {
+    "role": "user",
+    "content": "yo"
+  },
+  {
+    "role": "assistant",
+    "content": "Hey there! What's up? How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "yo"
+  },
+  {
+    "role": "assistant",
+    "content": "Yo! How can I help you today?"
+  },
+  {
+    "role": "user",
+    "content": "wassup"
+  },
+  {
+    "role": "assistant",
+    "content": "Not much! Just here, ready to assist you with anything you need. What's on your mind?"
+  },
+  {
+    "role": "user",
+    "content": "who made u"
+  },
+  {
+    "role": "assistant",
+    "content": "I was developed by a team of engineers and researchers focused on creating advanced AI technologies. If you have any questions or need assistance, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "hello nova"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "yo open chrome"
+  },
+  {
+    "role": "assistant",
+    "content": "I've opened Google Chrome for you. If you need to search for anything or have specific tasks in mind, just let me know!"
+  },
+  {
+    "role": "user",
+    "content": "What do you see through my camera?"
+  },
+  {
+    "role": "assistant",
+    "content": "I don’t have access to your camera or any visual input. I can only assist you through text. If you have questions or need help, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "who made u"
+  },
+  {
+    "role": "assistant",
+    "content": "I was created by a team of developers and researchers focused on artificial intelligence. If you have any specific questions or need assistance, feel free to ask!"
+  },
+  {
+    "role": "user",
+    "content": "Who made you?"
+  },
+  {
+    "role": "assistant",
+    "content": "I was created by Kartavya Singh. If you have any other questions or need assistance, let me know!"
+  },
+  {
+    "role": "user",
+    "content": "hi"
+  },
+  {
+    "role": "assistant",
+    "content": "Hi there! How can I help you today?"
   }
 ]

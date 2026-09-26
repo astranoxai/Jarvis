@@ -6,7 +6,11 @@ import cors from '@fastify/cors';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
-import { askOpenRouter } from './orchestrator/openrouter.js';
+import {
+  askOpenRouter,
+  type OpenRouterMessage
+} from './orchestrator/openrouter.js';
+
 import { executeToolCall } from './executor.js';
 
 import { systemTool } from './tools/system.js';
@@ -17,31 +21,22 @@ import { weatherTool } from './tools/weather.js';
 import { newsTool } from './tools/news.js';
 
 const historyFile =
-  path.resolve('data/chat_history.json');
+  path.resolve(
+    'data/chat_history.json'
+  );
 
-type Message = {
+type StoredMessage = {
   role:
-    | 'system'
     | 'user'
-    | 'assistant'
-    | 'tool';
+    | 'assistant';
 
-  content?:
-    string | null;
-
-  name?:
-    string;
-
-  tool_call_id?:
-    string;
-
-  tool_calls?:
-    any[];
+  content: string;
 };
 
-/* =========================================
-   DASHBOARD CACHE
-========================================= */
+type ChatBody = {
+  message?: unknown;
+  image?: unknown;
+};
 
 const DASHBOARD_EXTERNAL_CACHE_MS =
   5 * 60 * 1000;
@@ -63,7 +58,7 @@ let cachedNewsTime =
 ========================================= */
 
 async function loadHistory():
-Promise<Message[]> {
+Promise<StoredMessage[]> {
   try {
     const raw =
       await fs.readFile(
@@ -84,8 +79,7 @@ Promise<Message[]> {
           message?.role === 'user' ||
           message?.role === 'assistant'
         ) &&
-        typeof message?.content ===
-        'string'
+        typeof message?.content === 'string'
     );
 
   } catch {
@@ -94,17 +88,16 @@ Promise<Message[]> {
 }
 
 async function saveHistory(
-  history: Message[]
+  history: StoredMessage[]
 ) {
   const cleanHistory =
     history.filter(
-      (message) =>
+      message =>
         (
           message.role === 'user' ||
           message.role === 'assistant'
         ) &&
-        typeof message.content ===
-        'string'
+        typeof message.content === 'string'
     );
 
   await fs.mkdir(
@@ -126,12 +119,62 @@ async function saveHistory(
 }
 
 /* =========================================
+   CAMERA IMAGE VALIDATION
+========================================= */
+
+function validateCameraImage(
+  image: unknown
+): string | null {
+  if (
+    typeof image !== 'string'
+  ) {
+    return null;
+  }
+
+  const trimmed =
+    image.trim();
+
+  if (!trimmed) {
+    return null;
+  }
+
+  const validDataUrl =
+    /^data:image\/(jpeg|jpg|png|webp);base64,/i;
+
+  if (
+    !validDataUrl.test(
+      trimmed
+    )
+  ) {
+    throw new Error(
+      'Invalid camera image format.'
+    );
+  }
+
+  const MAX_IMAGE_LENGTH =
+    8_000_000;
+
+  if (
+    trimmed.length >
+    MAX_IMAGE_LENGTH
+  ) {
+    throw new Error(
+      'Camera image is too large.'
+    );
+  }
+
+  return trimmed;
+}
+
+/* =========================================
    SERVER
 ========================================= */
 
 const app =
   Fastify({
-    logger: true
+    logger: true,
+    bodyLimit:
+      10 * 1024 * 1024
   });
 
 /* =========================================
@@ -143,8 +186,10 @@ app.get(
   async () => {
     return {
       name: 'NOVA',
+      creator: 'Kartavya Singh',
       status: 'online',
-      version: '1.0.0'
+      version: '1.1.0',
+      vision: true
     };
   }
 );
@@ -157,13 +202,15 @@ app.get(
   '/health',
   async () => {
     return {
-      status: 'ok'
+      status: 'ok',
+      name: 'NOVA',
+      creator: 'Kartavya Singh'
     };
   }
 );
 
 /* =========================================
-   EXTERNAL DASHBOARD DATA
+   DASHBOARD EXTERNAL DATA
 ========================================= */
 
 async function getDashboardWeather(
@@ -251,7 +298,6 @@ async function getDashboardNews() {
 app.get(
   '/dashboard',
   async () => {
-
     const dashboardCity =
       String(
         process.env.DASHBOARD_CITY ||
@@ -319,6 +365,7 @@ app.get(
             )
           : Promise.resolve({
               success: false,
+
               error:
                 'DASHBOARD_CITY is not configured.'
             }),
@@ -334,7 +381,8 @@ app.get(
           .toISOString(),
 
       backend: {
-        status: 'online'
+        status: 'online',
+        vision: true
       },
 
       system:
@@ -386,12 +434,9 @@ app.post(
     request,
     reply
   ) => {
-
     try {
       const body =
-        request.body as {
-          message?: unknown;
-        };
+        request.body as ChatBody;
 
       const message =
         String(
@@ -404,59 +449,153 @@ app.post(
           .code(400)
           .send({
             success: false,
+
             error:
               'Message is required.'
           });
       }
 
+      const cameraImage =
+        validateCameraImage(
+          body?.image
+        );
+
       const history =
         await loadHistory();
 
+      const systemPrompt =
+        [
+          'You are NOVA, a capable Windows desktop AI assistant.',
+
+          'You were created by Kartavya Singh.',
+
+          'If asked who created, built, made, or developed you, answer that you were created by Kartavya Singh.',
+
+          '',
+
+          'You run as part of a Windows desktop assistant application.',
+
+          '',
+
+          'Vision rules:',
+
+          '- When an image is attached to the current user message, you may analyze that image.',
+
+          '- An attached image may be a live snapshot from the user-selected webcam.',
+
+          '- Only claim you can see something when an image is actually attached to the current message.',
+
+          '- If no image is attached, do not claim that you can currently see through the camera.',
+
+          '- Describe only what is reasonably visible in the supplied image.',
+
+          '- Do not claim that the camera is continuously recording or continuously visible to you.',
+
+          '',
+
+          'Use tools whenever they are useful.',
+
+          '',
+
+          'Tool rules:',
+
+          '- For current time, use get_current_time.',
+
+          '- For calculations, use calculate.',
+
+          '- For live system information, use get_system_info.',
+
+          '- For battery information, use get_battery_status.',
+
+          '- For Wi-Fi information, use get_wifi_status.',
+
+          '- For Bluetooth information, use get_bluetooth_status.',
+
+          '- For current weather, use get_weather.',
+
+          '- For current news headlines, use get_news.',
+
+          '- For recent or current information from the web, use web_search.',
+
+          '- For memory requests, use the memory tools.',
+
+          '- For email sending, use send_email only when the user explicitly asks to send an email.',
+
+          '- For reading email, use read_emails or read_email.',
+
+          '- For browser actions, use open_browser or browser_search.',
+
+          '',
+
+          'Do not claim a tool action succeeded unless the tool result says it succeeded.',
+
+          '',
+
+          'Be concise and helpful.'
+        ]
+          .join('\n');
+
+      let currentUserMessage:
+        OpenRouterMessage;
+
+      if (cameraImage) {
+        currentUserMessage = {
+          role: 'user',
+
+          content: [
+            {
+              type: 'text',
+
+              text: message
+            },
+
+            {
+              type: 'image_url',
+
+              image_url: {
+                url: cameraImage
+              }
+            }
+          ]
+        };
+
+      } else {
+        currentUserMessage = {
+          role: 'user',
+
+          content: message
+        };
+      }
+
       const messages:
-        Message[] = [
+        OpenRouterMessage[] =
+        [
           {
-            role:
-              'system',
+            role: 'system',
 
             content:
-              [
-                'You are NOVA, a capable Windows desktop AI assistant.',
-                '',
-                'Use tools whenever they are useful.',
-                '',
-                'Tool rules:',
-                '- For current time, use get_current_time.',
-                '- For calculations, use calculate.',
-                '- For live system information, use get_system_info.',
-                '- For battery information, use get_battery_status.',
-                '- For Wi-Fi information, use get_wifi_status.',
-                '- For Bluetooth information, use get_bluetooth_status.',
-                '- For current weather, use get_weather.',
-                '- For current news headlines, use get_news.',
-                '- For recent or current information from the web, use web_search.',
-                '- For memory requests, use the memory tools.',
-                '- For email sending, use send_email only when the user explicitly asks to send an email.',
-                '- For reading email, use read_emails or read_email.',
-                '- For browser actions, use open_browser or browser_search.',
-                '',
-                'Do not claim a tool action succeeded unless the tool result says it succeeded.',
-                '',
-                'Be concise and helpful.'
-              ].join('\n')
+              systemPrompt
           },
 
-          ...history.slice(-20),
+          ...history
+            .slice(-20)
+            .map(
+              stored => ({
+                role:
+                  stored.role,
 
-          {
-            role: 'user',
-            content: message
-          }
+                content:
+                  stored.content
+              })
+            ),
+
+          currentUserMessage
         ];
 
       const firstResponse:
         any =
         await askOpenRouter(
-          messages as any
+          messages
         );
 
       const toolCalls =
@@ -467,12 +606,14 @@ app.post(
         firstResponse;
 
       if (
-        Array.isArray(toolCalls) &&
+        Array.isArray(
+          toolCalls
+        ) &&
         toolCalls.length > 0
       ) {
-
         const toolMessages:
-          Message[] = [];
+          OpenRouterMessage[] =
+          [];
 
         for (
           const toolCall
@@ -484,17 +625,17 @@ app.post(
             );
 
           toolMessages.push(
-            toolResult as Message
+            toolResult as OpenRouterMessage
           );
         }
 
         const secondMessages:
-          Message[] = [
+          OpenRouterMessage[] =
+          [
             ...messages,
 
             {
-              role:
-                'assistant',
+              role: 'assistant',
 
               content:
                 firstResponse
@@ -510,29 +651,40 @@ app.post(
 
         finalResponse =
           await askOpenRouter(
-            secondMessages as any
+            secondMessages
           );
       }
 
       const answer =
         typeof finalResponse
           ?.content ===
-        'string'
+          'string'
           ? finalResponse.content
           : 'Nova completed the request.';
 
+      const historyUserText =
+        cameraImage
+          ? `${message} [camera image attached]`
+          : message;
+
       const updatedHistory:
-        Message[] = [
+        StoredMessage[] =
+        [
           ...history,
 
           {
             role: 'user',
-            content: message
+
+            content:
+              historyUserText
           },
 
           {
-            role: 'assistant',
-            content: answer
+            role:
+              'assistant',
+
+            content:
+              answer
           }
         ];
 
@@ -542,6 +694,11 @@ app.post(
 
       return {
         success: true,
+
+        visionUsed:
+          Boolean(
+            cameraImage
+          ),
 
         response:
           finalResponse
@@ -602,7 +759,7 @@ async function main() {
 }
 
 main().catch(
-  (error) => {
+  error => {
     console.error(
       'Failed to start NOVA:',
       error

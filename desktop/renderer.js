@@ -1,96 +1,581 @@
 ﻿/* =========================================
-   NOVA ELEMENTS
+   NOVA DESKTOP RENDERER
+========================================= */
+
+const $ =
+  id =>
+    document.getElementById(id);
+
+
+/* =========================================
+   MAIN ELEMENTS
 ========================================= */
 
 const messageInput =
-  document.getElementById('messageInput');
+  $('messageInput');
 
 const sendButton =
-  document.getElementById('sendButton');
+  $('sendButton');
 
 const responseBox =
-  document.getElementById('responseBox');
+  $('responseBox');
 
 const commandFeed =
-  document.getElementById('commandFeed');
+  $('commandFeed');
 
 const statusText =
-  document.getElementById('statusText');
+  $('statusText');
 
 const activityStatus =
-  document.getElementById('activityStatus');
+  $('activityStatus');
 
 const currentTask =
-  document.getElementById('currentTask');
+  $('currentTask');
 
 const novaCore =
-  document.getElementById('novaCore');
-
-const systemClock =
-  document.getElementById('systemClock');
-
-const systemDate =
-  document.getElementById('systemDate');
+  $('novaCore');
 
 const backendStatus =
-  document.getElementById('backendStatus');
+  $('backendStatus');
 
 const aiStatus =
-  document.getElementById('aiStatus');
+  $('aiStatus');
+
+const systemClock =
+  $('systemClock');
+
+const systemDate =
+  $('systemDate');
 
 
-/* RIGHT PANEL */
+/* =========================================
+   DASHBOARD
+========================================= */
 
 const weatherTemperature =
-  document.getElementById('weatherTemperature');
+  $('weatherTemperature');
 
 const weatherCondition =
-  document.getElementById('weatherCondition');
+  $('weatherCondition');
 
 const weatherLocation =
-  document.getElementById('weatherLocation');
+  $('weatherLocation');
 
 const weatherHumidity =
-  document.getElementById('weatherHumidity');
+  $('weatherHumidity');
 
 const weatherWind =
-  document.getElementById('weatherWind');
+  $('weatherWind');
 
 const wifiName =
-  document.getElementById('wifiName');
+  $('wifiName');
 
 const wifiSignal =
-  document.getElementById('wifiSignal');
+  $('wifiSignal');
 
 const bluetoothDevice =
-  document.getElementById('bluetoothDevice');
+  $('bluetoothDevice');
 
 const bluetoothStatus =
-  document.getElementById('bluetoothStatus');
+  $('bluetoothStatus');
 
 const cpuUsage =
-  document.getElementById('cpuUsage');
+  $('cpuUsage');
 
 const ramUsage =
-  document.getElementById('ramUsage');
+  $('ramUsage');
 
 const batteryLevel =
-  document.getElementById('batteryLevel');
+  $('batteryLevel');
 
 const newsList =
-  document.getElementById('newsList');
+  $('newsList');
 
 const newsStatus =
-  document.getElementById('newsStatus');
+  $('newsStatus');
+
+
+/* =========================================
+   MEDIA
+========================================= */
 
 const posterImage =
-  document.getElementById('posterImage');
+  $('posterImage');
 
 const posterPlaceholder =
-  document.getElementById('posterPlaceholder');
+  $('posterPlaceholder');
 
 const posterCaption =
-  document.getElementById('posterCaption');
+  $('posterCaption');
+
+
+/* =========================================
+   SETTINGS
+========================================= */
+
+const settingsButton =
+  $('settingsButton');
+
+const settingsOverlay =
+  $('settingsOverlay');
+
+const closeSettingsButton =
+  $('closeSettingsButton');
+
+const settingsSaveStatus =
+  $('settingsSaveStatus');
+
+
+/* =========================================
+   NOTIFICATIONS
+========================================= */
+
+const notificationsButton =
+  $('notificationsButton');
+
+const notificationPanel =
+  $('notificationPanel');
+
+const closeNotificationsButton =
+  $('closeNotificationsButton');
+
+const notificationList =
+  $('notificationList');
+
+const notificationBadge =
+  $('notificationBadge');
+
+
+/* =========================================
+   CAMERA
+========================================= */
+
+const cameraCard =
+  $('cameraCard');
+
+const cameraPreview =
+  $('cameraPreview');
+
+const cameraPlaceholder =
+  $('cameraPlaceholder');
+
+const cameraDeviceName =
+  $('cameraDeviceName');
+
+const cameraHeaderStatus =
+  $('cameraHeaderStatus');
+
+const cameraLiveBadge =
+  $('cameraLiveBadge');
+
+
+/* =========================================
+   SETTINGS INPUTS
+========================================= */
+
+const cameraEnabledSetting =
+  $('cameraEnabledSetting');
+
+const cameraSidebarSetting =
+  $('cameraSidebarSetting');
+
+const cameraMirrorSetting =
+  $('cameraMirrorSetting');
+
+const cameraDeviceSelect =
+  $('cameraDeviceSelect');
+
+const mediaRotationSetting =
+  $('mediaRotationSetting');
+
+const mediaRotationSpeedSetting =
+  $('mediaRotationSpeedSetting');
+
+const desktopNotificationsSetting =
+  $('desktopNotificationsSetting');
+
+const batteryNotificationsSetting =
+  $('batteryNotificationsSetting');
+
+const newsNotificationsSetting =
+  $('newsNotificationsSetting');
+
+const startupSetting =
+  $('startupSetting');
+
+const traySetting =
+  $('traySetting');
+
+const enhancedAnimationsSetting =
+  $('enhancedAnimationsSetting');
+
+const voiceRepliesSetting =
+  $('voiceRepliesSetting');
+
+const voiceStatus =
+  $('voiceStatus');
+
+
+/* =========================================
+   SETTINGS DATA
+========================================= */
+
+const defaultSettings = {
+  cameraEnabled: false,
+  cameraSidebar: false,
+  cameraMirror: true,
+  cameraDevice: '',
+
+  mediaRotation: true,
+  mediaRotationSpeed: 8000,
+
+  desktopNotifications: true,
+  batteryNotifications: true,
+  newsNotifications: false,
+
+  startup: false,
+  tray: true,
+
+  enhancedAnimations: true,
+  voiceReplies: true
+};
+
+
+let settings =
+  loadSettings();
+
+
+function loadSettings() {
+  try {
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          'nova-settings'
+        ) ||
+        '{}'
+      );
+
+    return {
+      ...defaultSettings,
+      ...saved
+    };
+
+  } catch {
+    return {
+      ...defaultSettings
+    };
+  }
+}
+
+
+function saveSettings() {
+  localStorage.setItem(
+    'nova-settings',
+    JSON.stringify(settings)
+  );
+
+  if (settingsSaveStatus) {
+    settingsSaveStatus.textContent =
+      'Settings saved.';
+
+    setTimeout(
+      () => {
+        settingsSaveStatus.textContent =
+          'Settings saved automatically.';
+      },
+      1200
+    );
+  }
+}
+
+
+function loadSettingsIntoUI() {
+  cameraEnabledSetting.checked =
+    settings.cameraEnabled;
+
+  cameraSidebarSetting.checked =
+    settings.cameraSidebar;
+
+  cameraMirrorSetting.checked =
+    settings.cameraMirror;
+
+  mediaRotationSetting.checked =
+    settings.mediaRotation;
+
+  mediaRotationSpeedSetting.value =
+    String(
+      settings.mediaRotationSpeed
+    );
+
+  desktopNotificationsSetting.checked =
+    settings.desktopNotifications;
+
+  batteryNotificationsSetting.checked =
+    settings.batteryNotifications;
+
+  newsNotificationsSetting.checked =
+    settings.newsNotifications;
+
+  startupSetting.checked =
+    settings.startup;
+
+  traySetting.checked =
+    settings.tray;
+
+  enhancedAnimationsSetting.checked =
+    settings.enhancedAnimations;
+
+  voiceRepliesSetting.checked =
+    settings.voiceReplies;
+
+  applyAnimationSetting();
+
+  updateVoiceStatus();
+}
+
+
+/* =========================================
+   SETTINGS PANEL
+========================================= */
+
+function openSettings() {
+  settingsOverlay.hidden =
+    false;
+
+  document.body.classList.add(
+    'modal-open'
+  );
+}
+
+
+function closeSettings() {
+  settingsOverlay.hidden =
+    true;
+
+  document.body.classList.remove(
+    'modal-open'
+  );
+}
+
+
+settingsButton
+  ?.addEventListener(
+    'click',
+    openSettings
+  );
+
+
+closeSettingsButton
+  ?.addEventListener(
+    'click',
+    closeSettings
+  );
+
+
+settingsOverlay
+  ?.addEventListener(
+    'click',
+    event => {
+      if (
+        event.target ===
+        settingsOverlay
+      ) {
+        closeSettings();
+      }
+    }
+  );
+
+
+/* =========================================
+   NOTIFICATIONS
+========================================= */
+
+let notifications =
+  [];
+
+let unreadNotifications =
+  0;
+
+
+function renderNotifications() {
+  notificationList.innerHTML =
+    '';
+
+  if (
+    notifications.length ===
+    0
+  ) {
+    const empty =
+      document.createElement(
+        'div'
+      );
+
+    empty.className =
+      'notification-empty';
+
+    empty.textContent =
+      'No notifications.';
+
+    notificationList.appendChild(
+      empty
+    );
+
+  } else {
+    for (
+      const notification
+      of notifications
+    ) {
+      const card =
+        document.createElement(
+          'div'
+        );
+
+      card.className =
+        'notification-entry';
+
+
+      const title =
+        document.createElement(
+          'div'
+        );
+
+      title.className =
+        'notification-entry-title';
+
+      title.textContent =
+        notification.title;
+
+
+      const body =
+        document.createElement(
+          'div'
+        );
+
+      body.className =
+        'notification-entry-body';
+
+      body.textContent =
+        notification.body;
+
+
+      const time =
+        document.createElement(
+          'div'
+        );
+
+      time.className =
+        'notification-entry-time';
+
+      time.textContent =
+        notification.time;
+
+
+      card.append(
+        title,
+        body,
+        time
+      );
+
+
+      notificationList.appendChild(
+        card
+      );
+    }
+  }
+
+
+  if (
+    unreadNotifications >
+    0
+  ) {
+    notificationBadge.hidden =
+      false;
+
+    notificationBadge.textContent =
+      String(
+        unreadNotifications
+      );
+
+  } else {
+    notificationBadge.hidden =
+      true;
+  }
+}
+
+
+function addNotification(
+  title,
+  body,
+  desktop = true
+) {
+  notifications.unshift({
+    title,
+    body,
+
+    time:
+      new Date()
+        .toLocaleTimeString()
+  });
+
+
+  notifications =
+    notifications.slice(
+      0,
+      40
+    );
+
+
+  unreadNotifications++;
+
+
+  renderNotifications();
+
+
+  if (
+    desktop &&
+    settings.desktopNotifications
+  ) {
+    window.novaAPI
+      ?.showNotification({
+        title,
+        body
+      });
+  }
+}
+
+
+function openNotifications() {
+  notificationPanel.hidden =
+    false;
+
+  unreadNotifications =
+    0;
+
+  renderNotifications();
+}
+
+
+function closeNotifications() {
+  notificationPanel.hidden =
+    true;
+}
+
+
+notificationsButton
+  ?.addEventListener(
+    'click',
+    openNotifications
+  );
+
+
+closeNotificationsButton
+  ?.addEventListener(
+    'click',
+    closeNotifications
+  );
+
+
+renderNotifications();
 
 
 /* =========================================
@@ -101,33 +586,33 @@ function updateClock() {
   const now =
     new Date();
 
-  if (systemClock) {
-    systemClock.textContent =
-      now.toLocaleTimeString(
-        [],
-        {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        }
-      );
-  }
 
-  if (systemDate) {
-    systemDate.textContent =
-      now.toLocaleDateString(
-        [],
-        {
-          weekday: 'long',
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric'
-        }
-      );
-  }
+  systemClock.textContent =
+    now.toLocaleTimeString(
+      [],
+      {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }
+    );
+
+
+  systemDate.textContent =
+    now.toLocaleDateString(
+      [],
+      {
+        weekday: 'long',
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      }
+    );
 }
 
+
 updateClock();
+
 
 setInterval(
   updateClock,
@@ -142,20 +627,19 @@ setInterval(
 function setCoreState(
   state
 ) {
-  if (!novaCore) {
-    return;
-  }
-
   novaCore.classList.remove(
     'thinking',
     'speaking',
     'error'
   );
 
+
   if (
-    state === 'thinking' ||
-    state === 'speaking' ||
-    state === 'error'
+    [
+      'thinking',
+      'speaking',
+      'error'
+    ].includes(state)
   ) {
     novaCore.classList.add(
       state
@@ -170,7 +654,7 @@ function setCoreState(
 
 function createFeedCard(
   type,
-  title,
+  titleText,
   text
 ) {
   const card =
@@ -178,48 +662,50 @@ function createFeedCard(
       'div'
     );
 
+
   card.className =
     `feed-card ${type}`;
 
-  const header =
+
+  const title =
     document.createElement(
       'div'
     );
 
-  header.className =
+
+  title.className =
     'feed-card-header';
 
-  header.textContent =
-    title;
+
+  title.textContent =
+    titleText;
+
 
   const body =
     document.createElement(
       'div'
     );
 
+
   body.className =
     'feed-card-body';
+
 
   body.textContent =
     text;
 
-  card.appendChild(
-    header
-  );
 
-  card.appendChild(
+  card.append(
+    title,
     body
   );
+
 
   return card;
 }
 
 
-function scrollCommandFeed() {
-  if (!commandFeed) {
-    return;
-  }
-
+function scrollFeed() {
   commandFeed.scrollTo({
     top:
       commandFeed.scrollHeight,
@@ -233,138 +719,96 @@ function scrollCommandFeed() {
 function addUserMessage(
   text
 ) {
-  if (!commandFeed) {
-    return;
-  }
-
-  const card =
+  commandFeed.appendChild(
     createFeedCard(
       'user-message',
       'YOU',
       text
-    );
-
-  commandFeed.appendChild(
-    card
+    )
   );
 
-  scrollCommandFeed();
+
+  scrollFeed();
 }
-
-
-let firstNovaMessageUsed =
-  false;
 
 
 function addNovaMessage(
   text
 ) {
-  if (
-    !firstNovaMessageUsed &&
-    responseBox
-  ) {
-    responseBox.textContent =
-      text;
+  responseBox.textContent =
+    text;
 
-    firstNovaMessageUsed =
-      true;
 
-    scrollCommandFeed();
-
-    return;
-  }
-
-  if (!commandFeed) {
-    return;
-  }
-
-  const card =
+  commandFeed.appendChild(
     createFeedCard(
       'nova-message',
       'NOVA',
       text
-    );
-
-  commandFeed.appendChild(
-    card
+    )
   );
 
-  scrollCommandFeed();
+
+  scrollFeed();
 }
 
 
 function addSystemMessage(
   text
 ) {
-  if (!commandFeed) {
-    return;
-  }
-
-  const card =
+  commandFeed.appendChild(
     createFeedCard(
       'system-message',
       'SYSTEM',
       text
-    );
-
-  commandFeed.appendChild(
-    card
+    )
   );
 
-  scrollCommandFeed();
+
+  scrollFeed();
 }
 
 
 /* =========================================
-   NOVA VOICE
+   VOICE
 ========================================= */
+
+function updateVoiceStatus() {
+  if (!voiceStatus) {
+    return;
+  }
+
+
+  voiceStatus.textContent =
+    settings.voiceReplies
+      ? 'ENABLED'
+      : 'OFF';
+}
+
 
 function chooseNovaVoice() {
   const voices =
-    window
-      .speechSynthesis
-      ?.getVoices() ||
-    [];
+    speechSynthesis
+      .getVoices();
 
-  if (
-    voices.length === 0
-  ) {
-    return null;
-  }
-
-  const preferredNames = [
-    'Microsoft David',
-    'Microsoft Mark',
-    'Microsoft Zira'
-  ];
-
-  for (
-    const preferredName
-    of preferredNames
-  ) {
-    const voice =
-      voices.find(
-        (item) =>
-          item.name
-            .toLowerCase()
-            .includes(
-              preferredName
-                .toLowerCase()
-            )
-      );
-
-    if (voice) {
-      return voice;
-    }
-  }
 
   return (
     voices.find(
-      (voice) =>
+      voice =>
+        /Microsoft (David|Mark|Zira)/i
+          .test(
+            voice.name
+          )
+    ) ||
+
+    voices.find(
+      voice =>
         voice.lang
           ?.toLowerCase()
-          .startsWith('en')
+          .startsWith(
+            'en'
+          )
     ) ||
+
     voices[0]
   );
 }
@@ -374,40 +818,39 @@ function speakText(
   text
 ) {
   if (
-    !text ||
-    !(
-      'speechSynthesis'
-      in window
-    )
+    !settings.voiceReplies ||
+    !text
   ) {
     return;
   }
 
-  window
-    .speechSynthesis
-    .cancel();
+
+  speechSynthesis.cancel();
+
 
   const utterance =
     new SpeechSynthesisUtterance(
       text
     );
 
+
   const voice =
     chooseNovaVoice();
+
 
   if (voice) {
     utterance.voice =
       voice;
   }
 
+
   utterance.rate =
     1;
+
 
   utterance.pitch =
     0.88;
 
-  utterance.volume =
-    1;
 
   utterance.onstart =
     () => {
@@ -415,21 +858,15 @@ function speakText(
         'speaking'
       );
 
-      if (activityStatus) {
-        activityStatus.textContent =
-          'SPEAKING';
-      }
 
-      if (currentTask) {
-        currentTask.textContent =
-          'VOICE RESPONSE';
-      }
+      activityStatus.textContent =
+        'SPEAKING';
 
-      if (statusText) {
-        statusText.textContent =
-          'NOVA SPEAKING';
-      }
+
+      statusText.textContent =
+        'NOVA SPEAKING';
     };
+
 
   utterance.onend =
     () => {
@@ -437,39 +874,478 @@ function speakText(
         'idle'
       );
 
-      if (activityStatus) {
-        activityStatus.textContent =
-          'IDLE';
-      }
 
-      if (currentTask) {
-        currentTask.textContent =
-          'STANDBY';
-      }
+      activityStatus.textContent =
+        'IDLE';
 
-      if (statusText) {
-        statusText.textContent =
-          'SYSTEMS ONLINE';
-      }
+
+      statusText.textContent =
+        'SYSTEMS ONLINE';
     };
 
-  utterance.onerror =
-    () => {
-      setCoreState(
-        'idle'
+
+  speechSynthesis.speak(
+    utterance
+  );
+}
+
+
+/* =========================================
+   CAMERA
+========================================= */
+
+let cameraStream =
+  null;
+
+
+async function stopCamera() {
+  if (cameraStream) {
+    cameraStream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
       );
 
-      if (activityStatus) {
-        activityStatus.textContent =
-          'IDLE';
-      }
-    };
 
-  window
-    .speechSynthesis
-    .speak(
-      utterance
+    cameraStream =
+      null;
+  }
+
+
+  if (cameraPreview) {
+    cameraPreview.srcObject =
+      null;
+  }
+
+
+  cameraHeaderStatus.textContent =
+    'OFF';
+
+
+  cameraPlaceholder.hidden =
+    false;
+
+
+  cameraPlaceholder.textContent =
+    'CAMERA OFF';
+
+
+  cameraLiveBadge.textContent =
+    'OFF';
+
+
+  cameraDeviceName.textContent =
+    'No camera selected';
+}
+
+
+async function populateCameraDevices() {
+  try {
+    const devices =
+      await navigator
+        .mediaDevices
+        .enumerateDevices();
+
+
+    const cameras =
+      devices.filter(
+        device =>
+          device.kind ===
+          'videoinput'
+      );
+
+
+    cameraDeviceSelect.innerHTML =
+      '';
+
+
+    const defaultOption =
+      document.createElement(
+        'option'
+      );
+
+
+    defaultOption.value =
+      '';
+
+
+    defaultOption.textContent =
+      'Default Camera';
+
+
+    cameraDeviceSelect.appendChild(
+      defaultOption
     );
+
+
+    cameras.forEach(
+      (
+        camera,
+        index
+      ) => {
+        const option =
+          document.createElement(
+            'option'
+          );
+
+
+        option.value =
+          camera.deviceId;
+
+
+        option.textContent =
+          camera.label ||
+          `Camera ${index + 1}`;
+
+
+        cameraDeviceSelect.appendChild(
+          option
+        );
+      }
+    );
+
+
+    cameraDeviceSelect.value =
+      settings.cameraDevice ||
+      '';
+
+  } catch (
+    error
+  ) {
+    console.error(
+      'Camera listing failed:',
+      error
+    );
+  }
+}
+
+
+function applyCameraMirror() {
+  if (!cameraPreview) {
+    return;
+  }
+
+
+  cameraPreview.style.transform =
+    settings.cameraMirror
+      ? 'scaleX(-1)'
+      : 'scaleX(1)';
+}
+
+
+function updateCameraCardVisibility() {
+  cameraCard.hidden =
+    !(
+      settings.cameraEnabled &&
+      settings.cameraSidebar
+    );
+}
+
+
+async function startCamera() {
+  if (
+    !settings.cameraEnabled
+  ) {
+    await stopCamera();
+
+    updateCameraCardVisibility();
+
+    return;
+  }
+
+
+  try {
+    await stopCamera();
+
+
+    const videoConstraints =
+      settings.cameraDevice
+        ? {
+            deviceId: {
+              exact:
+                settings.cameraDevice
+            },
+
+            width: {
+              ideal: 1280
+            },
+
+            height: {
+              ideal: 720
+            }
+          }
+
+        : {
+            width: {
+              ideal: 1280
+            },
+
+            height: {
+              ideal: 720
+            }
+          };
+
+
+    cameraStream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+          video:
+            videoConstraints,
+
+          audio:
+            false
+        });
+
+
+    cameraPreview.srcObject =
+      cameraStream;
+
+
+    await cameraPreview.play();
+
+
+    cameraHeaderStatus.textContent =
+      'ACTIVE';
+
+
+    cameraHeaderStatus.classList.add(
+      'online'
+    );
+
+
+    cameraPlaceholder.hidden =
+      true;
+
+
+    cameraLiveBadge.textContent =
+      'ACTIVE';
+
+
+    applyCameraMirror();
+
+
+    updateCameraCardVisibility();
+
+
+    await populateCameraDevices();
+
+
+    const track =
+      cameraStream
+        .getVideoTracks()[0];
+
+
+    cameraDeviceName.textContent =
+      track?.label ||
+      'Camera active';
+
+
+  } catch (
+    error
+  ) {
+    console.error(
+      'Camera error:',
+      error
+    );
+
+
+    cameraStream =
+      null;
+
+
+    settings.cameraEnabled =
+      false;
+
+
+    cameraEnabledSetting.checked =
+      false;
+
+
+    saveSettings();
+
+
+    cameraHeaderStatus.textContent =
+      'ERROR';
+
+
+    cameraHeaderStatus.classList.remove(
+      'online'
+    );
+
+
+    cameraPlaceholder.hidden =
+      false;
+
+
+    cameraPlaceholder.textContent =
+      'CAMERA UNAVAILABLE';
+
+
+    addNotification(
+      'Camera Error',
+      'NOVA could not access the webcam.',
+      false
+    );
+  }
+}
+
+
+/* =========================================
+   CAMERA VISION
+========================================= */
+
+/*
+   NOVA does NOT constantly upload video.
+
+   A single JPEG frame is captured only
+   when:
+   1. the camera is enabled, AND
+   2. the user's message looks like a request
+      to inspect what the camera can see.
+*/
+
+function isVisionRequest(
+  message
+) {
+  const text =
+    message
+      .toLowerCase()
+      .trim();
+
+
+  const visionPatterns = [
+    /\bcan you see\b/,
+    /\bdo you see\b/,
+    /\bwhat do you see\b/,
+    /\bwhat can you see\b/,
+    /\blook at me\b/,
+    /\blook at this\b/,
+    /\blook through\b/,
+    /\blook at the camera\b/,
+    /\bsee me\b/,
+    /\bdescribe me\b/,
+    /\bdescribe what you see\b/,
+    /\bdescribe the camera\b/,
+    /\bwhat am i holding\b/,
+    /\bwhat is in front of\b/,
+    /\bwhat's in front of\b/,
+    /\bidentify this\b/,
+    /\brecognize this\b/,
+    /\bcheck the camera\b/,
+    /\buse the camera\b/,
+    /\buse camera\b/,
+    /\bcamera view\b/,
+    /\bwebcam\b/
+  ];
+
+
+  return visionPatterns.some(
+    pattern =>
+      pattern.test(text)
+  );
+}
+
+
+function cameraIsReady() {
+  return Boolean(
+    settings.cameraEnabled &&
+    cameraStream &&
+    cameraPreview &&
+    cameraPreview.readyState >= 2 &&
+    cameraPreview.videoWidth > 0 &&
+    cameraPreview.videoHeight > 0
+  );
+}
+
+
+function captureCameraFrame() {
+  if (
+    !cameraIsReady()
+  ) {
+    return null;
+  }
+
+
+  /*
+     Keep the image reasonably small.
+
+     The actual webcam can still display
+     at higher resolution in the sidebar.
+  */
+
+  const targetWidth =
+    640;
+
+
+  const sourceWidth =
+    cameraPreview.videoWidth;
+
+
+  const sourceHeight =
+    cameraPreview.videoHeight;
+
+
+  const ratio =
+    sourceHeight /
+    sourceWidth;
+
+
+  const targetHeight =
+    Math.max(
+      1,
+      Math.round(
+        targetWidth *
+        ratio
+      )
+    );
+
+
+  const canvas =
+    document.createElement(
+      'canvas'
+    );
+
+
+  canvas.width =
+    targetWidth;
+
+
+  canvas.height =
+    targetHeight;
+
+
+  const context =
+    canvas.getContext(
+      '2d'
+    );
+
+
+  if (!context) {
+    return null;
+  }
+
+
+  /*
+     We intentionally capture the actual
+     camera orientation, not the CSS mirrored
+     sidebar preview.
+  */
+
+  context.drawImage(
+    cameraPreview,
+    0,
+    0,
+    targetWidth,
+    targetHeight
+  );
+
+
+  return canvas.toDataURL(
+    'image/jpeg',
+    0.72
+  );
 }
 
 
@@ -480,65 +1356,129 @@ function speakText(
 async function sendMessage() {
   const message =
     messageInput
-      ?.value
-      ?.trim();
+      .value
+      .trim();
+
 
   if (!message) {
     return;
   }
 
+
   addUserMessage(
     message
   );
 
+
   messageInput.value =
     '';
+
 
   messageInput.disabled =
     true;
 
+
   sendButton.disabled =
     true;
 
-  window
-    .speechSynthesis
-    ?.cancel();
+
+  speechSynthesis.cancel();
+
 
   setCoreState(
     'thinking'
   );
 
-  if (activityStatus) {
-    activityStatus.textContent =
-      'THINKING';
-  }
 
-  if (currentTask) {
-    currentTask.textContent =
-      message
-        .toUpperCase()
-        .slice(
-          0,
-          32
-        );
-  }
+  activityStatus.textContent =
+    'THINKING';
 
-  if (statusText) {
-    statusText.textContent =
-      'PROCESSING COMMAND';
-  }
 
-  if (aiStatus) {
-    aiStatus.textContent =
-      'THINKING';
-  }
+  currentTask.textContent =
+    message
+      .toUpperCase()
+      .slice(
+        0,
+        34
+      );
+
+
+  statusText.textContent =
+    'PROCESSING COMMAND';
+
+
+  aiStatus.textContent =
+    'THINKING';
+
 
   try {
+    let cameraImage =
+      null;
+
+
+    const wantsVision =
+      isVisionRequest(
+        message
+      );
+
+
+    if (
+      wantsVision
+    ) {
+      if (
+        !settings.cameraEnabled
+      ) {
+        addSystemMessage(
+          'Camera vision requested, but the camera is disabled. Enable Camera in Settings first.'
+        );
+
+      } else if (
+        !cameraIsReady()
+      ) {
+        addSystemMessage(
+          'Camera is enabled but not ready yet.'
+        );
+
+      } else {
+        cameraImage =
+          captureCameraFrame();
+
+
+        if (cameraImage) {
+          statusText.textContent =
+            'ANALYZING CAMERA';
+
+
+          activityStatus.textContent =
+            'VISION';
+
+
+          currentTask.textContent =
+            'CAMERA ANALYSIS';
+        }
+      }
+    }
+
+
+    const payload = {
+      message
+    };
+
+
+    if (
+      cameraImage
+    ) {
+      payload.image =
+        cameraImage;
+    }
+
+
     const response =
       await fetch(
         'http://127.0.0.1:3000/chat',
         {
-          method: 'POST',
+          method:
+            'POST',
 
           headers: {
             'Content-Type':
@@ -546,91 +1486,118 @@ async function sendMessage() {
           },
 
           body:
-            JSON.stringify({
-              message
-            })
+            JSON.stringify(
+              payload
+            )
         }
       );
+
 
     const data =
       await response.json();
 
+
     if (!response.ok) {
       throw new Error(
+        data?.details ||
         data?.error ||
-        'Nova request failed'
+        'NOVA request failed'
       );
     }
+
 
     const answer =
       data
         ?.response
         ?.content ||
-      'Nova returned no text response.';
+      'NOVA returned no response.';
+
 
     addNovaMessage(
       answer
     );
 
-    if (backendStatus) {
-      backendStatus.textContent =
-        'ONLINE';
+
+    if (
+      data?.visionUsed
+    ) {
+      addSystemMessage(
+        'Camera snapshot analyzed.'
+      );
     }
 
-    if (aiStatus) {
-      aiStatus.textContent =
-        'READY';
+
+    aiStatus.textContent =
+      'READY';
+
+
+    currentTask.textContent =
+      'STANDBY';
+
+
+    if (
+      settings.voiceReplies
+    ) {
+      speakText(
+        answer
+      );
+
+    } else {
+      setCoreState(
+        'idle'
+      );
+
+
+      activityStatus.textContent =
+        'IDLE';
+
+
+      statusText.textContent =
+        'SYSTEMS ONLINE';
     }
 
-    speakText(
-      answer
-    );
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
     console.error(
-      'Chat error:',
       error
     );
 
+
     addSystemMessage(
-      'Unable to communicate with the Nova backend.'
+      `NOVA error: ${
+        error?.message ||
+        'Unable to communicate with NOVA.'
+      }`
     );
+
+
+    backendStatus.textContent =
+      'OFFLINE';
+
+
+    aiStatus.textContent =
+      'ERROR';
+
 
     setCoreState(
       'error'
     );
 
-    if (backendStatus) {
-      backendStatus.textContent =
-        'OFFLINE';
-    }
 
-    if (aiStatus) {
-      aiStatus.textContent =
-        'ERROR';
-    }
+    statusText.textContent =
+      'SYSTEM ERROR';
 
-    if (activityStatus) {
-      activityStatus.textContent =
-        'ERROR';
-    }
-
-    if (currentTask) {
-      currentTask.textContent =
-        'CONNECTION FAILURE';
-    }
-
-    if (statusText) {
-      statusText.textContent =
-        'CONNECTION ERROR';
-    }
 
   } finally {
     messageInput.disabled =
       false;
 
+
     sendButton.disabled =
       false;
+
 
     messageInput.focus();
   }
@@ -644,7 +1611,7 @@ async function sendMessage() {
 function weatherCodeToText(
   code
 ) {
-  const map = {
+  const codes = {
     0: 'Clear',
     1: 'Mostly Clear',
     2: 'Partly Cloudy',
@@ -657,36 +1624,26 @@ function weatherCodeToText(
     53: 'Drizzle',
     55: 'Heavy Drizzle',
 
-    56: 'Freezing Drizzle',
-    57: 'Freezing Drizzle',
-
     61: 'Light Rain',
     63: 'Rain',
     65: 'Heavy Rain',
-
-    66: 'Freezing Rain',
-    67: 'Freezing Rain',
 
     71: 'Light Snow',
     73: 'Snow',
     75: 'Heavy Snow',
 
-    77: 'Snow Grains',
-
     80: 'Rain Showers',
     81: 'Rain Showers',
     82: 'Heavy Showers',
-
-    85: 'Snow Showers',
-    86: 'Heavy Snow Showers',
 
     95: 'Thunderstorm',
     96: 'Thunderstorm',
     99: 'Thunderstorm'
   };
 
+
   return (
-    map[code] ||
+    codes[code] ||
     'Unknown'
   );
 }
@@ -696,137 +1653,105 @@ function updateWeather(
   weather
 ) {
   if (
-    !weather ||
-    weather.success !== true
+    weather?.success !==
+    true
   ) {
-    if (weatherTemperature) {
-      weatherTemperature.textContent =
-        '--°C';
-    }
+    weatherTemperature.textContent =
+      '--°C';
 
-    if (weatherCondition) {
-      weatherCondition.textContent =
-        'Unavailable';
-    }
 
-    if (weatherLocation) {
-      weatherLocation.textContent =
-        '';
-    }
+    weatherCondition.textContent =
+      'Unavailable';
 
-    if (weatherHumidity) {
-      weatherHumidity.textContent =
-        '--';
-    }
 
-    if (weatherWind) {
-      weatherWind.textContent =
-        '--';
-    }
+    weatherLocation.textContent =
+      'Location unavailable';
+
 
     return;
   }
 
-  if (weatherTemperature) {
-    weatherTemperature.textContent =
-      `${weather.temperature_c ?? '--'}°C`;
-  }
 
-  if (weatherCondition) {
-    weatherCondition.textContent =
-      weatherCodeToText(
-        weather.weather_code
-      );
-  }
+  weatherTemperature.textContent =
+    `${weather.temperature_c ?? '--'}°C`;
 
-  if (weatherLocation) {
-    weatherLocation.textContent =
-      [
-        weather.city,
-        weather.region,
-        weather.country
-      ]
-        .filter(Boolean)
-        .join(', ');
-  }
 
-  if (weatherHumidity) {
-    weatherHumidity.textContent =
-      `${weather.humidity_percent ?? '--'}%`;
-  }
+  weatherCondition.textContent =
+    weatherCodeToText(
+      weather.weather_code
+    );
 
-  if (weatherWind) {
-    weatherWind.textContent =
-      `${weather.wind_speed_kmh ?? '--'} km/h`;
-  }
+
+  weatherLocation.textContent =
+    [
+      weather.city,
+      weather.region,
+      weather.country
+    ]
+      .filter(Boolean)
+      .join(', ');
+
+
+  weatherHumidity.textContent =
+    `${weather.humidity_percent ?? '--'}%`;
+
+
+  weatherWind.textContent =
+    `${weather.wind_speed_kmh ?? '--'} km/h`;
 }
 
 
 /* =========================================
-   BLUETOOTH
+   BLUETOOTH DISPLAY
 ========================================= */
 
-function findUsefulBluetoothDevice(
+function usefulBluetoothDevice(
   bluetooth
 ) {
   const devices =
     bluetooth
       ?.active_devices ||
-    bluetooth
-      ?.devices ||
     [];
 
-  if (
-    !Array.isArray(
-      devices
-    )
-  ) {
-    return null;
-  }
 
-  const ignoredWords = [
-    'intel',
-    'generic',
-    'service',
-    'profile',
-    'rfcomm',
-    'transport',
-    'enumerator',
-    'adapter',
-    'device information',
-    'personal area',
-    'phonebook',
-    'object push',
-    'sim access'
-  ];
+  const ignored =
+    [
+      'intel',
+      'service',
+      'generic',
+      'profile',
+      'transport',
+      'rfcomm',
+      'personal area',
+      'phonebook',
+      'object push'
+    ];
 
-  return (
-    devices.find(
-      (device) => {
-        const name =
-          String(
-            device?.name ||
-            ''
-          ).trim();
 
-        if (!name) {
-          return false;
-        }
+  return devices.find(
+    device => {
+      const name =
+        String(
+          device?.name ||
+          ''
+        )
+          .trim();
 
-        const lower =
-          name.toLowerCase();
 
-        return (
-          !ignoredWords.some(
-            (word) =>
-              lower.includes(
-                word
-              )
-          )
-        );
-      }
-    ) ||
-    null
+      const lower =
+        name.toLowerCase();
+
+
+      return (
+        name &&
+        !ignored.some(
+          value =>
+            lower.includes(
+              value
+            )
+        )
+      );
+    }
   );
 }
 
@@ -835,146 +1760,159 @@ function findUsefulBluetoothDevice(
    NEWS
 ========================================= */
 
-function formatNewsTime(
-  published
-) {
-  if (!published) {
-    return '';
-  }
-
-  const date =
-    new Date(
-      published
-    );
-
-  if (
-    Number.isNaN(
-      date.getTime()
-    )
-  ) {
-    return '';
-  }
-
-  return date.toLocaleTimeString(
-    [],
-    {
-      hour: '2-digit',
-      minute: '2-digit'
-    }
-  );
-}
+let lastHeadline =
+  null;
 
 
 function updateNews(
   news
 ) {
-  if (!newsList) {
-    return;
-  }
-
   newsList.innerHTML =
     '';
 
+
   if (
-    !news ||
-    news.success !== true ||
+    news?.success !== true ||
     !Array.isArray(
       news.headlines
-    ) ||
-    news.headlines.length === 0
+    )
   ) {
-    if (newsStatus) {
-      newsStatus.textContent =
-        'OFFLINE';
-    }
+    newsStatus.textContent =
+      'OFFLINE';
 
-    const empty =
+
+    const unavailable =
       document.createElement(
         'div'
       );
 
-    empty.className =
+
+    unavailable.className =
       'news-item';
 
-    empty.textContent =
-      'No live headlines available.';
+
+    unavailable.textContent =
+      'News unavailable.';
+
 
     newsList.appendChild(
-      empty
+      unavailable
     );
+
 
     return;
   }
 
-  if (newsStatus) {
-    newsStatus.textContent =
-      'LIVE';
-  }
 
-  for (
-    const headline
-    of news.headlines
+  newsStatus.textContent =
+    'LIVE';
+
+
+  const newest =
+    news.headlines[0];
+
+
+  if (
+    newest &&
+    lastHeadline &&
+    newest.title !==
+      lastHeadline &&
+    settings.newsNotifications
   ) {
-    const item =
-      document.createElement(
-        'div'
-      );
-
-    item.className =
-      'news-item';
-
-    const title =
-      document.createElement(
-        'div'
-      );
-
-    title.className =
-      'news-title';
-
-    title.textContent =
-      headline.title ||
-      'Untitled headline';
-
-    const metadata =
-      document.createElement(
-        'div'
-      );
-
-    metadata.className =
-      'news-meta';
-
-    const source =
-      headline.source ||
-      'News';
-
-    const time =
-      formatNewsTime(
-        headline.published
-      );
-
-    metadata.textContent =
-      time
-        ? `${source} • ${time}`
-        : source;
-
-    item.appendChild(
-      title
-    );
-
-    item.appendChild(
-      metadata
-    );
-
-    newsList.appendChild(
-      item
+    addNotification(
+      'NOVA News',
+      newest.title
     );
   }
+
+
+  if (newest) {
+    lastHeadline =
+      newest.title;
+  }
+
+
+  news.headlines.forEach(
+    headline => {
+      const card =
+        document.createElement(
+          'button'
+        );
+
+
+      card.type =
+        'button';
+
+
+      card.className =
+        'news-item clickable-news';
+
+
+      const title =
+        document.createElement(
+          'div'
+        );
+
+
+      title.className =
+        'news-title';
+
+
+      title.textContent =
+        headline.title;
+
+
+      const meta =
+        document.createElement(
+          'div'
+        );
+
+
+      meta.className =
+        'news-meta';
+
+
+      meta.textContent =
+        headline.source ||
+        'News';
+
+
+      card.append(
+        title,
+        meta
+      );
+
+
+      card.addEventListener(
+        'click',
+        () => {
+          if (
+            headline.link
+          ) {
+            window.novaAPI
+              ?.openExternal(
+                headline.link
+              );
+          }
+        }
+      );
+
+
+      newsList.appendChild(
+        card
+      );
+    }
+  );
 }
 
 
 /* =========================================
    LIVE DASHBOARD
 ========================================= */
+
+let lowBatteryNotified =
+  false;
+
 
 async function refreshDashboard() {
   try {
@@ -983,189 +1921,189 @@ async function refreshDashboard() {
         'http://127.0.0.1:3000/dashboard'
       );
 
+
     if (!response.ok) {
       throw new Error(
-        'Dashboard request failed'
+        'Dashboard failed'
       );
     }
+
 
     const data =
       await response.json();
 
-    if (backendStatus) {
-      backendStatus.textContent =
-        'ONLINE';
-    }
+
+    backendStatus.textContent =
+      'ONLINE';
 
 
-    /* SYSTEM */
+    backendStatus.classList.add(
+      'online'
+    );
+
 
     const system =
-      data?.system;
+      data.system;
+
 
     if (
-      system?.success ===
-      true
+      system?.success
     ) {
-      if (cpuUsage) {
-        cpuUsage.textContent =
-          `${system.cpu_usage_percent ?? '--'}%`;
-      }
+      cpuUsage.textContent =
+        `${system.cpu_usage_percent ?? '--'}%`;
 
-      if (ramUsage) {
-        ramUsage.textContent =
-          `${system.memory_usage_percent ?? '--'}%`;
-      }
 
-      const gpu =
-        Array.isArray(
-          system.gpu
-        )
-          ? system.gpu[0]
-          : null;
+      ramUsage.textContent =
+        `${system.memory_usage_percent ?? '--'}%`;
+
 
       if (
-        gpu &&
-        cpuUsage
+        system.gpu
       ) {
         cpuUsage.title =
-          `GPU: ${gpu.name || 'Unknown'} | ${gpu.memory_gb ?? '--'} GB`;
+          `GPU: ${
+            typeof system.gpu ===
+              'string'
+              ? system.gpu
+              : JSON.stringify(
+                  system.gpu
+                )
+          }`;
       }
     }
 
-
-    /* BATTERY */
 
     const battery =
-      data?.battery;
+      data.battery;
+
 
     if (
-      battery
-        ?.battery_present
-    ) {
-      if (batteryLevel) {
-        batteryLevel.textContent =
-          `${battery.percentage ?? '--'}%`;
-
-        batteryLevel.title =
-          battery.status ||
-          'Battery';
-      }
-
-    } else if (
-      batteryLevel
+      battery?.battery_present
     ) {
       batteryLevel.textContent =
-        'N/A';
+        `${battery.percentage ?? '--'}%`;
+
+
+      const percent =
+        Number(
+          battery.percentage
+        );
+
+
+      if (
+        settings
+          .batteryNotifications &&
+        Number.isFinite(
+          percent
+        ) &&
+        percent <= 20 &&
+        !lowBatteryNotified
+      ) {
+        lowBatteryNotified =
+          true;
+
+
+        addNotification(
+          'Low Battery',
+          `Battery is at ${percent}%.`
+        );
+      }
+
+
+      if (
+        percent > 25
+      ) {
+        lowBatteryNotified =
+          false;
+      }
+
+    } else {
+      batteryLevel.textContent =
+        '--%';
     }
 
-
-    /* WIFI */
 
     const wifi =
       data
         ?.wifi
         ?.current_connection;
 
-    if (wifi) {
-      if (wifiName) {
-        wifiName.textContent =
-          wifi.ssid ||
-          'Connected';
-      }
 
-      if (wifiSignal) {
-        wifiSignal.textContent =
-          wifi.signal ||
-          '--';
-      }
-
-    } else {
-      if (wifiName) {
-        wifiName.textContent =
-          'Not connected';
-      }
-
-      if (wifiSignal) {
-        wifiSignal.textContent =
-          '--';
-      }
-    }
+    wifiName.textContent =
+      wifi?.ssid ||
+      'Not connected';
 
 
-    /* BLUETOOTH */
+    wifiSignal.textContent =
+      wifi?.signal ||
+      '--';
+
 
     const bluetooth =
-      data?.bluetooth;
+      data.bluetooth;
+
 
     const btDevice =
-      findUsefulBluetoothDevice(
+      usefulBluetoothDevice(
         bluetooth
       );
 
-    if (
+
+    bluetoothStatus.textContent =
       bluetooth
         ?.bluetooth_available
-    ) {
-      if (bluetoothStatus) {
-        bluetoothStatus.textContent =
-          'AVAILABLE';
-      }
-
-      if (bluetoothDevice) {
-        bluetoothDevice.textContent =
-          btDevice
-            ?.name
-            ?.trim() ||
-          'Bluetooth enabled';
-      }
-
-    } else {
-      if (bluetoothStatus) {
-        bluetoothStatus.textContent =
-          'OFF';
-      }
-
-      if (bluetoothDevice) {
-        bluetoothDevice.textContent =
-          'Unavailable';
-      }
-    }
+        ? 'AVAILABLE'
+        : 'OFF';
 
 
-    /* WEATHER */
+    bluetoothDevice.textContent =
+      btDevice
+        ?.name
+        ?.trim() ||
+
+      (
+        bluetooth
+          ?.bluetooth_available
+          ? 'Bluetooth enabled'
+          : 'Unavailable'
+      );
+
 
     updateWeather(
-      data?.weather
+      data.weather
     );
 
-
-    /* NEWS */
 
     updateNews(
-      data?.news
+      data.news
     );
 
-  } catch (error) {
+
+  } catch (
+    error
+  ) {
     console.error(
-      'Dashboard refresh error:',
       error
     );
 
-    if (backendStatus) {
-      backendStatus.textContent =
-        'OFFLINE';
-    }
 
-    if (newsStatus) {
-      newsStatus.textContent =
-        'OFFLINE';
-    }
+    backendStatus.textContent =
+      'OFFLINE';
+
+
+    backendStatus.classList.remove(
+      'online'
+    );
+
+
+    newsStatus.textContent =
+      'OFFLINE';
   }
 }
 
 
 refreshDashboard();
+
 
 setInterval(
   refreshDashboard,
@@ -1174,264 +2112,511 @@ setInterval(
 
 
 /* =========================================
-   HEALTH CHECK
+   MEDIA AUTO DISCOVERY
 ========================================= */
 
-async function checkBackendHealth() {
+let mediaItems =
+  [];
+
+let mediaIndex =
+  0;
+
+let mediaTimer =
+  null;
+
+
+async function loadMedia() {
   try {
-    const response =
-      await fetch(
-        'http://127.0.0.1:3000/health'
-      );
+    mediaItems =
+      (
+        await window
+          .novaAPI
+          ?.listMedia()
+      ) || [];
 
-    if (!response.ok) {
-      throw new Error();
+
+    if (
+      mediaIndex >=
+      mediaItems.length
+    ) {
+      mediaIndex =
+        0;
     }
 
-    if (backendStatus) {
-      backendStatus.textContent =
-        'ONLINE';
-    }
 
-  } catch {
-    if (backendStatus) {
-      backendStatus.textContent =
-        'OFFLINE';
-    }
-  }
-}
-
-checkBackendHealth();
-
-setInterval(
-  checkBackendHealth,
-  10000
-);
+    showCurrentMedia();
 
 
-/* =========================================
-   MEDIA ROTATION
-========================================= */
+    restartMediaTimer();
 
-const mediaItems = [
-  {
-    file:
-      './media/poster1.jpg',
-
-    caption:
-      'NOVA // POSTER 01'
-  },
-
-  {
-    file:
-      './media/poster2.jpg',
-
-    caption:
-      'NOVA // POSTER 02'
-  },
-
-  {
-    file:
-      './media/poster3.png',
-
-    caption:
-      'NOVA // POSTER 03'
-  },
-
-  {
-    file:
-      './media/meme1.jpg',
-
-    caption:
-      'MEME // 01'
-  },
-
-  {
-    file:
-      './media/meme2.jpg',
-
-    caption:
-      'MEME // 02'
-  },
-
-  {
-    file:
-      './media/meme3.png',
-
-    caption:
-      'MEME // 03'
-  }
-];
-
-let currentMediaIndex =
-  0;
-
-let failedMediaCount =
-  0;
-
-
-function showPosterPlaceholder() {
-  if (posterImage) {
-    posterImage.style.display =
-      'none';
-  }
-
-  if (posterPlaceholder) {
-    posterPlaceholder.style.display =
-      'flex';
-  }
-
-  if (posterCaption) {
-    posterCaption.textContent =
-      'Add images to desktop/media/';
+  } catch (
+    error
+  ) {
+    console.error(
+      'Media loading failed:',
+      error
+    );
   }
 }
 
 
-function displayMediaItem() {
+function showCurrentMedia() {
   if (
-    !posterImage ||
     mediaItems.length ===
     0
   ) {
-    showPosterPlaceholder();
+    posterImage.style.display =
+      'none';
+
+
+    posterPlaceholder.hidden =
+      false;
+
+
+    posterCaption.textContent =
+      'Add images to desktop/media/';
+
 
     return;
   }
 
+
   const item =
     mediaItems[
-      currentMediaIndex
+      mediaIndex
     ];
+
 
   posterImage.onload =
     () => {
-      failedMediaCount =
-        0;
-
-      if (posterPlaceholder) {
-        posterPlaceholder.style.display =
-          'none';
-      }
-
       posterImage.style.display =
         'block';
 
-      if (posterCaption) {
-        posterCaption.textContent =
-          item.caption;
-      }
+
+      posterPlaceholder.hidden =
+        true;
+
+
+      posterCaption.textContent =
+        item.name;
     };
+
 
   posterImage.onerror =
     () => {
-      failedMediaCount++;
-
-      if (
-        failedMediaCount >=
-        mediaItems.length
-      ) {
-        showPosterPlaceholder();
-
-        return;
-      }
-
-      currentMediaIndex =
-        (
-          currentMediaIndex +
-          1
-        ) %
-        mediaItems.length;
-
-      displayMediaItem();
+      nextMedia();
     };
 
-  posterImage.style.display =
-    'none';
 
   posterImage.src =
-    item.file;
+    item.url;
 }
 
 
-function nextMediaItem() {
-  currentMediaIndex =
+function nextMedia() {
+  if (
+    mediaItems.length ===
+    0
+  ) {
+    return;
+  }
+
+
+  mediaIndex =
     (
-      currentMediaIndex +
-      1
+      mediaIndex + 1
     ) %
     mediaItems.length;
 
-  failedMediaCount =
-    0;
 
-  displayMediaItem();
+  showCurrentMedia();
 }
 
-displayMediaItem();
+
+function restartMediaTimer() {
+  if (
+    mediaTimer
+  ) {
+    clearInterval(
+      mediaTimer
+    );
+
+
+    mediaTimer =
+      null;
+  }
+
+
+  if (
+    !settings.mediaRotation ||
+    mediaItems.length < 2
+  ) {
+    return;
+  }
+
+
+  mediaTimer =
+    setInterval(
+      nextMedia,
+      Number(
+        settings.mediaRotationSpeed
+      )
+    );
+}
+
+
+loadMedia();
+
 
 setInterval(
-  nextMediaItem,
-  8000
+  loadMedia,
+  30000
 );
 
 
 /* =========================================
-   EVENTS
+   ANIMATIONS
 ========================================= */
 
-sendButton?.addEventListener(
-  'click',
-  sendMessage
-);
+function applyAnimationSetting() {
+  document.body.classList.toggle(
+    'reduced-effects',
+    !settings.enhancedAnimations
+  );
+}
 
 
-messageInput?.addEventListener(
-  'keydown',
-  (event) => {
-    if (
-      event.key ===
-      'Enter' &&
-      !event.shiftKey
-    ) {
-      event.preventDefault();
+/* =========================================
+   SETTINGS EVENTS
+========================================= */
 
-      sendMessage();
+cameraEnabledSetting
+  .addEventListener(
+    'change',
+    async () => {
+      settings.cameraEnabled =
+        cameraEnabledSetting.checked;
+
+
+      saveSettings();
+
+
+      await startCamera();
     }
-  }
-);
+  );
+
+
+cameraSidebarSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.cameraSidebar =
+        cameraSidebarSetting.checked;
+
+
+      saveSettings();
+
+
+      updateCameraCardVisibility();
+    }
+  );
+
+
+cameraMirrorSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.cameraMirror =
+        cameraMirrorSetting.checked;
+
+
+      saveSettings();
+
+
+      applyCameraMirror();
+    }
+  );
+
+
+cameraDeviceSelect
+  .addEventListener(
+    'change',
+    async () => {
+      settings.cameraDevice =
+        cameraDeviceSelect.value;
+
+
+      saveSettings();
+
+
+      if (
+        settings.cameraEnabled
+      ) {
+        await startCamera();
+      }
+    }
+  );
+
+
+mediaRotationSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.mediaRotation =
+        mediaRotationSetting.checked;
+
+
+      saveSettings();
+
+
+      restartMediaTimer();
+    }
+  );
+
+
+mediaRotationSpeedSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.mediaRotationSpeed =
+        Number(
+          mediaRotationSpeedSetting
+            .value
+        );
+
+
+      saveSettings();
+
+
+      restartMediaTimer();
+    }
+  );
+
+
+desktopNotificationsSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.desktopNotifications =
+        desktopNotificationsSetting
+          .checked;
+
+
+      saveSettings();
+    }
+  );
+
+
+batteryNotificationsSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.batteryNotifications =
+        batteryNotificationsSetting
+          .checked;
+
+
+      saveSettings();
+    }
+  );
+
+
+newsNotificationsSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.newsNotifications =
+        newsNotificationsSetting
+          .checked;
+
+
+      saveSettings();
+    }
+  );
+
+
+voiceRepliesSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.voiceReplies =
+        voiceRepliesSetting.checked;
+
+
+      saveSettings();
+
+
+      updateVoiceStatus();
+
+
+      if (
+        !settings.voiceReplies
+      ) {
+        speechSynthesis.cancel();
+      }
+    }
+  );
+
+
+enhancedAnimationsSetting
+  .addEventListener(
+    'change',
+    () => {
+      settings.enhancedAnimations =
+        enhancedAnimationsSetting
+          .checked;
+
+
+      saveSettings();
+
+
+      applyAnimationSetting();
+    }
+  );
+
+
+startupSetting
+  .addEventListener(
+    'change',
+    async () => {
+      settings.startup =
+        startupSetting.checked;
+
+
+      saveSettings();
+
+
+      const actual =
+        await window
+          .novaAPI
+          ?.setStartup(
+            settings.startup
+          );
+
+
+      settings.startup =
+        Boolean(
+          actual
+        );
+
+
+      startupSetting.checked =
+        settings.startup;
+
+
+      saveSettings();
+    }
+  );
+
+
+traySetting
+  .addEventListener(
+    'change',
+    async () => {
+      settings.tray =
+        traySetting.checked;
+
+
+      saveSettings();
+
+
+      await window
+        .novaAPI
+        ?.setTray(
+          settings.tray
+        );
+    }
+  );
 
 
 /* =========================================
-   INITIALIZATION
+   CHAT EVENTS
 ========================================= */
 
-window
-  .speechSynthesis
-  ?.getVoices();
+sendButton
+  ?.addEventListener(
+    'click',
+    sendMessage
+  );
 
 
-if (
-  window
-    .speechSynthesis
-) {
-  window
-    .speechSynthesis
-    .onvoiceschanged =
-      () => {
-        window
-          .speechSynthesis
-          .getVoices();
-      };
+messageInput
+  ?.addEventListener(
+    'keydown',
+    event => {
+      if (
+        event.key ===
+        'Enter'
+      ) {
+        event.preventDefault();
+
+
+        sendMessage();
+      }
+    }
+  );
+
+
+/* =========================================
+   INIT
+========================================= */
+
+async function initializeNovaUI() {
+  loadSettingsIntoUI();
+
+
+  try {
+    const actualStartup =
+      await window
+        .novaAPI
+        ?.getStartup();
+
+
+    settings.startup =
+      Boolean(
+        actualStartup
+      );
+
+
+    startupSetting.checked =
+      settings.startup;
+
+  } catch {}
+
+
+  try {
+    await window
+      .novaAPI
+      ?.setTray(
+        settings.tray
+      );
+
+  } catch {}
+
+
+  updateCameraCardVisibility();
+
+
+  applyCameraMirror();
+
+
+  await populateCameraDevices();
+
+
+  if (
+    settings.cameraEnabled
+  ) {
+    await startCamera();
+  }
+
+
+  speechSynthesis
+    ?.getVoices();
+
+
+  messageInput
+    ?.focus();
 }
 
 
-if (newsStatus) {
-  newsStatus.textContent =
-    'SYNCING';
-}
-
-
-if (messageInput) {
-  messageInput.focus();
-}
+initializeNovaUI();
